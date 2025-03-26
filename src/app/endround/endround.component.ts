@@ -51,7 +51,10 @@ export class EndroundComponent implements OnChanges, OnInit, AfterViewChecked {
           this.teamWon = match.teams[0].isAttacking ? 1 : 0;
         }
 
-        if (match.roundPhase === "end" && !this.canvasInitialized) {
+        // Reset canvasInitialized when a new round ends
+        if (match.roundPhase === "end") {
+          this.canvasInitialized = false;
+
           if (this.initializeScoreboardCanvas()) {
             this.scoreboardAnim();
           }

@@ -5,3 +5,22 @@
   top: 0;
   left: 0;
 }
+
+#scoreboardCanvas {
+  position: absolute; /* Allows precise positioning */
+  top: 56%; /* Center vertically */
+  left: 50%; /* Center horizontally */
+  transform: translate(-50%, -50%); /* Adjust for the canvas size */
+  width: 100%; /* Adjust width as needed */
+  height: auto; /* Maintain aspect ratio */
+  z-index: 10; /* Ensure it appears above other elements */
+  pointer-events: none; /* Prevent interaction if not needed */
+}
+
+.endround-container {
+  position: relative; /* Ensure child elements can be positioned absolutely */
+  width: 100%; /* Full width of the parent */
+  height: 100%; /* Full height of the parent */
+  overflow: hidden; /* Prevent overflow issues */
+  background-color: transparent; /* Optional: Set a background color if needed */
+}
