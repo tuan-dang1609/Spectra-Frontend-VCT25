@@ -3,8 +3,8 @@ import { Component, Input, SimpleChanges, OnChanges } from "@angular/core";
 
 @Component({
   selector: "app-topscore",
-  templateUrl: "./topscore.component.html",
-  styleUrls: ["./topscore.component.scss"],
+  templateUrl: "./topscore-custom.component.html",
+  styleUrls: ["./topscore-custom.component.scss"],
   animations: [
     trigger("fade", [
       transition(":enter", [style({ opacity: "0" }), animate("0.5s", style({ opacity: "1" }))]),
@@ -28,6 +28,7 @@ export class TopscoreComponent implements OnChanges {
       const match = changes["match"].currentValue;
       if (match["spikeState"]["planted"] != this.spikePlanted) {
         this.spikePlanted = match["spikeState"]["planted"];
+
         if (this.spikePlanted) {
           this.detonationTime = match["spikeDetonationTime"];
           this.blinkState = false;
@@ -69,9 +70,5 @@ export class TopscoreComponent implements OnChanges {
         this.blinkState = true;
       }
     }, 25);
-  }
-
-  numSequence(n: number): number[] {
-    return Array(n);
   }
 }

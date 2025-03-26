@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="861" height="273" viewBox="0 0 861 273">
+  <defs>
+    <linearGradient id="linear-gradient" y1="0.5" x2="1" y2="0.5" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#e02853" stop-opacity="0.38"/>
+      <stop offset="0.745" stop-color="#140303" stop-opacity="0.49"/>
+      <stop offset="0.827" stop-opacity="0.561"/>
+      <stop offset="0.946" stop-opacity="0.22"/>
+      <stop offset="1" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="linear-gradient-2" x1="1" x2="0" xlink:href="#linear-gradient"/>
+  </defs>
+  <g id="Timeout_Component" data-name="Timeout Component" transform="translate(0 1)">
+    <rect id="Rectangle_250" data-name="Rectangle 250" width="430" height="191" transform="translate(430 40)" fill="url(#linear-gradient)"/>
+    <rect id="Rectangle_255" data-name="Rectangle 255" width="430" height="191" transform="translate(0 40)" fill="url(#linear-gradient-2)"/>
+    <line id="Line_2" data-name="Line 2" x2="860" transform="translate(0.5 40.5)" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="1"/>
+    <line id="Line_3" data-name="Line 3" y1="1" x2="859" transform="translate(0.5 230.5)" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="1"/>
+    <rect id="Rectangle_251" data-name="Rectangle 251" width="24" height="4" transform="translate(0 40)" fill="#fff"/>
+    <rect id="Rectangle_252" data-name="Rectangle 252" width="24" height="4" transform="translate(0 228)" fill="#fff"/>
+    <rect id="Rectangle_253" data-name="Rectangle 253" width="24" height="4" transform="translate(836 227)" fill="#fff"/>
+    <rect id="Rectangle_254" data-name="Rectangle 254" width="24" height="4" transform="translate(837 40)" fill="#fff"/>
+    <text id="TIMEOUT" transform="translate(430 212)" fill="rgba(118,118,118,0.2)" stroke="#c7c7c7" stroke-width="1" font-size="180" font-family="Anton-Regular, Anton"><tspan x="-282.173" y="0">TIMEOUT</tspan></text>
+  </g>
+</svg>

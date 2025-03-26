@@ -47,13 +47,7 @@
   flex-grow: 1;
   border-radius: 8px;
   overflow: visible;
-  background: linear-gradient(
-    90deg,
-    rgba(15, 25, 35, 0.65) 0%,
-    rgba(15, 25, 35, 0.53) 53%,
-    rgba(15, 25, 35, 0) 75%,
-    rgba(15, 25, 35, 0) 100%
-  );
+  background: transparent;
 }
 
 .money-spent-container {
@@ -138,6 +132,42 @@
   flex: 0 0 auto;
 }
 
+.scoreboard-box-container {
+  position: relative; // Ensure the parent container is positioned
+  width: 100%; // Ensure it spans the necessary width
+  height: auto; // Allow it to adjust to its content
+  overflow: visible; // Ensure child elements are not clipped
+}
+
+.graphics-left {
+  position: absolute;
+  left: 10px; // X position
+  top: 100px; // Y position
+  overflow: visible;
+  
+  .vector3-left,
+  .vector4-left {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+}
+
+.graphics-right {
+  transform: scaleX(-1);
+  position: absolute;
+  left: 1870px; // X position
+  top: 100px; // Y position
+  overflow: visible;
+  
+  .vector3-right,
+  .vector4-right {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+}
+
 .playerscore-wrapper {
   display: inline-flex;
   flex-direction: column;
@@ -145,7 +175,6 @@
   align-items: flex-start;
   gap: 10px;
   padding: 13px 16px;
-  background-color: #0f1923cc;
   border-radius: 8px;
   overflow: hidden;
   position: relative;

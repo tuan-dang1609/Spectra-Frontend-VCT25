@@ -74,7 +74,11 @@ export class TimeoutComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.timeout = this.match.timeoutState;
     this.socketService = SocketService.getInstance(this.config.serverEndpoint, this.groupCode);
-    this.getTournamentBackdropUrl();
+    this.tournamentBackgroundUrl =
+      this.match?.tools?.tournamentInfo?.backdropUrl &&
+      this.match.tools.tournamentInfo.backdropUrl !== ""
+        ? this.match.tools.tournamentInfo.backdropUrl
+        : "../../assets/misc/backdrop.webp";
     this.preloadImage(this.tournamentBackgroundUrl);
     this.preloadImage(this.match.teams[0].teamUrl);
     this.preloadImage(this.match.teams[1].teamUrl);
@@ -93,17 +97,14 @@ export class TimeoutComponent implements OnInit, AfterViewInit, OnDestroy {
     const newTimeout = this.match.timeoutState;
     if (newTimeout.techPause && newTimeout.techPause !== this.timeout.techPause) {
       this.anyTimeout = true;
-      this.getTournamentBackdropUrl();
     }
 
     if (newTimeout.leftTeam && newTimeout.leftTeam !== this.timeout.leftTeam) {
       this.anyTimeout = true;
-      this.getTournamentBackdropUrl();
     }
 
     if (newTimeout.rightTeam && newTimeout.rightTeam !== this.timeout.rightTeam) {
       this.anyTimeout = true;
-      this.getTournamentBackdropUrl();
     }
 
     if (this.anyTimeout && !newTimeout.techPause && !newTimeout.leftTeam && !newTimeout.rightTeam) {
@@ -113,14 +114,6 @@ export class TimeoutComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.timeLeft = newTimeout.timeRemaining;
     this.timeout = this.match.timeoutState;
-  }
-
-  private getTournamentBackdropUrl() {
-    this.tournamentBackgroundUrl =
-      this.match?.tools?.tournamentInfo?.backdropUrl &&
-      this.match.tools.tournamentInfo.backdropUrl !== ""
-        ? this.match.tools.tournamentInfo.backdropUrl
-        : "../../assets/misc/backdrop.webp";
   }
 
   private preloadImage(url: string): void {

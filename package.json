@@ -21,6 +21,7 @@
     "@angular/platform-browser": "^18.2.8",
     "@angular/platform-browser-dynamic": "^18.2.8",
     "@angular/router": "^18.2.8",
+    "@rive-app/canvas": "^2.26.5",
     "express": "^4.19.2",
     "rxjs": "~7.8.0",
     "socket.io-client": "4.8.1",

@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="917" height="333" viewBox="0 0 917 333">
+  <g id="Border_Left" data-name="Border Left" transform="translate(-31 -735)">
+    <line id="Line_4" data-name="Line 4" x2="917" transform="translate(31 736.5)" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="1"/>
+    <line id="Line_5" data-name="Line 5" x2="917" transform="translate(31 1066.5)" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="1"/>
+    <rect id="Rectangle_294" data-name="Rectangle 294" width="8" height="3" transform="translate(31 735)" fill="#fff"/>
+    <rect id="Rectangle_295" data-name="Rectangle 295" width="8" height="3" transform="translate(31 1065)" fill="#fff"/>
+    <rect id="Rectangle_296" data-name="Rectangle 296" width="8" height="3" transform="translate(940 1065)" fill="#fff"/>
+    <rect id="Rectangle_297" data-name="Rectangle 297" width="8" height="3" transform="translate(940 735)" fill="#fff"/>
+  </g>
+</svg>
