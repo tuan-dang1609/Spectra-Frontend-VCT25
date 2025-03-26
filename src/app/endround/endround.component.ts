@@ -29,7 +29,7 @@ export class EndroundComponent implements OnChanges, OnInit, AfterViewChecked {
       this.match?.tools?.tournamentInfo?.backdropUrl &&
       this.match.tools.tournamentInfo.backdropUrl !== ""
         ? this.match.tools.tournamentInfo.backdropUrl
-        : "../../assets/misc/backdrop.png";
+        : "../../assets/misc/backdrop.webp";
 
     this.preloadImage(this.tournamentUrl);
     this.preloadImage(this.tournamentBackgroundUrl);
