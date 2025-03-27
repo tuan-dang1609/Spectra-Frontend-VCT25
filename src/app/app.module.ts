@@ -35,6 +35,7 @@ import { AutoswitchComponent } from "./autoswitch/autoswitch.component";
 import { RedirectComponent } from "./redirect/redirect.component";
 import { TimeoutComponent } from "./timeout/timeout.component";
 import { AbilitiesComponent } from "./abilities/abilities.component";
+import { UltimateComponent } from "./ultimate/ultimate.component";
 
 @NgModule({
   declarations: [
@@ -63,6 +64,7 @@ import { AbilitiesComponent } from "./abilities/abilities.component";
     AbilitiesComponent,
     InhouseTrackerPlayercardMinimalComponent,
     PlayerscoreMinimalComponent,
+    UltimateComponent,
   ],
   exports: [],
   bootstrap: [AppComponent],

@@ -1,0 +1,49 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #222;
+}
+
+.ultimate-container {
+    position: relative;
+    width: 80px; /* Matches the dashed circle's size */
+    height: 80px; /* Matches the dashed circle's size */
+}
+
+/* Background Circle */
+.ultimate-background {
+    position: absolute;
+    width: 36px;
+    height: 36px;
+    background-color: rgba(24, 24, 24, 0.63); /* #181818 at 63% opacity */
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* Dashed Circle */
+.ultimate-dashed-circle {
+    position: absolute;
+    width: 73.5px;
+    height: 73.5px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* Centered Icon */
+.ultimate-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 18px;
+    height: 18px;
+}
+
+.ultimate-icon img {
+    width: 100%;
+}

@@ -54,6 +54,22 @@
         />
       </div>
     </div>
+    <div class="ultimate-container">
+      <app-ultimate
+        [match]="match"
+        [player]="player"
+        [color]="
+        match.teams[0].players.includes(player)
+        ? match.teams[0].isAttacking
+          ? 'attacker'
+          : 'defender'
+        : match.teams[1].isAttacking
+        ? 'attacker'
+        : 'defender'
+        "
+        [hideAuxiliary]="hideAuxiliary">
+      </app-ultimate>
+    </div>
     <div class="money-container">
       <p class="money-element" [class]="side">
         <span class="money-text-red">-</span>
