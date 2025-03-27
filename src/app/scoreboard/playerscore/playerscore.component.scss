@@ -124,31 +124,8 @@
   }
 }
 
-.ultimate-tracker {
-  display: inline-flex;
-  align-items: center;
-  gap: 1.25px;
-  position: relative;
-  flex: 0 0 auto;
-}
-
-.pip-ultimate {
-  position: relative;
-  background-image: url(/assets/misc/ultimate-pip.svg);
-  background-size: 100% 100%;
-  width: 10px;
-  height: 10px;
-
-  &-full {
-    @extend .pip-ultimate;
-    background-image: url(/assets/misc/ultimate-pip-full.svg);
-  }
-}
-
-.ultimate-full-image {
-  width: 25px;
-  margin-left: auto;
-  margin-right: auto;
+.ultimate-component {
+  scale: 1.17;
 }
 
 .resources-container {

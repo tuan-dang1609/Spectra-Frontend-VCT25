@@ -1,19 +1,22 @@
 import { Config } from "../shared/config";
-import { Component, Input, AfterViewInit, OnChanges, ViewChild, ElementRef } from "@angular/core";
+import { Component, Input, AfterViewInit, OnChanges, DoCheck, ViewChild, ElementRef, ChangeDetectorRef } from "@angular/core";
 
 @Component({
   selector: "app-ultimate",
   templateUrl: "./ultimate.component.html",
   styleUrls: ["./ultimate.component.scss"],
 })
-export class UltimateComponent implements AfterViewInit, OnChanges {
+export class UltimateComponent implements AfterViewInit, OnChanges, DoCheck {
   public readonly assets: string = "../../../assets";
 
   private _player: any;
+  private prevUltPoints: number = -1; // to track changes
+
   @Input()
   set player(val: any) {
     this._player = val;
     this.updateUltimateProgress();
+    this.prevUltPoints = this._player?.currUltPoints;
   }
   get player() {
     return this._player;
@@ -21,11 +24,12 @@ export class UltimateComponent implements AfterViewInit, OnChanges {
 
   @Input() color!: "attacker" | "defender";
   @Input() match!: any;
+  @Input() side!: "left" | "right";
   @Input() hideAuxiliary = false;
 
   @ViewChild("svgContainer", { static: true }) svgContainerRef!: ElementRef<SVGSVGElement>;
 
-  constructor(private config: Config) {}
+  constructor(public config: Config, private cdRef: ChangeDetectorRef) {}
 
   ngAfterViewInit(): void {
     this.updateUltimateProgress();
@@ -33,6 +37,34 @@ export class UltimateComponent implements AfterViewInit, OnChanges {
 
   ngOnChanges(): void {
     this.updateUltimateProgress();
+  }
+
+  ngDoCheck(): void {
+    if (this.player && this.player.currUltPoints !== this.prevUltPoints) {
+      this.prevUltPoints = this.player.currUltPoints;
+      this.updateUltimateProgress();
+    }
+  }
+
+  public get dashes(): { collected: boolean; angle: number }[] {
+    const dashSpan = (2 * Math.PI) / this.player.maxUltPoints;
+    return Array.from({ length: this.player.maxUltPoints }, (_, i) => ({
+        collected: i < this.player.currUltPoints,
+        angle: i * dashSpan - Math.PI / 2 + dashSpan / 2,
+    }));
+  }
+
+  public computePath(angle: number): string {
+    const cx = 40, cy = 40, outerRadius = 18;
+    const dashSpan = (2 * Math.PI) / this.player.maxUltPoints;
+    const adjustedSpan = dashSpan * 0.8;
+    const startAngle = angle - adjustedSpan / 2;
+    const endAngle = angle + adjustedSpan / 2;
+    const startX = cx + outerRadius * Math.cos(startAngle);
+    const startY = cy + outerRadius * Math.sin(startAngle);
+    const endX = cx + outerRadius * Math.cos(endAngle);
+    const endY = cy + outerRadius * Math.sin(endAngle);
+    return `M ${startX} ${startY} A ${outerRadius} ${outerRadius} 0 0 1 ${endX} ${endY}`;
   }
 
   private createDash(
@@ -139,5 +171,7 @@ export class UltimateComponent implements AfterViewInit, OnChanges {
         );
       }
     }
+
+    this.cdRef.detectChanges();
   }
 }

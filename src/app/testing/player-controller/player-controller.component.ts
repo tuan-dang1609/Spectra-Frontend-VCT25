@@ -121,11 +121,8 @@ export class PlayerControllerComponent implements OnDestroy {
   }
 
   giveUltPoint(): void {
-    this.playerObject = {
-      ...this.playerObject,
-      currUltPoints: this.playerObject.currUltPoints + 1,
-    };
-    if (this.playerObject.currUltPoints === this.playerObject.maxUltPoints) {
+    this.playerObject.currUltPoints++;
+    if (this.playerObject.currUltPoints == this.playerObject.maxUltPoints) {
       this.playerObject.ultReady = true;
     }
   }

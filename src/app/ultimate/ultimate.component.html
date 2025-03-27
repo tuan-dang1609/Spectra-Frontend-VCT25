@@ -1,9 +1,53 @@
 <div class="ultimate-container">
   <div class="ultimate-background"></div>
-
-  <svg #svgContainer class="ultimate-dashed-circle" width="80" height="80" viewBox="0 0 80 80"></svg>
+  <svg
+    class="ultimate-dashed-circle"
+    width="80"
+    height="80"
+    viewBox="0 0 80 80"
+    [ngClass]="{ 'flip-ult-dashes': side === 'right' }"
+  >
+    <defs>
+      <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+        <feDropShadow dx="0" dy="0" stdDeviation="3" flood-color="white" flood-opacity="1">
+          <animate
+            attributeName="stdDeviation"
+            values="3;8;8;3"
+            keyTimes="0;0.4;0.5;1"
+            calcMode="spline"
+            keySplines="0.42 0 0.58 1;0 0 1 1;0.42 0 0.58 1"
+            dur="5s"
+            repeatCount="indefinite"
+          />
+        </feDropShadow>
+      </filter>
+    </defs>
+    
+    <!-- ultimate ready -->
+    <ng-container *ngIf="player.ultReady">
+      <circle
+        cx="40" cy="40" r="18"
+        stroke="white" stroke-width="2"
+        fill="none"
+        filter="url(#glow)"
+      />
+    </ng-container>
+    
+    <!-- render ultimate progress -->
+    <ng-container *ngIf="!player.ultReady">
+      <ng-container *ngFor="let dash of dashes">
+        <path
+          [attr.d]="computePath(dash.angle)"
+          [attr.stroke]="dash.collected ? (color === 'attacker' ? config.attackerColorPrimary : config.defenderColorPrimary) : 'rgba(163,163,163,0.5)'"
+          stroke-width="3"
+          fill="none"
+          stroke-linecap="butt"
+        ></path>
+      </ng-container>
+    </ng-container>
+  </svg>
 
   <div class="ultimate-icon">
-      <img src="{{ assets }}/ultimates/{{ player.agentInternal }}Ultimate.webp">
+    <img src="{{ assets }}/ultimates/{{ player.agentInternal }}Ultimate.webp">
   </div>
 </div>
