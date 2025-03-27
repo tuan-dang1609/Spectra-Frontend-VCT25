@@ -1,5 +1,5 @@
 import { Config } from "../shared/config";
-import { Component, Input, AfterViewInit, OnChanges } from "@angular/core";
+import { Component, Input, AfterViewInit, OnChanges, ViewChild, ElementRef } from "@angular/core";
 
 @Component({
   selector: "app-ultimate",
@@ -23,13 +23,11 @@ export class UltimateComponent implements AfterViewInit, OnChanges {
   @Input() match!: any;
   @Input() hideAuxiliary = false;
 
-  private svgContainer!: SVGSVGElement;
+  @ViewChild("svgContainer", { static: true }) svgContainerRef!: ElementRef<SVGSVGElement>;
 
   constructor(private config: Config) {}
 
   ngAfterViewInit(): void {
-    // Query after the view is initialized
-    this.svgContainer = document.querySelector(".ultimate-dashed-circle") as SVGSVGElement;
     this.updateUltimateProgress();
   }
 
@@ -43,8 +41,7 @@ export class UltimateComponent implements AfterViewInit, OnChanges {
     outerRadius: number,
     angle: number,
     originalSpan: number,
-    collected: boolean,
-    isAttacking: boolean
+    collected: boolean
   ) {
     const dashCoverage = 0.8;
     const adjustedSpan = originalSpan * dashCoverage;
@@ -67,7 +64,7 @@ export class UltimateComponent implements AfterViewInit, OnChanges {
     dash.setAttribute(
       "stroke",
       collected
-        ? isAttacking
+        ? this.color === "attacker"
           ? this.config.attackerColorPrimary
           : this.config.defenderColorPrimary
         : "rgba(163, 163, 163, 0.5)"
@@ -76,17 +73,18 @@ export class UltimateComponent implements AfterViewInit, OnChanges {
     dash.setAttribute("fill", "none");
     dash.setAttribute("stroke-linecap", "butt");
 
-    this.svgContainer.appendChild(dash);
+    this.svgContainerRef.nativeElement.appendChild(dash);
   }
 
   private updateUltimateProgress(): void {
-    if (!this.svgContainer) {
+    if (!this.svgContainerRef) {
       return;
     }
-    this.svgContainer.innerHTML = "";
+    const svgContainer = this.svgContainerRef.nativeElement;
+    svgContainer.innerHTML = "";
     const cx = 40, cy = 40, outerRadius = 18;
 
-    if (this.player.currUltPoints === this.player.maxUltPoints) {
+    if (this.player.ultReady === true) {
       const defs = document.createElementNS("http://www.w3.org/2000/svg", "defs");
       const filter = document.createElementNS("http://www.w3.org/2000/svg", "filter");
       filter.setAttribute("id", "glow");
@@ -114,7 +112,7 @@ export class UltimateComponent implements AfterViewInit, OnChanges {
       feDropShadow.appendChild(animate);
       filter.appendChild(feDropShadow);
       defs.appendChild(filter);
-      this.svgContainer.appendChild(defs);
+      svgContainer.appendChild(defs);
 
       const glowingCircle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
       glowingCircle.setAttribute("cx", cx.toString());
@@ -125,10 +123,10 @@ export class UltimateComponent implements AfterViewInit, OnChanges {
       glowingCircle.setAttribute("fill", "none");
       glowingCircle.setAttribute("filter", "url(#glow)");
 
-      this.svgContainer.appendChild(glowingCircle);
+      svgContainer.appendChild(glowingCircle);
     } else {
       const dashSpan = (2 * Math.PI) / this.player.maxUltPoints;
-      const isAttacking = this.match?.teams?.[ this.player.teamIndex ]?.isAttacking ?? false;
+      const isAttacking = this.match?.teams?.[this.player.teamIndex]?.isAttacking ?? false;
       for (let i = 0; i < this.player.maxUltPoints; i++) {
         const angle = i * dashSpan - Math.PI / 2 + dashSpan / 2;
         this.createDash(
@@ -138,7 +136,6 @@ export class UltimateComponent implements AfterViewInit, OnChanges {
           angle,
           dashSpan,
           i < this.player.currUltPoints,
-          isAttacking
         );
       }
     }
