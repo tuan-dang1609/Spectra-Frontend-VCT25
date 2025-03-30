@@ -1,5 +1,59 @@
+@font-face {
+  font-family: DIN Next W1G Regular;
+  src: url("../../../public/assets/fonts/DINNextW1G/dinnextw1g.otf") format("opentype");
+} 
+
 .flip {
   transform: rotateY(180deg);
+}
+
+.scoreboard-label-text {
+  position: absolute;
+  left: 80px;
+  top: 120px;
+  font-family: "DIN Next W1G Regular", sans-serif;
+  opacity: 1;
+  font-size: 16px;
+  text-align: center;
+  letter-spacing: 1px;
+  z-index: 1;
+}
+
+.player-display {
+  color: white;
+  opacity: 0.54;
+  transform: translateY(58px);
+}
+
+.kda-display {
+  color: white;
+  opacity: 0.54;
+  transform: translate(180px, 40px);
+  letter-spacing: 10px;
+}
+
+.abilities-display {
+  color: white;
+  opacity: 0.54;
+  transform: translate(372px, 20px);
+}
+
+.shield-display {
+  color: white;
+  opacity: 0.54;
+  transform: translate(542px, 1px);
+}
+
+.loadout-display {
+  color: white;
+  opacity: 0.54;
+  transform: translate(639px, -18px);
+}
+
+.creds-display {
+  color: white;
+  opacity: 0.54;
+  transform: translate(754px, -37px);
 }
 
 .team-icon-container {
@@ -156,7 +210,7 @@
 .graphics-right {
   transform: scaleX(-1);
   position: absolute;
-  left: 1870px; // X position
+  left: 1872px; // X position
   top: 100px; // Y position
   overflow: visible;
   
@@ -173,7 +227,7 @@
   flex-direction: column;
   height: 415px;
   align-items: flex-start;
-  gap: 10px;
+  gap: 0px;
   padding: 13px 16px;
   border-radius: 8px;
   overflow: hidden;

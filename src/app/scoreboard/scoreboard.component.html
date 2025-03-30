@@ -32,6 +32,14 @@
       </div>
     </div>
   </div>
+  <div class="scoreboard-label-text">
+    <div class="player-display">PLAYER</div>
+    <div class="kda-display">K       D       A</div>
+    <div class="abilities-display">ABILITIES</div>
+    <div class="shield-display">SHIELD</div>
+    <div class="loadout-display">LOADOUT</div>
+    <div class="creds-display">CREDS</div>
+  </div>
   <!-- loading full info playerscores -->
   <div class="scoreboard-box-container">
     <div class="graphics-left">
@@ -52,7 +60,7 @@
         [color]="match.teams[0].isAttacking ? 'attacker' : 'defender'"
         [hideAuxiliary]="hideAuxiliary"
         side="left"
-      />
+      ></app-playerscore>
     </div>
     <div class="playerscore-wrapper flip">
       <app-playerscore
@@ -62,7 +70,7 @@
         [color]="match.teams[1].isAttacking ? 'attacker' : 'defender'"
         [hideAuxiliary]="hideAuxiliary"
         side="right"
-      />
+      ></app-playerscore>
     </div>
   </div>
   <!-- loading minimal info playerscores -->

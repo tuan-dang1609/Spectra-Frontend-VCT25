@@ -4,11 +4,11 @@ export class Config {
   sponsorImageUrls: string[] = [];
   sponsorImageRotateSpeed = 5000; // in milliseconds
 
-  attackerColorPrimary = "#b82e3c";
+  attackerColorPrimary = "#E02853";
   attackerColorSecondary = "#ff4557";
   attackerColorShieldCurrency = "#ff838f";
 
-  defenderColorPrimary = "#25ac79";
+  defenderColorPrimary = "#46F4CF";
   defenderColorSecondary = "#61eab6";
   defenderColorShieldCurrency = "#61eab6";
 

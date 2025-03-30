@@ -1,11 +1,11 @@
 <div class="playerscore-component" [class]="color">
   <div class="playerinfo-container">
-    <div>
+    <div class="agent-color">
       <img
       [src]="
-      match.teams[1].isAttacking
-        ? '/assets/scoreboard/green.svg'
-        : '/assets/scoreboard/red.svg'
+        (side === 'left' && match.teams[0].isAttacking) || (side === 'right' && match.teams[1].isAttacking)
+          ? '/assets/scoreboard/red.svg'
+          : '/assets/scoreboard/green.svg'
       "/>
     </div>
     <img
@@ -39,11 +39,9 @@
     ></app-abilities>
     <div class="KDA-tracker-wrapper">
       <p class="KDA-tracker" [class]="side">
-        <span class="KDA-text">{{ player.kills }}</span>
-        <span class="KDA-text-delimiter"> / </span>
-        <span class="KDA-text">{{ player.deaths }}</span>
-        <span class="KDA-text-delimiter" *ngIf="showAssistCounts"> / </span>
-        <span class="KDA-text" *ngIf="showAssistCounts">{{ player.assists }}</span>
+        <span class="KDA-kills">{{ player.kills }}</span>
+        <span class="KDA-deaths">{{ player.deaths }}</span>
+        <span class="KDA-assists" *ngIf="showAssistCounts">{{ player.assists }}</span>
       </p>
     </div>
     <div class="weapon-icon-container">

@@ -1,3 +1,18 @@
+@font-face {
+  font-family: DIN Next W1G Regular;
+  src: url("../../../../public/assets/fonts/DINNextW1G/dinnextw1g.otf") format("opentype");
+} 
+
+@font-face {
+  font-family: DIN Next W1G Medium;
+  src: url("../../../../public/assets/fonts/DINNextW1G/dinnextw1g_medium.otf") format("opentype");
+}
+
+@font-face {
+  font-family: Tungsten;
+  src: url("../../../../public/assets/fonts/Tungsten/Tungsten-Bold.ttf") format("truetype");
+}
+
 .flip {
   transform: rotateY(180deg);
 }
@@ -8,32 +23,13 @@
 
 .playerscore-component {
   display: flex;
-  height: 74px;
-  width: 760px;
+  height: 58px;
+  width: 885px;
   align-items: center;
   justify-content: space-between;
   position: relative;
   flex: 0 0 auto;
-
-  &.defender {
-    background: linear-gradient(
-      90deg,
-      rgba(var(--defender-color-rgb), 0) 3.74%,
-      rgba(var(--defender-color-rgb), 0.65) 5.57%,
-      rgba(var(--defender-color-rgb), 0.3) 22.42%,
-      rgba(var(--defender-color-rgb), 0) 37.11%
-    );
-  }
-
-  &.attacker {
-    background: linear-gradient(
-      90deg,
-      rgba(var(--attacker-color-rgb), 0) 4.69%,
-      rgba(var(--attacker-color-rgb), 0.65) 6.5%,
-      rgba(var(--attacker-color-rgb), 0.3) 23.1%,
-      rgba(var(--attacker-color-rgb), 0) 37.57%
-    );
-  }
+  transform: translateY(110px);
 
   &.minimal {
     @extend .playerscore-component;
@@ -75,28 +71,32 @@
   background-position: 50% 50%;
   position: relative;
   width: 74px;
-  height: 74px;
+  height: 57.5px;
+  overflow: hidden;
+  object-fit: cover;
+  transform: translate(-43px, -2px);
 }
 
 .playername-container {
   display: flex;
   flex-direction: column;
   width: 121px;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
   gap: 3px;
   position: relative;
   align-self: stretch;
+  left: -62px;
+  top: -2px;
 }
 
 .playername-text {
   position: relative;
   width: fit-content;
-  font-family: "Montserrat", Helvetica;
-  font-weight: 600;
+  font-family: "DIN Next W1G Regular", sans-serif;
   color: #ffffff;
-  font-size: 16px;
-  text-align: center;
+  font-size: 18px;
+  text-align: left;
   letter-spacing: 0;
   line-height: normal;
   white-space: nowrap;
@@ -124,8 +124,9 @@
   }
 }
 
-.ultimate-component {
+.ultimate-container {
   scale: 1.17;
+  transform: translate(-74px, -2px);
 }
 
 .resources-container {
@@ -161,6 +162,9 @@
 }
 
 .shield-icon-container {
+  position: absolute;
+  left: 268.5px;
+  transform: translateY(-2px);
   width: 36px;
   height: 36px;
 }
@@ -178,6 +182,7 @@
   gap: 10px;
   position: relative;
   align-self: stretch;
+  left: -256px;
 
   &.minimal {
     @extend .KDA-tracker-wrapper;
@@ -188,26 +193,39 @@
 .KDA-tracker {
   position: relative;
   width: fit-content;
-  font-family: "Unbounded", Helvetica;
-  font-weight: 600;
-  color: transparent;
-  font-size: 16px;
+  font-family: "DIN Next W1G Medium", sans-serif;
+  justify-content: space-between;
+  width: 100%;
+  font-weight: 500;
+  font-size: 20px;
   text-align: center;
   letter-spacing: 0;
   line-height: normal;
   white-space: nowrap;
 
+  display: flex;
+  flex-direction: row;
+  gap: 12px;  /* Adjust as needed */
+  color: #fff; /* Remove `color: transparent` so text appears */
+
+  /* Remove or override any conflicting width/color properties if needed */
+  width: auto;
+  justify-content: flex-start;
+  /* ...other properties... */
+
   &.minimal {
     @extend .KDA-tracker;
     display: flex;
     flex-direction: row;
-    gap: 14px;
+    gap: 8px;
   }
 }
 
 .KDA-tracker-bundle {
   display: flex;
   flex-direction: column;
+  align-items: center;
+  gap: 4px;
 }
 
 .KDA-title {
@@ -215,17 +233,29 @@
   color: white;
 }
 
-.KDA-text {
+.KDA-kills {
   color: #ffffff;
-  font-family: "Unbounded", Helvetica;
-  font-weight: 600;
-  font-size: 16px;
+  font-family: "DIN Next W1G Medium", sans-serif;
+  font-size: 20px;
   letter-spacing: 0;
+  text-align: center;
+  
+}
 
-  &-delimiter {
-    @extend .KDA-text;
-    color: #ffffff80;
-  }
+.KDA-deaths {
+  color: #ffffff;
+  font-family: "DIN Next W1G Medium", sans-serif;
+  font-size: 20px;
+  letter-spacing: 0;
+  text-align: center;
+}
+
+.KDA-assists {
+  color: #ffffff;
+  font-family: "DIN Next W1G Medium", sans-serif;
+  font-size: 20px;
+  letter-spacing: 0;
+  text-align: center;
 }
 
 .weapon-icon-container {
@@ -236,8 +266,9 @@
   align-items: center;
   justify-content: center;
   gap: 10px;
-  position: relative;
+  position: absolute;
   align-self: stretch;
+  transform: translate(-64px, 14px);
 }
 
 .weapon-icon-wrapper {
@@ -253,31 +284,31 @@
 
 .weapon-icon {
   position: relative;
-  max-height: 40px;
-  max-width: 160px;
+  max-height: 25px;
+  max-width: 100px;
   object-fit: cover;
 }
 
 .money-container {
   display: flex;
   flex-direction: column;
-  min-width: 80px;
-  max-width: 100px;
   flex: auto;
   align-items: center;
   justify-content: center;
   gap: 8px;
   position: relative;
   align-self: stretch;
+  transform: translateY(-2px);
+  left: 65px;
 }
 
 .money-element {
   position: relative;
   width: fit-content;
   opacity: 0.8;
-  font-family: "Montserrat", Helvetica;
-  font-weight: 700;
-  font-size: 18px;
+  font-family: "DIN Next W1G Medium", sans-serif;
+  font-weight: 500;
+  font-size: 20px;
   text-align: center;
   line-height: normal;
   white-space: nowrap;
@@ -292,14 +323,12 @@
 
 .money-text {
   letter-spacing: 0;
-  opacity: 0.8;
-  font-family: "Montserrat", Helvetica;
-  font-weight: 700;
-  font-size: 18px;
+  font-family: "DIN Next W1G Medium", sans-serif;
+  font-size: 20px;
 
   &-red {
     @extend .money-text;
-    color: #ff4557;
+    color: #F4E9A0;
   }
 
   &-white {
@@ -311,4 +340,17 @@
 app-abilities {
   min-width: 90px;
   margin: 0 5px;
+  transform: translate(16px, -6px);
+}
+
+.agent-color {
+  transform: translateX(-6px);
+}
+
+.KDA-kills,
+.KDA-deaths,
+.KDA-assists {
+  /* Additional spacing if needed */
+  margin: 0 4px;
+  text-align: center;
 }
