@@ -1,3 +1,13 @@
+@font-face {
+  font-family: DIN Next W1G Medium;
+  src: url("../../../../public/assets/fonts/DINNextW1G/dinnextw1g_medium.otf") format("opentype");
+}
+
+@font-face {
+  font-family: DIN Next W1G Bold;
+  src: url("../../../../public/assets/fonts/DINNextW1G/dinnextw1g_bold.otf") format("opentype");
+}
+
 .round-reasons-container {
   display: block;
   max-width: 600px;
@@ -6,10 +16,9 @@
   padding: 0px 4px;
   position: relative;
   align-self: stretch;
-  background-color: #0f1923cc;
+  background-color: transparent;
   border-radius: 6px;
-  box-shadow: inset 34px 0px 24.7px -8px #0f1923;
-  top: -400px;
+  top: 26px;
 }
 
 .left-team {
@@ -26,18 +35,18 @@
   max-width: 75px;
   min-width: 75px;
   color: white;
-
+  transform: translateX(-185px);
   text-align: center;
   line-height: 40px;
-  font-size: 14px;
-  font-weight: 800;
-  font-family: "Unbounded", Helvetica;
+  font-size: 20px;
+  word-spacing: 10px;
+  font-family: "DIN Next W1G Bold", Helvetica;
 }
 
 .reason-container {
   width: max-content;
   overflow-x: visible;
-  float: right;
+  float: none;
 
   display: inline-flex;
   flex-direction: row;
@@ -71,9 +80,9 @@
   text-align: center;
   color: rgba(255, 255, 255, 0.8);
 
-  font-size: 16px;
-  font-weight: 800;
-  font-family: "Unbounded", Helvetica;
+  font-size: 24px;
+  word-spacing: -50px;
+  font-family: "DIN Next W1G Bold", Helvetica;
 }
 
 .round-number-upcoming {
@@ -86,9 +95,9 @@
   text-align: center;
   color: white;
 
-  font-size: 20px;
-  font-weight: 800;
-  font-family: "Unbounded", Helvetica;
+  font-size: 24px;
+  word-spacing: -50px;
+  font-family: "DIN Next W1G Bold", Helvetica;
 }
 
 .reason-color {
@@ -173,4 +182,68 @@
   width: 1px;
   height: 30px;
   object-fit: cover;
+}
+
+.team-roundsWon {
+  position: absolute;
+  font-family: "DIN Next W1G Bold", Helvetica;
+  font-size: 30px;
+  text-align: center;
+  line-height: 40px;
+  word-spacing: -50px;
+  left: -100px;
+
+  &.attacking {
+    color: #E5375F;
+  }
+  &.defending {
+    color: #46F4CF;
+  }
+}
+
+.round-wrapper {
+  display: inline-flex;
+  margin-right: 1px;
+}
+.side-swap-container {
+  margin-right: 35px;
+  display: inline-flex;
+  align-items: center;
+}
+
+.side-swap-container-early {
+  margin-right: 51px;
+  display: inline-flex;
+  align-items: center;
+  position: relative;
+}
+
+.side-swap-container-late {
+  margin-right: 35px;
+  display: inline-flex;
+  align-items: center;
+  position: relative;
+}
+
+.six-square {
+  width: 6px;
+  height: 6px;
+  background-color: #fff;
+  margin-right: 1px;
+  align-self: center;
+}
+
+.round-svg-container {
+  position: relative;
+  width: 49px;
+  height: 49px;
+
+  .round-image {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 24px;
+    height: 24px;
+    transform: translate(-50%, -50%);
+  }
 }

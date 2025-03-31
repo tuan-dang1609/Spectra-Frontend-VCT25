@@ -3,22 +3,45 @@
     <div class="team-info">
       {{ match.teams[0].teamTricode }}
     </div>
+    <!-- Bind classes for attacking or defending -->
+    <div class="team-roundsWon"
+         [ngClass]="{ 'attacking': match.teams[0].isAttacking, 'defending': !match.teams[0].isAttacking }">
+      {{ match.teams[0].roundsWon }}
+    </div>
     <div class="reason-container">
-      <div *ngFor="let record of match.teams[0].roundRecord | slice: -10">
+      <div *ngFor="let record of match.teams[0].roundRecord | slice: -14; let i = index" class="round-wrapper">
+        <!-- Show sideSwap, 51px margin before round 13; 35px after -->
         <div
-          class="divider"
-          *ngIf="record.round === match.switchRound || record.round === match.firstOtRound"
+          [ngClass]="{ 'side-swap-container-early': i < 12, 'side-swap-container-late': i >= 12 }"
+          *ngIf="record.round === 13 && i > 0 && match.teams[0].roundRecord[i - 1]?.round === 12"
         >
-          <img class="line" src="{{ assets }}/roundWinReason/divider-line.svg" />
+          <img
+            src="{{ assets }}/scoreboard/roundReasons/sideSwap.svg"
+            class="side-swap"
+          />
         </div>
 
+        <!-- Show 6×6 square if next round (14) doesn't exist yet -->
         <div
-          [class]="'reason-color top ' + (record.wasAttack ? 'attacker' : 'defender')"
+          class="six-square"
+          *ngIf="record.round === 13 && match.teams[0].roundRecord.length < 14"
+        ></div>
+
+        <!-- SVG and centered reason image -->
+        <div
+          class="round-svg-container"
           *ngIf="record.type !== 'lost' && record.type !== 'upcoming'"
         >
-          <div class="image-container">
-            <img class="image" src="{{ assets }}/roundWinReason/{{ record.type }}.webp" />
-          </div>
+          <img
+            class="round-svg"
+            [src]="record.wasAttack
+              ? assets + '/scoreboard/roundReasons/redWin.svg'
+              : assets + '/scoreboard/roundReasons/greenWin.svg'"
+          />
+          <img
+            class="round-image"
+            [src]="assets + '/roundWinReason/' + record.type + '.webp'"
+          />
         </div>
 
         <div class="reason-color lost" *ngIf="record.type === 'lost'">
@@ -36,26 +59,42 @@
     <div class="team-info">
       {{ match.teams[1].teamTricode }}
     </div>
+    <!-- Same approach for the other team -->
+    <div class="team-roundsWon"
+         [ngClass]="{ 'attacking': match.teams[1].isAttacking, 'defending': !match.teams[1].isAttacking }">
+      {{ match.teams[1].roundsWon }}
+    </div>
     <div class="reason-container">
-      <div *ngFor="let record of match.teams[1].roundRecord | slice: -10">
+      <div *ngFor="let record of match.teams[1].roundRecord | slice: -10; let i = index" class="round-wrapper">
+        <!-- 1. Insert sideSwap after round 12 -->
         <div
-          class="divider"
-          *ngIf="record.round === match.switchRound || record.round === match.firstOtRound"
+          class="side-swap-container"
+          *ngIf="record.round === 13 && i > 0 && match.teams[1].roundRecord[i - 1]?.round === 12"
         >
-          <img class="line" src="{{ assets }}/roundWinReason/divider-line.svg" />
+          <img src="{{ assets }}/scoreboard/roundReasons/sideSwap.svg" class="side-swap" />
         </div>
 
+        <!-- 2. Use greenWin/redWin.svg instead of gradients -->
         <div
-          [class]="'reason-color bottom ' + (record.wasAttack ? 'attacker' : 'defender')"
+          class="round-svg-container"
+          [ngClass]="record.wasAttack ? 'attacker' : 'defender'"
           *ngIf="record.type !== 'lost' && record.type !== 'upcoming'"
         >
-          <div class="image-container">
-            <img class="image" src="{{ assets }}/roundWinReason/{{ record.type }}.webp" />
-          </div>
+          <img
+            class="round-svg"
+            [src]="record.wasAttack
+              ? assets + '/scoreboard/roundReasons/redWin.svg'
+              : assets + '/scoreboard/roundReasons/greenWin.svg'"
+          />
+          <img class="image" [src]="assets + '/roundWinReason/' + record.type + '.webp'" />
         </div>
 
+        <!-- Lost / Upcoming remain similar -->
         <div class="reason-color lost" *ngIf="record.type === 'lost'">
           <div class="round-number">{{ record.round }}</div>
+        </div>
+        <div class="reason-color lost" *ngIf="record.type === 'upcoming'">
+          <div class="round-number-upcoming">{{ record.round }}</div>
         </div>
       </div>
     </div>

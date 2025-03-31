@@ -13,10 +13,14 @@ interface matchType {
     {
       teamTricode: string;
       roundRecord: recordType[];
+      roundsWon: number;
+      isAttacking: boolean;
     },
     {
       teamTricode: string;
       roundRecord: recordType[];
+      roundsWon: number;
+      isAttacking: boolean;
     },
   ];
 }

@@ -12,7 +12,9 @@
         <img class="team-icon" src="{{ match.teams[0].teamUrl }}" />
       </div>
       <div class="teaminfo-wrapper-left">
-        <div class="teamname-text">{{ match.teams[0].teamName }}</div>
+        <div class="teamname-text">
+          {{ match.teams[0].teamName.length > 23 ? (match.teams[0].teamName | slice:0:21) + '...' : match.teams[0].teamName }}
+        </div>
         <div class="money-spent-container" *ngIf="!isMinimal()">
           <div class="money-spent-wrapper">
             <img class="credits-icon" src="../../assets/misc/ValorantCreditsWhite.svg" />
@@ -35,7 +37,9 @@
         <img class="team-icon flip" src="{{ match.teams[1].teamUrl }}" />
       </div>
       <div class="teaminfo-wrapper-right flip">
-        <div class="teamname-text">{{ match.teams[1].teamName }}</div>
+        <div class="teamname-text">
+          {{ match.teams[1].teamName.length > 23 ? (match.teams[1].teamName | slice:0:21) + '...' : match.teams[1].teamName }}
+        </div>
         <div class="money-spent-container" *ngIf="!isMinimal()">
           <div class="money-spent-label-text">LOADOUT VALUE</div>
           <div class="money-spent-wrapper">
@@ -66,7 +70,7 @@
     </div>
   </div>
   <div class="team-round-reasons-box">
-    <img class="round-reason-vector" src="/assets/scoreboard/roundReasons/teamRoundReasons.svg" />
+    <img class="round-reason-vector" src="/assets/scoreboard/roundReasons/TeamRoundReasons.svg" />
   </div>
   <div class="scoreboard-content-container" *ngIf="!isMinimal()">
     <div class="playerscore-wrapper">
