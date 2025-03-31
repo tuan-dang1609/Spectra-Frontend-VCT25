@@ -1,6 +1,13 @@
 <div class="scoreboard-container">
   <div class="scoreboard-header-container">
     <div class="team-container">
+      <div class="team-side-color">
+        <img
+        [src]="match.teams[0].isAttacking
+            ? '/assets/scoreboard/roundReasons/redStroke.svg'
+            : '/assets/scoreboard/roundReasons/greenStroke.svg'
+        "/>
+      </div>
       <div class="team-icon-container">
         <img class="team-icon" src="{{ match.teams[0].teamUrl }}" />
       </div>
@@ -17,6 +24,13 @@
     </div>
     <app-roundreasons class="round-reasons" [match]="match" />
     <div class="team-container flip">
+      <div class="team-side-color flip">
+        <img
+        [src]="match.teams[1].isAttacking
+            ? '/assets/scoreboard/roundReasons/redStroke.svg'
+            : '/assets/scoreboard/roundReasons/greenStroke.svg'
+        "/>
+      </div>
       <div class="team-icon-container">
         <img class="team-icon flip" src="{{ match.teams[1].teamUrl }}" />
       </div>
@@ -50,6 +64,9 @@
       <img class="vector3-right" src="/assets/scoreboard/overlay1.svg" />
       <img class="vector4-right" src="/assets/scoreboard/overlay2.svg" />
     </div>
+  </div>
+  <div class="team-round-reasons-box">
+    <img class="round-reason-vector" src="/assets/scoreboard/roundReasons/teamRoundReasons.svg" />
   </div>
   <div class="scoreboard-content-container" *ngIf="!isMinimal()">
     <div class="playerscore-wrapper">

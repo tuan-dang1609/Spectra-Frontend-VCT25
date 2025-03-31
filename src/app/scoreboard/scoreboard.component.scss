@@ -1,6 +1,21 @@
 @font-face {
   font-family: DIN Next W1G Regular;
   src: url("../../../public/assets/fonts/DINNextW1G/dinnextw1g.otf") format("opentype");
+}
+
+@font-face {
+  font-family: DIN Next W1G Medium;
+  src: url("../../../public/assets/fonts/DINNextW1G/dinnextw1g_medium.otf") format("opentype");
+}
+
+@font-face {
+  font-family: DIN Next W1G Bold;
+  src: url("../../../public/assets/fonts/DINNextW1G/dinnextw1g_bold.otf") format("opentype");
+}
+
+@font-face {
+  font-family: Tungsten;
+  src: url("../../../public/assets/fonts/Tungsten/Tungsten-Bold.ttf") format("truetype");
 } 
 
 .flip {
@@ -89,6 +104,9 @@
   position: relative;
   align-self: stretch;
   width: 100%;
+  top: 74px;
+  left: 0px;
+  z-index: 1;
 }
 
 .team-container {
@@ -102,6 +120,15 @@
   border-radius: 8px;
   overflow: visible;
   background: transparent;
+  left: 24px;
+}
+
+.team-container .flip {
+  left: 54px;
+}
+
+.team-container.flip .team-side-color.flip {
+  transform: rotateY(180deg) translateX(-88px); // Adjust -20px as needed
 }
 
 .money-spent-container {
@@ -118,6 +145,8 @@
   justify-content: flex-end;
   position: relative;
   flex: 0 0 auto;
+  left: 32px;
+  top: -2px;
   &-left {
     @extend .teaminfo-wrapper;
     align-items: flex-start;
@@ -125,6 +154,7 @@
   &-right {
     @extend .teaminfo-wrapper;
     align-items: flex-end;
+    transform: translateX(38px) scaleX(-1);  
   }
 }
 
@@ -132,12 +162,10 @@
   position: relative;
   width: fit-content;
   margin-top: -1px;
-  font-family: "Unbounded", Helvetica;
-  font-weight: 800;
+  font-family: "Tungsten", Helvetica;
   color: #ffffff;
-  font-size: 36px;
+  font-size: 46px;
   text-align: center;
-  letter-spacing: -0.72px;
   line-height: normal;
   white-space: nowrap;
   text-transform: uppercase;
@@ -145,13 +173,12 @@
 
 .money-spent-wrapper {
   margin-top: -1px;
-  font-family: "Unbounded", Helvetica;
+  font-family: "DIN Next W1G Bold", Helvetica;
   color: #ffffffe6;
-  font-size: 12px;
+  font-size: 26px;
   letter-spacing: 0;
   position: relative;
   width: fit-content;
-  font-weight: 700;
   text-align: center;
   line-height: normal;
   white-space: nowrap;
@@ -161,20 +188,20 @@
   position: relative;
   width: 12px;
   height: 12px;
+  top: -2px;
 }
 
 .money-spent-label-text {
   position: relative;
   width: fit-content;
   margin-top: -1px;
-  font-family: "Unbounded", Helvetica;
-  font-weight: 700;
-  color: #ffffff99;
-  font-size: 12px;
+  font-family: "DIN Next W1G Medium", Helvetica;
+  color: #ffffff58;
+  font-size: 22px;
   text-align: center;
-  letter-spacing: -0.24px;
   line-height: normal;
   white-space: nowrap;
+  top: -2px;
 }
 
 .scoreboard-content-container {
@@ -238,4 +265,16 @@
 .round-reasons {
   position: relative;
   bottom: 40px;
+}
+
+.team-round-reasons-box {
+  position: absolute;
+  top: 58px;
+  left: 12px;
+}
+
+.team-side-color {
+  position: absolute;
+  left: 84px;
+  top: -16px;
 }
