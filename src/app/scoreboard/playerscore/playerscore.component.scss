@@ -205,13 +205,11 @@
 
   display: flex;
   flex-direction: row;
-  gap: 12px;  /* Adjust as needed */
-  color: #fff; /* Remove `color: transparent` so text appears */
+  gap: 12px; 
+  color: #fff; 
 
-  /* Remove or override any conflicting width/color properties if needed */
   width: auto;
   justify-content: flex-start;
-  /* ...other properties... */
 
   &.minimal {
     @extend .KDA-tracker;

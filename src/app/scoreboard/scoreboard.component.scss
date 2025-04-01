@@ -128,7 +128,7 @@
 }
 
 .team-container.flip .team-side-color.flip {
-  transform: rotateY(180deg) translateX(-88px); // Adjust -20px as needed
+  transform: rotateY(180deg) translateX(-88px);
 }
 
 .money-spent-container {
@@ -222,31 +222,39 @@
 
 .graphics-left {
   position: absolute;
-  left: 10px; // X position
-  top: 100px; // Y position
+  left: 10px; 
+  top: 100px; 
   overflow: visible;
   
   .vector3-left,
   .vector4-left {
     position: absolute;
-    top: 0;
-    left: 0;
   }
+}
+
+.vector4-left {
+  position: absolute;
+  top: -1px; 
+  left: 0;
 }
 
 .graphics-right {
   transform: scaleX(-1);
   position: absolute;
-  left: 1872px; // X position
-  top: 100px; // Y position
+  left: 1872px; 
+  top: 100px; 
   overflow: visible;
   
   .vector3-right,
   .vector4-right {
     position: absolute;
-    top: 0;
-    left: 0;
   }
+}
+
+.vector4-right {
+  position: absolute;
+  top: -1px; 
+  left: 0;
 }
 
 .playerscore-wrapper {
@@ -276,5 +284,5 @@
 .team-side-color {
   position: absolute;
   left: 84px;
-  top: -16px;
+  top: -18px;
 }

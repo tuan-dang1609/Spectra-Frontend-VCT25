@@ -3,7 +3,7 @@
     <div class="team-info">
       {{ match.teams[0].teamTricode }}
     </div>
-    <!-- Bind classes for attacking or defending -->
+    <!-- bind classes for attacking or defending -->
     <div class="team-roundsWon"
          [ngClass]="{ 'attacking': match.teams[0].isAttacking, 'defending': !match.teams[0].isAttacking }">
       {{ match.teams[0].roundsWon }}
@@ -21,13 +21,12 @@
           />
         </div>
 
-        <!-- Show 6×6 square if next round (14) doesn't exist yet -->
+        <!-- Show 6×6 dot if next round (14) doesn't exist yet -->
         <div
           class="six-square"
           *ngIf="record.round === 13 && match.teams[0].roundRecord.length < 14"
         ></div>
 
-        <!-- SVG and centered reason image -->
         <div
           class="round-svg-container"
           *ngIf="record.type !== 'lost' && record.type !== 'upcoming'"
@@ -59,7 +58,6 @@
     <div class="team-info">
       {{ match.teams[1].teamTricode }}
     </div>
-    <!-- Same approach for the other team -->
     <div class="team-roundsWon"
          [ngClass]="{ 'attacking': match.teams[1].isAttacking, 'defending': !match.teams[1].isAttacking }">
       {{ match.teams[1].roundsWon }}
@@ -74,7 +72,6 @@
           <img src="{{ assets }}/scoreboard/roundReasons/sideSwap.svg" class="side-swap" />
         </div>
 
-        <!-- 2. Use greenWin/redWin.svg instead of gradients -->
         <div
           class="round-svg-container"
           [ngClass]="record.wasAttack ? 'attacker' : 'defender'"
@@ -89,7 +86,6 @@
           <img class="image" [src]="assets + '/roundWinReason/' + record.type + '.webp'" />
         </div>
 
-        <!-- Lost / Upcoming remain similar -->
         <div class="reason-color lost" *ngIf="record.type === 'lost'">
           <div class="round-number">{{ record.round }}</div>
         </div>
