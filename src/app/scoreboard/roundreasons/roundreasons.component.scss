@@ -78,7 +78,7 @@
   line-height: 40px;
   text-align: center;
   color: rgba(255, 255, 255, 0.8);
-  transform: translate(2px, 6px);
+  transform: translate(0.5px, 6px);
   font-size: 24px;
   word-spacing: -50px;
   font-family: "DIN Next W1G Bold", Helvetica;
@@ -195,12 +195,12 @@
 
 .round-wrapper {
   display: inline-flex;
-  margin-left: 1px;
-  margin-right: 1px;
+  margin-left: 0.5px;
+  margin-right: 0.5px;
 }
 
 .round-wrapper.lost-round {
-  margin-right: 7px;
+  margin-right: 6px;
   margin-left: 5px;
 }
 
@@ -230,7 +230,7 @@
   position: absolute;
   width: 6px;
   height: 6px;
-  transform: translate(15px, 24px);
+  transform: translate(24px, 24px);
   background-color: #fff;
   margin-right: 1px;
   align-self: center;
