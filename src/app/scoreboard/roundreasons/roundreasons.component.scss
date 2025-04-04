@@ -18,7 +18,8 @@
   align-self: stretch;
   background-color: transparent;
   border-radius: 6px;
-  top: 28px;
+  top: 20px;
+  left: -80px;
 }
 
 .left-team {
@@ -35,7 +36,7 @@
   max-width: 75px;
   min-width: 75px;
   color: white;
-  transform: translateX(-185px);
+  transform: translate(-45px, 5px);
   text-align: center;
   line-height: 40px;
   font-size: 20px;
@@ -72,14 +73,12 @@
   position: absolute;
   padding: 0px 0px;
   margin: 0px 0px;
-
   width: 24px;
   height: 40px;
   line-height: 40px;
-
   text-align: center;
   color: rgba(255, 255, 255, 0.8);
-
+  transform: translate(2px, 6px);
   font-size: 24px;
   word-spacing: -50px;
   font-family: "DIN Next W1G Bold", Helvetica;
@@ -88,13 +87,12 @@
 .round-number-upcoming {
   position: absolute;
   left: 0;
-  top: 24px;
-  width: 40px;
-
+  top: 30px;
+  width: 51px;
+  margin-right: 51px;
   line-height: 40px;
   text-align: center;
   color: white;
-
   font-size: 24px;
   word-spacing: -50px;
   font-family: "DIN Next W1G Bold", Helvetica;
@@ -177,13 +175,6 @@
   flex: 0 0 auto;
 }
 
-.line {
-  position: relative;
-  width: 1px;
-  height: 30px;
-  object-fit: cover;
-}
-
 .team-roundsWon {
   position: absolute;
   font-family: "DIN Next W1G Bold", Helvetica;
@@ -191,7 +182,8 @@
   text-align: center;
   line-height: 40px;
   word-spacing: -50px;
-  left: -100px;
+  left: 40px;
+  transform: translateY(5px);
 
   &.attacking {
     color: #E5375F;
@@ -203,8 +195,15 @@
 
 .round-wrapper {
   display: inline-flex;
+  margin-left: 1px;
   margin-right: 1px;
 }
+
+.round-wrapper.lost-round {
+  margin-right: 7px;
+  margin-left: 5px;
+}
+
 .side-swap-container {
   margin-right: 35px;
   display: inline-flex;
@@ -212,22 +211,26 @@
 }
 
 .side-swap-container-early {
-  margin-right: 51px;
+  margin-left: 20px;  // total of 51px
+  margin-right: 4px;
   display: inline-flex;
   align-items: center;
   position: relative;
 }
 
 .side-swap-container-late {
-  margin-right: 35px;
+  margin-left: 2px;  // total of 35px
+  margin-right: 4px;
   display: inline-flex;
   align-items: center;
   position: relative;
 }
 
 .six-square {
+  position: absolute;
   width: 6px;
   height: 6px;
+  transform: translate(15px, 24px);
   background-color: #fff;
   margin-right: 1px;
   align-self: center;
@@ -246,4 +249,24 @@
     height: 24px;
     transform: translate(-50%, -50%);
   }
+}
+
+.side-swap {
+  transform: translateY(26px);
+}
+
+.side-swap-container {
+  opacity: 0;
+}
+
+.current-round-indicator {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+}
+
+.current-round-svg {
+  transform: translate(7px, 32px);
 }

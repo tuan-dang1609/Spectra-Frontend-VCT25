@@ -34,19 +34,23 @@ export class TestingComponent implements AfterViewInit {
     this.matchData.teams[0] = this.team1.getData();
     this.matchData.teams[1] = this.team2.getData();
 
-    this.matchData.switchRound = 6;
+    this.matchData.switchRound = 13;
 
     this.matchData.teams[0].roundRecord = [
       { type: "detonated", wasAttack: true, round: 1 },
       { type: "lost", wasAttack: true, round: 2 },
       { type: "kills", wasAttack: true, round: 3 },
-      { type: "timeout", wasAttack: true, round: 4 },
+      { type: "detonated", wasAttack: true, round: 4 },
       { type: "lost", wasAttack: true, round: 5 },
-      { type: "kills", wasAttack: false, round: 6 },
-      { type: "lost", wasAttack: false, round: 7 },
-      { type: "defused", wasAttack: false, round: 8 },
-      { type: "lost", wasAttack: false, round: 9 },
-      { type: "lost", wasAttack: false, round: 10 },
+      { type: "kills", wasAttack: true, round: 6 },
+      { type: "lost", wasAttack: true, round: 7 },
+      { type: "detonated", wasAttack: true, round: 8 },
+      { type: "lost", wasAttack: true, round: 9 },
+      { type: "detonated", wasAttack: true, round: 10 },
+      { type: "kills", wasAttack: true, round: 11 },
+      { type: "upcoming", wasAttack: true, round: 12 },
+      { type: "upcoming", wasAttack: false, round: 13 },
+      { type: "upcoming", wasAttack: false, round: 14 },
     ];
 
     this.matchData.teams[1].roundRecord = [
@@ -55,11 +59,15 @@ export class TestingComponent implements AfterViewInit {
       { type: "lost", wasAttack: false, round: 3 },
       { type: "lost", wasAttack: false, round: 4 },
       { type: "kills", wasAttack: false, round: 5 },
-      { type: "lost", wasAttack: true, round: 6 },
-      { type: "detonated", wasAttack: true, round: 7 },
-      { type: "lost", wasAttack: true, round: 8 },
-      { type: "kills", wasAttack: true, round: 9 },
-      { type: "timeout", wasAttack: true, round: 10 },
+      { type: "lost", wasAttack: false, round: 6 },
+      { type: "defused", wasAttack: false, round: 7 },
+      { type: "lost", wasAttack: false, round: 8 },
+      { type: "timeout", wasAttack: false, round: 9 },
+      { type: "lost", wasAttack: false, round: 10 },
+      { type: "lost", wasAttack: false, round: 11 },
+      { type: "upcoming", wasAttack: false, round: 12 },
+      { type: "upcoming", wasAttack: true, round: 13 },
+      { type: "upcoming", wasAttack: true, round: 14 },
     ];
 
     this.matchData.tools = {

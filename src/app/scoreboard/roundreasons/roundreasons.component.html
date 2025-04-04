@@ -9,23 +9,37 @@
       {{ match.teams[0].roundsWon }}
     </div>
     <div class="reason-container">
-      <div *ngFor="let record of match.teams[0].roundRecord | slice: -14; let i = index" class="round-wrapper">
+      <div
+        *ngFor="let record of match.teams[0].roundRecord | slice: -14; let i = index"
+        class="round-wrapper"
+        [ngClass]="{ 'lost-round': record.type === 'lost' }"
+      >
         <!-- Show sideSwap, 51px margin before round 13; 35px after -->
         <div
-          [ngClass]="{ 'side-swap-container-early': i < 12, 'side-swap-container-late': i >= 12 }"
+          [ngClass]="{ 'side-swap-container-early': match.roundNumber < 13, 'side-swap-container-late': match.roundNumber >= 13 }"
           *ngIf="record.round === 13 && i > 0 && match.teams[0].roundRecord[i - 1]?.round === 12"
         >
-          <img
-            src="{{ assets }}/scoreboard/roundReasons/sideSwap.svg"
-            class="side-swap"
-          />
+          <img [src]="assets + '/scoreboard/roundReasons/sideSwap.svg'" class="side-swap" />
         </div>
 
-        <!-- Show 6×6 dot if next round (14) doesn't exist yet -->
+        <div
+          class="round-svg-container"
+          *ngIf="record.round === 13 && record.type !== 'lost' && record.type !== 'upcoming'"
+        >
+        </div>
+
         <div
           class="six-square"
-          *ngIf="record.round === 13 && match.teams[0].roundRecord.length < 14"
+          *ngIf="record.round === 14 && match.roundNumber < 14"
         ></div>
+
+        <!-- Normal round-14 content only if current round >= 14 -->
+        <div
+          class="round-svg-container"
+          *ngIf="record.round === 14 && match.roundNumber >= 14 && record.type !== 'lost' && record.type !== 'upcoming'"
+        >
+          <!-- ...round 14 content here... -->
+        </div>
 
         <div
           class="round-svg-container"
@@ -43,12 +57,28 @@
           />
         </div>
 
-        <div class="reason-color lost" *ngIf="record.type === 'lost'">
+        <div
+          class="reason-color lost"
+          *ngIf="
+            record.type === 'lost' &&
+            !(record.round === 14 && match.roundNumber < 14)
+          "
+        >
           <div class="round-number">{{ record.round }}</div>
         </div>
 
-        <div class="reason-color lost" *ngIf="record.type === 'upcoming'">
+        <div
+          class="reason-color lost"
+          *ngIf="
+            record.type === 'upcoming' &&
+            !(record.round === 14 && match.roundNumber < 14)
+          "
+        >
           <div class="round-number-upcoming">{{ record.round }}</div>
+          <!-- CurrentRound SVG in the center of the upcoming round -->
+          <div class="current-round-indicator" *ngIf="record.round === match.roundNumber">
+            <img [src]="assets + '/scoreboard/roundReasons/currentRound.svg'" class="current-round-svg" />
+          </div>
         </div>
       </div>
     </div>
@@ -63,7 +93,11 @@
       {{ match.teams[1].roundsWon }}
     </div>
     <div class="reason-container">
-      <div *ngFor="let record of match.teams[1].roundRecord | slice: -10; let i = index" class="round-wrapper">
+      <div
+        *ngFor="let record of match.teams[1].roundRecord | slice: -14; let i = index"
+        class="round-wrapper"
+        [ngClass]="{ 'lost-round': record.type === 'lost' }"
+      >
         <!-- 1. Insert sideSwap after round 12 -->
         <div
           class="side-swap-container"
@@ -83,14 +117,14 @@
               ? assets + '/scoreboard/roundReasons/redWin.svg'
               : assets + '/scoreboard/roundReasons/greenWin.svg'"
           />
-          <img class="image" [src]="assets + '/roundWinReason/' + record.type + '.webp'" />
+          <img
+            class="round-image"
+            [src]="assets + '/roundWinReason/' + record.type + '.webp'"
+          />
         </div>
 
         <div class="reason-color lost" *ngIf="record.type === 'lost'">
           <div class="round-number">{{ record.round }}</div>
-        </div>
-        <div class="reason-color lost" *ngIf="record.type === 'upcoming'">
-          <div class="round-number-upcoming">{{ record.round }}</div>
         </div>
       </div>
     </div>

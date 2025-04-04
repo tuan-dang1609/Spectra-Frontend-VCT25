@@ -9,6 +9,7 @@ interface recordType {
 interface matchType {
   switchRound: number;
   firstOtRound: number;
+  roundNumber: number;
   teams: [
     {
       teamTricode: string;
