@@ -34,4 +34,12 @@ interface matchType {
 export class RoundreasonsComponent {
   @Input() match!: matchType;
   public readonly assets: string = "../../../assets";
+
+  public readonly roundRecordLength: number = 14;
+
+  getReasonStartIndex(): number {
+    return this.match.roundNumber < this.roundRecordLength
+      ? 0
+      : this.match.roundNumber - this.roundRecordLength;
+  }
 }

@@ -89,7 +89,6 @@
   left: 0;
   top: 30px;
   width: 51px;
-  margin-right: 51px;
   line-height: 40px;
   text-align: center;
   color: white;
@@ -181,9 +180,10 @@
   font-size: 30px;
   text-align: center;
   line-height: 40px;
-  word-spacing: -50px;
+  word-spacing: 0px;
   left: 40px;
-  transform: translateY(5px);
+  transform: translate(-50%, 5px);
+  z-index: 2;
 
   &.attacking {
     color: #E5375F;
@@ -219,7 +219,7 @@
 }
 
 .side-swap-container-late {
-  margin-left: 2px;  // total of 35px
+  margin-left: 0.5px;  // total of 35px
   margin-right: 4px;
   display: inline-flex;
   align-items: center;
@@ -269,4 +269,11 @@
 
 .current-round-svg {
   transform: translate(7px, 32px);
+}
+
+.round-fade {
+  position: absolute;
+  top: 2%;
+  left: 13%;
+  z-index: 1;
 }
