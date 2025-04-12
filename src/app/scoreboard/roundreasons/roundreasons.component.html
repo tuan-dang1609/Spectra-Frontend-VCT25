@@ -78,7 +78,11 @@
             record.type === 'lost' &&
             !(record.round === 14 && match.roundNumber < 14)
           "
-        >
+          [ngStyle]="{
+            transform: record.round >= 13
+              ? 'translateX(4px)'
+              : 'translateX(0)'
+          }">
           <div class="round-number">{{ record.round }}</div>
         </div>
 
@@ -143,7 +147,14 @@
           />
         </div>
 
-        <div class="reason-color lost" *ngIf="record.type === 'lost'">
+        <div 
+        class="reason-color lost" 
+        *ngIf="record.type === 'lost'"
+        [ngStyle]="{
+          transform: record.round >= 13
+            ? 'translateX(4px)'
+            : 'translateX(0)'
+        }">
           <div class="round-number">{{ record.round }}</div>
         </div>
       </div>

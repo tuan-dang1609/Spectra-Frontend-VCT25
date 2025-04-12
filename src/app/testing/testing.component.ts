@@ -50,7 +50,8 @@ export class TestingComponent implements AfterViewInit {
       { type: "kills", wasAttack: true, round: 11 },
       { type: "lost", wasAttack: true, round: 12 },
       { type: "lost", wasAttack: false, round: 13 },
-      { type: "upcoming", wasAttack: false, round: 14 },
+      { type: "lost", wasAttack: false, round: 14 },
+      { type: "upcoming", wasAttack: false, round: 15 },
     ];
 
     this.matchData.teams[1].roundRecord = [
@@ -67,7 +68,8 @@ export class TestingComponent implements AfterViewInit {
       { type: "lost", wasAttack: false, round: 11 },
       { type: "kills", wasAttack: false, round: 12 },
       { type: "detonated", wasAttack: true, round: 13 },
-      { type: "upcoming", wasAttack: true, round: 14 },
+      { type: "detonated", wasAttack: true, round: 14 },
+      { type: "upcoming", wasAttack: true, round: 15 },
     ];
 
     this.matchData.tools = {
