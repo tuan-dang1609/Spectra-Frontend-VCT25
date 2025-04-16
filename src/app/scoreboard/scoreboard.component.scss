@@ -286,3 +286,19 @@
   left: 84px;
   top: -18px;
 }
+
+.scoreboard-container.non-auxiliary .abilities-display {
+  transform: translate(297px, 20px);
+}
+
+.scoreboard-container.non-auxiliary .shield-display {
+  transform: translate(382px, 1px);
+}
+
+.scoreboard-container.non-auxiliary .loadout-display {
+  transform: translate(480px, -18px);
+}
+
+.scoreboard-container.non-auxiliary .creds-display {
+  transform: translate(594px, -37px);
+}

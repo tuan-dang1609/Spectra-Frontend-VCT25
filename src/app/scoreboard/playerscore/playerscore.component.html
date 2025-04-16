@@ -1,4 +1,4 @@
-<div class="playerscore-component" [class]="color">
+<div class="playerscore-component" [class]="color" [class.non-auxiliary]="!showAuxScoreboard">
   <div class="playerinfo-container">
     <div class="agent-color">
       <img
@@ -52,7 +52,7 @@
         />
       </div>
     </div>
-    <div class="ultimate-container">
+    <div class="ultimate-container" [class.right]="side === 'right'">
       <app-ultimate
         [match]="match"
         [player]="player"

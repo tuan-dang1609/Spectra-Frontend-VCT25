@@ -1,4 +1,4 @@
-<div class="scoreboard-container">
+<div class="scoreboard-container" [class.non-auxiliary]="!showAuxScoreboard">
   <div class="scoreboard-header-container">
     <div class="team-container">
       <div class="team-side-color">
@@ -53,21 +53,36 @@
   <div class="scoreboard-label-text">
     <div class="player-display">PLAYER</div>
     <div class="kda-display">K       D       A</div>
-    <div class="abilities-display">ABILITIES</div>
+    <div class="abilities-display">
+      {{ showAuxScoreboard ? 'ABILITIES' : 'ULTIMATE' }}
+    </div>
     <div class="shield-display">SHIELD</div>
     <div class="loadout-display">LOADOUT</div>
     <div class="creds-display">CREDS</div>
   </div>
   <!-- loading full info playerscores -->
   <div class="scoreboard-box-container">
-    <div class="graphics-left">
+    <!-- Show auxiliary overlays if at least one player has auxiliary abilities and hideAuxiliary is false -->
+    <ng-container *ngIf="showAuxScoreboard; else noAuxScoreboard">
+      <div class="graphics-left">
         <img class="vector3-left" src="/assets/scoreboard/overlay1.svg" />
         <img class="vector4-left" src="/assets/scoreboard/overlay2.svg" />
-    </div>
-    <div class="graphics-right">
-      <img class="vector3-right" src="/assets/scoreboard/overlay1.svg" />
-      <img class="vector4-right" src="/assets/scoreboard/overlay2.svg" />
-    </div>
+      </div>
+      <div class="graphics-right">
+        <img class="vector3-right" src="/assets/scoreboard/overlay1.svg" />
+        <img class="vector4-right" src="/assets/scoreboard/overlay2.svg" />
+      </div>
+    </ng-container>
+    <ng-template #noAuxScoreboard>
+      <div class="graphics-left hideAuxiliary">
+        <img class="vector3-left" src="/assets/scoreboard/overlay1_nonAuxiliary.svg" />
+        <img class="vector4-left" src="/assets/scoreboard/overlay2_nonAuxiliary.svg" />
+      </div>
+      <div class="graphics-right hideAuxiliary">
+        <img class="vector3-right" src="/assets/scoreboard/overlay1_nonAuxiliary.svg" />
+        <img class="vector4-right" src="/assets/scoreboard/overlay2_nonAuxiliary.svg" />
+      </div>
+    </ng-template>
   </div>
   <div class="team-round-reasons-box">
     <img class="round-reason-vector" src="/assets/scoreboard/roundReasons/teamRoundReasons.svg" />

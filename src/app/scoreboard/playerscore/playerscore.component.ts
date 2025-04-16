@@ -31,6 +31,17 @@ export class PlayerscoreComponent {
   getAgentRole(agent: string): string {
     return AgentRoleService.getAgentRole(agent);
   }
+
+  get showAuxScoreboard(): boolean {
+    // Returns true if at least one player has auxiliary abilities and hideAuxiliary is false
+    return (
+      !this.hideAuxiliary &&
+      (
+        this.match.teams[0].players.some((p: any) => p.auxiliaryAvailable?.abilities) ||
+        this.match.teams[1].players.some((p: any) => p.auxiliaryAvailable?.abilities)
+      )
+    );
+  }
 }
 
 @Component({

@@ -352,3 +352,27 @@ app-abilities {
   margin: 0 4px;
   text-align: center;
 }
+
+.playerscore-component.non-auxiliary .ultimate-container {
+  transform: translate(-206px, -2px);
+}
+
+.playerscore-component.non-auxiliary .ultimate-container.right {
+  transform: translate(-206px, -2px) scaleX(-1);
+}
+
+.playerscore-component.non-auxiliary .shield-icon-container {
+  transform: translate(-161px, -2px);
+}
+
+.playerscore-component.non-auxiliary .weapon-icon-container {
+  transform: translate(-224px, 14px);
+}
+
+.playerscore-component.non-auxiliary .money-container {
+  transform: translate(-158px, -2px);
+}
+
+.ultimate-container.right {
+  transform: translate(-73px, -1.5px) scaleX(-1);
+}
