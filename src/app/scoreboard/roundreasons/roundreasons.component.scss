@@ -78,7 +78,7 @@
   line-height: 40px;
   text-align: center;
   color: rgba(255, 255, 255, 0.8);
-  transform: translate(0.5px, 6px);
+  transform: translate(1px, 6px);
   font-size: 24px;
   word-spacing: -50px;
   font-family: "DIN Next W1G Bold", Helvetica;
@@ -219,7 +219,7 @@
 }
 
 .side-swap-container-late {
-  margin-left: 0px;  // total of 35px
+  margin-left: -1px;  // total of 35px
   margin-right: 4px;
   display: inline-flex;
   align-items: center;
@@ -268,7 +268,7 @@
 }
 
 .current-round-svg {
-  transform: translate(7px, 32px);
+  transform: translate(7px, 31px);
 }
 
 .round-fade {

@@ -59,6 +59,16 @@
         <div
           class="round-svg-container"
           *ngIf="record.type !== 'lost' && record.type !== 'upcoming'"
+          [ngStyle]="{
+            transform: record.round === 13 || record.round > 14
+              ? 'translateX(3.5px)'
+              : 'translateX(0)'
+          }"
+          [ngStyle]="{
+            transform: record.round >= 14 && match.roundNumber > 14
+              ? 'translateX(-45px)'
+              : 'translateX(0)'
+          }"
         >
           <img
             class="round-svg"
@@ -79,8 +89,8 @@
             !(record.round === 14 && match.roundNumber < 14)
           "
           [ngStyle]="{
-            transform: record.round >= 13
-              ? 'translateX(4px)'
+            transform: record.round >= 14 && match.roundNumber > 14
+              ? 'translateX(-47.5px)'
               : 'translateX(0)'
           }">
           <div class="round-number">{{ record.round }}</div>
@@ -92,6 +102,11 @@
             record.type === 'upcoming' &&
             !(record.round === 14 && match.roundNumber < 14)
           "
+          [ngStyle]="{
+            transform: match.roundNumber > 14
+              ? 'translateX(-48px)'
+              : 'translateX(0)'
+          }"
         >
             <div class="round-number-upcoming">{{ record.round }}</div>
           <!-- CurrentRound SVG in the center of the upcoming round -->
@@ -131,7 +146,7 @@
           *ngIf="record.type !== 'lost' && record.type !== 'upcoming'"
           [ngStyle]="{
             transform: record.round >= 13
-              ? 'translateX(33px)'
+              ? 'translateX(30px)'
               : 'translateX(0)'
           }"
         >
@@ -152,7 +167,7 @@
         *ngIf="record.type === 'lost'"
         [ngStyle]="{
           transform: record.round >= 13
-            ? 'translateX(4px)'
+            ? 'translateX(28px)'
             : 'translateX(0)'
         }">
           <div class="round-number">{{ record.round }}</div>
