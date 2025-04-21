@@ -34,6 +34,18 @@
   z-index: 1;
 }
 
+.scoreboard-label-text.flipped {
+  position: absolute;
+  left: 298px;
+  top: 120px;
+  font-family: "DIN Next W1G Regular", sans-serif;
+  opacity: 1;
+  font-size: 16px;
+  text-align: center;
+  letter-spacing: 1px;
+  z-index: 1;
+}
+
 .player-display {
   color: white;
   opacity: 0.54;
@@ -69,6 +81,43 @@
   color: white;
   opacity: 0.54;
   transform: translate(754px, -37px);
+}
+
+.player-display-right {
+  color: white;
+  opacity: 0.54;
+  transform: translate(1420px, -37px);
+}
+
+.kda-display-right {
+  color: white;
+  opacity: 0.54;
+  transform: translate(1246px, -18px);
+  letter-spacing: 10px;
+}
+
+.abilities-display-right {
+  color: white;
+  opacity: 0.54;
+  transform: translate(1048px, 2px);
+}
+
+.shield-display-right {
+  color: white;
+  opacity: 0.54;
+  transform: translate(877px, 20px);
+}
+
+.loadout-display-right {
+  color: white;
+  opacity: 0.54;
+  transform: translate(780px, 39px);
+}
+
+.creds-display-right {
+  color: white;
+  opacity: 0.54;
+  transform: translate(664px, 58px);
 }
 
 .team-icon-container {

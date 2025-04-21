@@ -60,6 +60,16 @@
     <div class="loadout-display">LOADOUT</div>
     <div class="creds-display">CREDS</div>
   </div>
+  <div class="scoreboard-label-text flipped">
+    <div class="creds-display-right">CREDS</div>
+    <div class="loadout-display-right">LOADOUT</div>
+    <div class="shield-display-right">SHIELD</div>
+    <div class="abilities-display-right">
+      {{ showAuxScoreboard ? 'ABILITIES' : 'ULTIMATE' }}
+    </div>
+    <div class="kda-display-right">K       D       A</div>
+    <div class="player-display-right">PLAYER</div>
+  </div>
   <!-- loading full info playerscores -->
   <div class="scoreboard-box-container">
     <!-- Show auxiliary overlays if at least one player has auxiliary abilities and hideAuxiliary is false -->

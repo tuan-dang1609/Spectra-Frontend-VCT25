@@ -1,5 +1,9 @@
 @import url("https://fonts.googleapis.com/css2?family=Anton&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Source+Sans+3&display=swap");
+@font-face { 
+  font-family: DIN Next W1G Bold;
+  src: url("../../../public/assets/fonts/DINNextW1G/dinnextw1g_bold.otf") format("opentype");
+}
 .topscore {
   position: absolute;
   width: 601px;
@@ -27,8 +31,7 @@
   justify-content: center;
 }
 .round-number {
-  font-family: "Unbounded-Bold", Helvetica;
-  font-weight: 700;
+  font-family: "DIN Next W1g Bold", Helvetica;
   color: #fefeff99;
   font-size: 15px;
   text-align: center;
