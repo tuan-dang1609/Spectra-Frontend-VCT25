@@ -5,12 +5,12 @@ export class Config {
   sponsorImageRotateSpeed = 5000; // in milliseconds
 
   attackerColorPrimary = "#E02853";
-  attackerColorSecondary = "#ff4557";
-  attackerColorShieldCurrency = "#ff838f";
+  attackerColorSecondary = "#E02853";
+  attackerColorShieldCurrency = "#E02853";
 
   defenderColorPrimary = "#46F4CF";
-  defenderColorSecondary = "#61eab6";
-  defenderColorShieldCurrency = "#61eab6";
+  defenderColorSecondary = "#46F4CF";
+  defenderColorShieldCurrency = "#46F4CF";
 
   public constructor(init?: Partial<Config>) {
     Object.assign(this, init);

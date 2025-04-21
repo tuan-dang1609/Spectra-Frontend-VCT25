@@ -9,7 +9,38 @@
       src="{{ assets }}/agents/{{ player.agentInternal }}{{ player.iconNameSuffix }}Icon.webp"
     />
   </div>
-  <div class="player-card">
+  <div class="player-card" [ngClass]="{ observed: player.isObserved, 'dead': !player.isAlive }">
+    <div id="aaa">
+      <svg class="aab">
+        <linearGradient id="aab" spreadMethod="pad" x1="0.366" x2="0" y1="0.5" y2="0.5">
+          <stop offset="0" stop-color="#292929" stop-opacity="0.71"></stop>
+          <stop offset="0.4038" stop-color="#615c46" stop-opacity="0.749"></stop>
+          <stop offset="1" stop-color="#cab857" stop-opacity="0.29"></stop>
+        </linearGradient>
+        <rect id="aab" rx="1" ry="1" x="0" y="0" width="348" height="37">
+        </rect>
+      </svg>
+      <svg class="aac">
+        <linearGradient id="aac" spreadMethod="pad" x1="0" x2="0.526" y1="0.77" y2="0.765">
+          <stop offset="0" stop-color="#b3a23e" stop-opacity="0.439"></stop>
+          <stop offset="1" stop-color="#292929" stop-opacity="0.361"></stop>
+        </linearGradient>    
+        <rect id="aac" rx="2" ry="2" x="0" y="0" width="350" height="95">
+        </rect>
+      </svg>
+      <svg class="aad">
+        <rect id="aad" rx="2" ry="2" x="0" y="0" width="350" height="95">
+        </rect>
+      </svg>
+      <svg class="player-health-bg">
+        <linearGradient id="aaf" spreadMethod="pad" x1="0.779" x2="0" y1="0.5" y2="0.5">
+          <stop offset="0" stop-color="#2e2e2e" stop-opacity="1"></stop>
+          <stop offset="1" stop-color="#808080" stop-opacity="0"></stop>
+        </linearGradient>
+        <rect id="player-health-bg" rx="0" ry="0" x="0" y="0" width="348" height="7">
+        </rect>
+      </svg>
+    </div>
     <div
       class="player-info"
       [class]="
@@ -22,6 +53,10 @@
     >
       <div class="spectator-icon-container" [class]="side" *ngIf="player.isObserved">
         <img class="spectator-icon" src="{{ assets }}/misc/ObserverEye.svg" />
+        <svg class="spectator-box">
+          <rect id="spectator-box" rx="1" ry="1" x="0" y="0" width="25" height="95">
+          </rect>
+        </svg>
       </div>
       <div class="info-container">
         <app-abilities
@@ -52,7 +87,7 @@
             <div class="health-amount" [class]="color" [@healthChange]="player.health">
               {{ player.health }}
             </div>
-            <app-shield-icon
+            <app-shield-icon [class.right]="side === 'right'"
               [type]="player.armorName"
               [side]="color"
               [@healthChange]="player.armorName"
@@ -66,8 +101,8 @@
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              width="9"
-              height="8"
+              width="13"
+              height="13"
               viewBox="0 0 9 8"
               fill="none"
             >
@@ -75,13 +110,12 @@
                 fill-rule="evenodd"
                 clip-rule="evenodd"
                 d="M6.04745 6.92766L7.11979 8L8.25098 6.86881L7.17863 5.79647C7.50002 5.27382 7.68538 4.65856 7.68538 4C7.68538 3.34144 7.50002 2.72618 7.17863 2.20353L8.25098 1.13119L7.11979 0L6.04745 1.07234C5.5248 0.750952 4.90953 0.565594 4.25098 0.565594C3.59242 0.565594 2.97715 0.750952 2.45451 1.07234L1.38216 0L0.250977 1.13119L1.32332 2.20353C1.00193 2.72618 0.81657 3.34144 0.81657 4C0.81657 4.65856 1.00193 5.27382 1.32332 5.79647L0.250977 6.86881L1.38216 8L2.45451 6.92766C2.97715 7.24905 3.59242 7.43441 4.25098 7.43441C4.90953 7.43441 5.5248 7.24905 6.04745 6.92766ZM4.25106 6.37761C5.5642 6.37761 6.62872 5.3131 6.62872 3.99995C6.62872 2.6868 5.5642 1.62228 4.25106 1.62228C2.93791 1.62228 1.87339 2.6868 1.87339 3.99995C1.87339 5.3131 2.93791 6.37761 4.25106 6.37761Z"
-                [attr.fill]="colorHex"
+                [attr.fill]="side === 'left' ? '#FFFFFF' : '#FFFFFF'"
               />
             </svg>
             <div
               class="currency-title"
               [class]="color"
-              [style.font-size.px]="player.auxiliaryAvailable.health ? 11 : 14"
             >
               {{ player.money }}
             </div>
@@ -99,7 +133,7 @@
       <div
         class="health-bar"
         [class]="color"
-        [style.width.%]="player.health * 0.88 + 12"
+        [style.width.%]="182 * (player.health / 100)"
         [@deathAnimation]="player.isAlive"
         *ngIf="player.isAlive"
       ></div>
@@ -116,24 +150,29 @@
           src="{{ assets }}/weapons/{{ player.highestWeapon }}Killfeed.webp"
         />
       </div>
-      <div class="ultimate-tracker-container">
-        <div class="ultimate-tracker" [class]="side" *ngIf="!player.ultReady" [@ultPipAnimation]>
-          <div class="pip-ultimate-full" *ngFor="let i of numSequence(player.currUltPoints)"></div>
-          <div
-            class="pip-ultimate"
-            *ngFor="let i of numSequence(player.maxUltPoints - player.currUltPoints)"
-          ></div>
-        </div>
-        <div class="ultimate-tracker" [class]="side" *ngIf="player.ultReady" [@ultImageAnimation]>
-          <img
-            class="ultimate-full-image"
-            src="{{ assets }}/ultimates/{{ player.agentInternal }}Ultimate.webp"
-          />
-        </div>
-        <div class="spike-icon-wrapper">
-          <img class="spike-icon" *ngIf="player.hasSpike" src="{{ assets }}/misc/Spike_Icon.svg" />
-        </div>
+    </div>
+    <div class="ultimate-tracker-container" [class]="(player.isAlive ? 'alive' : 'dead')">
+      <div class="ultimate-container" [class.right]="side === 'right'">
+        <app-ultimate
+          [match]="match"
+          [player]="player"
+          [color]="
+          match.teams[0].players.includes(player)
+          ? match.teams[0].isAttacking
+            ? 'attacker'
+            : 'defender'
+          : match.teams[1].isAttacking
+          ? 'attacker'
+          : 'defender'
+          "
+          [hideAuxiliary]="hideAuxiliary">
+        </app-ultimate>
       </div>
     </div>
   </div>
+  <div class="spike-icon-wrapper">
+      <img class="spike-icon" *ngIf="player.hasSpike" src="{{ assets }}/misc/Spike_Icon.svg" />
+      <span *ngIf="player.hasSpike" class="spike-bg"></span>
+  </div>
 </div>
+

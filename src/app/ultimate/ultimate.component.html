@@ -5,7 +5,9 @@
     width="80"
     height="80"
     viewBox="0 0 80 80"
-    [ngClass]="{ 'flip-ult-dashes': side === 'right' }"
+    [ngClass]="{ 'flip-ult-dashes': side === 'right',
+      'dead': !player.isAlive
+     }"
   >
     <defs>
       <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
@@ -38,7 +40,12 @@
       <ng-container *ngFor="let dash of dashes">
         <path
           [attr.d]="computePath(dash.angle)"
-          [attr.stroke]="dash.collected ? (color === 'attacker' ? config.attackerColorPrimary : config.defenderColorPrimary) : 'rgba(163,163,163,0.5)'"
+          [ngClass]="{ collected: dash.collected }"
+          [attr.stroke]="
+            dash.collected
+              ? (player.isAlive ? (color === 'attacker' ? config.attackerColorPrimary : config.defenderColorPrimary) : null)
+              : 'rgba(163,163,163,0.5)'
+          "
           stroke-width="3"
           fill="none"
           stroke-linecap="butt"

@@ -32,7 +32,7 @@
             'side-swap-container-early': match.roundNumber < match.switchRound,
             'side-swap-container-late': match.roundNumber >= match.switchRound
           }"
-          *ngIf="record.round === match.switchRound || record.round === match.firstOtRound"
+          *ngIf="record.round === match.switchRound"
         >
           <img [src]="assets + '/scoreboard/roundReasons/sideSwap.svg'" class="side-swap" />
         </div>
@@ -65,7 +65,7 @@
               : 'translateX(0)'
           }"
           [ngStyle]="{
-            transform: record.round >= 14 && match.roundNumber > 14
+            transform: record.round >= 13 && match.roundNumber >= 14
               ? 'translateX(-45px)'
               : 'translateX(0)'
           }"
@@ -103,7 +103,7 @@
             !(record.round === 14 && match.roundNumber < 14)
           "
           [ngStyle]="{
-            transform: match.roundNumber > 14
+            transform: match.roundNumber >= 14
               ? 'translateX(-48px)'
               : 'translateX(0)'
           }"
@@ -167,7 +167,7 @@
         *ngIf="record.type === 'lost'"
         [ngStyle]="{
           transform: record.round >= 13
-            ? 'translateX(28px)'
+            ? 'translateX(29px)'
             : 'translateX(0)'
         }">
           <div class="round-number">{{ record.round }}</div>

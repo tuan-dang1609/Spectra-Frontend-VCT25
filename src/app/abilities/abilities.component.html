@@ -4,21 +4,39 @@
   *ngIf="player.isAlive && player.auxiliaryAvailable.abilities && !hideAuxiliary"
   [@deathAnimation]="player.isAlive"
 >
-  <img
-    class="ability-icon"
-    src="{{ assets }}/grenades/{{ player.agentInternal }}Grenade.webp"
-    [class]="getAvailability(player.abilities?.grenade || 0)"
-  />
+  <div class="ability-wrapper">
+    <img
+      class="ability-icon"
+      src="{{ assets }}/grenades/{{ player.agentInternal }}Grenade.webp"
+      [class]="getAvailability(player.abilities?.grenade || 0)"
+    />
+    <span
+        class="ability-dot"
+        [ngClass]="{ unavailable: (player.abilities?.grenade || 0) === 0 }"
+      ></span>
+  </div>
+  <div class="ability-wrapper">
   <img
     class="ability-icon"
     src="{{ assets }}/ability1/{{ player.agentInternal }}Ability1.webp"
     [class]="getAvailability(player.abilities?.ability1 || 0)"
   />
+  <span
+      class="ability-dot"
+      [ngClass]="{ unavailable: (player.abilities?.ability1 || 0) === 0 }"
+    ></span>
+  </div>
+  <div class="ability-wrapper">
   <img
     class="ability-icon"
     src="{{ assets }}/ability2/{{ player.agentInternal }}Ability2.webp"
     [class]="getAvailability(player.abilities?.ability2 || 0)"
   />
+  <span
+      class="ability-dot"
+      [ngClass]="{ unavailable: (player.abilities?.ability2 || 0) === 0 }"
+    ></span>
+  </div>
 </div>
 
 <div
@@ -32,9 +50,15 @@
   "
   [@availableWhileDead]="!player.isAlive"
 >
-  <img
-    class="ability-icon available-while-dead"
-    src="{{ assets }}/ability2/{{ player.agentInternal }}Ability2.webp"
-    [class]="getAvailability(player.abilities?.ability2 || 0)"
-  />
+  <div class="ability-wrapper">
+    <img
+      class="ability-icon available-while-dead"
+      src="{{ assets }}/ability2/{{ player.agentInternal }}Ability2.webp"
+      [class]="getAvailability(player.abilities?.ability2 || 0)"
+    />
+    <span
+        class="ability-dot"
+        [ngClass]="{ unavailable: (player.abilities?.ability2 || 0) === 0 }"
+      ></span>
+  </div>
 </div>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_1" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 202.7 255.6">
+  <!-- Generator: Adobe Illustrator 29.4.0, SVG Export Plug-In . SVG Version: 2.1.0 Build 152)  -->
+  <defs>
+    <style>
+      .st0 {
+        fill: #231f20;
+        opacity: .9;
+      }
+
+      .st0, .st1, .st2 {
+        isolation: isolate;
+      }
+
+      .st3 {
+        fill: none;
+        stroke: #46f4cf;
+        stroke-miterlimit: 10;
+        stroke-width: 7px;
+      }
+
+      .st2 {
+        fill: #fff;
+        font-family: DINNextW1G-Bold, 'DIN Next W1G';
+        font-size: 150.4px;
+        font-weight: 700;
+      }
+    </style>
+  </defs>
+  <path class="st0" d="M184.3,195.6l-73.4,53.9c-5.8,3.8-13.2,3.8-19,0l-73.4-53.9c-9.3-6.1-14.9-16.4-14.9-27.5v-97.1c0-5.9,3-11.3,7.9-14.5L91.9,6.5c5.8-3.8,13.2-3.8,19,0l80.5,49.8c4.9,3.2,7.9,8.7,7.9,14.6v97.1c0,11.1-5.6,21.5-14.9,27.5h0Z"/>
+  <g class="st1">
+    <text class="st2" transform="translate(17.7 175)"><tspan x="0" y="0">25</tspan></text>
+  </g>
+  <path class="st3" d="M184.3,195.3l-73.4,53.9c-5.8,3.8-13.2,3.8-19,0l-73.4-53.9c-9.3-6.1-14.9-16.4-14.9-27.5v-97.1c0-5.9,3-11.3,7.9-14.5L91.9,6.3c5.8-3.8,13.2-3.8,19,0l80.5,49.8c4.9,3.2,7.9,8.7,7.9,14.6v97.1c0,11.1-5.6,21.5-14.9,27.5h0Z"/>
+</svg>

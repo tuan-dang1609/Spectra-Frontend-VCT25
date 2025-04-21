@@ -95,7 +95,7 @@ export class EndroundComponent implements OnChanges, OnInit, AfterViewChecked {
     this.riveInstance = new Rive({
       src: "/assets/roundEnd/round_win.riv",
       canvas: tempCanvas, // Use the temporary canvas
-      autoplay: false, // Do not autoplay during preload
+      autoplay: true, // Do not autoplay during preload
       onLoad: () => {
         console.log("Rive animation preloaded successfully.");
       },

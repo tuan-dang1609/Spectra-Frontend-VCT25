@@ -93,12 +93,17 @@ export class UltimateComponent implements AfterViewInit, OnChanges, DoCheck {
 
     const dash = document.createElementNS("http://www.w3.org/2000/svg", "path");
     dash.setAttribute("d", pathData);
+
+    // Use white for collected dashes if player is dead
+    const isDead = this.player && this.player.isAlive === false;
     dash.setAttribute(
       "stroke",
       collected
-        ? this.color === "attacker"
-          ? this.config.attackerColorPrimary
-          : this.config.defenderColorPrimary
+        ? isDead
+          ? "#fff"
+          : this.color === "attacker"
+            ? this.config.attackerColorPrimary
+            : this.config.defenderColorPrimary
         : "rgba(163, 163, 163, 0.5)"
     );
     dash.setAttribute("stroke-width", "3");

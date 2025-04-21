@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200.86 255.13">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #231f20;
+        opacity: .85;
+      }
+
+      .cls-2 {
+        fill: #fff;
+        font-family: DINNextW1G-Bold, 'DIN Next W1G';
+        font-size: 150.4px;
+        font-weight: 700;
+      }
+    </style>
+  </defs>
+  <path class="cls-1" d="M185.55,196.87l-75.38,55.37c-5.92,3.86-13.56,3.86-19.49,0L15.31,196.87C5.76,190.64,0,180.01,0,168.61v-99.64c0-6.03,3.04-11.64,8.09-14.94L90.68,2.9c5.92-3.86,13.56-3.86,19.49,0l82.6,51.14c5.05,3.29,8.09,8.91,8.09,14.94v99.64c0,11.4-5.76,22.03-15.31,28.26Z"/>
+  <text class="cls-2" transform="translate(58.37 173.56)"><tspan x="0" y="0">0</tspan></text>
+</svg>

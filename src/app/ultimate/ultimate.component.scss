@@ -34,6 +34,10 @@ body {
     transform: translate(-50%, -50%);
 }
 
+.ultimate-dashed-circle.dead path.collected {
+  stroke: #fff !important;
+}
+
 /* Centered Icon */
 .ultimate-icon {
     position: absolute;

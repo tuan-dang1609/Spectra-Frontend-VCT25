@@ -23,6 +23,7 @@ export class TestingComponent implements AfterViewInit {
   backgroundClass = "bg1";
   backgroundClassId = 1;
 
+
   constructor(private route: ActivatedRoute) {
     this.route.queryParams.subscribe((params) => {
       this.hideAuxiliary = params["hideAuxiliary"] != undefined;
@@ -144,7 +145,7 @@ export class TestingComponent implements AfterViewInit {
   updateRoundNumber(): void {
     const a = this.team1.teamObject.roundsWon;
     const b = this.team2.teamObject.roundsWon;
-    this.matchData.roundNumber = a + b;
+    this.matchData.roundNumber = 1 + (a + b);
   }
 
   plantSpike(): void {
