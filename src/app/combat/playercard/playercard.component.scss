@@ -267,6 +267,19 @@
   flex: 0 0 auto;
   left: 180px;
   top: -25px;
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+
+  &.shifted {
+    transform: translateX(38px);
+  }
+
+  &.right.shifted {
+    transform: translateX(38px) scaleX(-1);
+  }
+
+  &.right:not(.shifted) {
+    transform: translateX(0px) scaleX(-1);
+  }
 }
 
 .valorant-credits {

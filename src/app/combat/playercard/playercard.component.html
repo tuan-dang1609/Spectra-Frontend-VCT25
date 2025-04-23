@@ -71,6 +71,11 @@
             [side]="color"
             [@healthChange]="player.armorName"
             *ngIf="player.isAlive && (!player.auxiliaryAvailable.health || hideAuxiliary)"
+            [ngStyle]="{
+              transform: 
+                'translate(290px, 48px) scale(1.2)' + 
+                (side === 'right' ? ' scaleX(-1)' : '')
+            }"
           ></app-shield-icon>
           <div
             class="health-container"
@@ -97,7 +102,9 @@
           <div
             class="currency-container"
             [class]="side"
-            *ngIf="player.scoreboardAvailable || player.auxiliaryAvailable.scoreboard"
+            [ngClass]="{
+              'shifted': !player.auxiliaryAvailable.health || hideAuxiliary
+            }"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -116,6 +123,11 @@
             <div
               class="currency-title"
               [class]="color"
+              [ngStyle]="{
+                transform: !player.auxiliaryAvailable.health || !hideAuxiliary
+                  ? 'translateY(1px)'
+                  : 'translateY(0px)'
+              }"
             >
               {{ player.money }}
             </div>
