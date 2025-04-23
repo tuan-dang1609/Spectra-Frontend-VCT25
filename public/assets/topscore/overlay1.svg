@@ -1,9 +1,11 @@
-<svg width="353" height="89" viewBox="0 0 353 89" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path fill-rule="evenodd" clip-rule="evenodd" d="M353 7.97875V0H226V65H126V0H0V7.97875H65.024C68.879 7.97875 72.424 10.0916 74.259 13.4825L106.188 72.5H152L160.5 81H169.672L175.859 88.211L181.828 81H192L200.5 72.5H245.797L277.771 13.4773C279.607 10.0893 283.15 7.97875 287.004 7.97875H353Z" fill="url(#paint0_radial_0_3)"/>
-<defs>
-<radialGradient id="paint0_radial_0_3" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(176 34) rotate(-179.736) scale(217.002 868.393)">
-<stop offset="0.39075" stop-color="#0F1923"/>
-<stop offset="0.801481" stop-color="#0F1923" stop-opacity="0"/>
-</radialGradient>
-</defs>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_1" xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 353 88.2">
+  <!-- Generator: Adobe Illustrator 29.4.0, SVG Export Plug-In . SVG Version: 2.1.0 Build 152)  -->
+  <defs>
+    <radialGradient id="radial-gradient" cx="98.5" cy="-.2" fx="98.5" fy="-.2" r="1" gradientTransform="translate(21550.4 -35.2) rotate(-179.7) scale(217 868.4)" gradientUnits="userSpaceOnUse">
+      <stop offset=".5" stop-color="#0f1923"/>
+      <stop offset=".8" stop-color="#0f1923" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <path d="M353,8V0h-127v65h-100V0H0v8h65c3.8,0,7.4,2.1,9.2,5.5l31.9,59h45.8l8.5,8.5h9.2l6.2,7.2,6-7.2h10.2l8.5-8.5h45.3l32-59c1.8-3.4,5.4-5.5,9.2-5.5,0,0,66,0,66,0Z" fill="url(#radial-gradient)" fill-rule="evenodd"/>
 </svg>

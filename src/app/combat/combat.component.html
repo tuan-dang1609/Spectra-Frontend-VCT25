@@ -1,6 +1,11 @@
 <!-- Loading non-minimal versions of playercard component-->
 <div class="frame-2" *ngIf="!isMinimal()">
-  <div class="playercards-leftteam">
+  <div
+    class="playercards-leftteam"
+    *ngIf="!hidePlayercards"
+    [@slideInLeft]="playercardAnimationState"
+    (@slideInLeft.done)="onAnimationDone($event)"
+  >
     <app-playercard
       *ngFor="let player of match.teams[0].players; trackBy: trackByPlayerId"
       [match]="match"
@@ -10,7 +15,12 @@
       side="left"
     />
   </div>
-  <div class="playercards">
+  <div
+    class="playercards"
+    *ngIf="!hidePlayercards"
+    [@slideInRight]="playercardAnimationState"
+    (@slideInRight.done)="onAnimationDone($event)"
+  >
     <app-playercard
       *ngFor="let player of match.teams[1].players; trackBy: trackByPlayerId"
       [match]="match"

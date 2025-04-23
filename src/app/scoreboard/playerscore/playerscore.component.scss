@@ -107,6 +107,13 @@
   }
 }
 
+.playername-container.right .playername-text {
+  left: -6px;
+  width: 100%;
+  text-align: right;
+  justify-content: flex-end;
+}
+
 .agentname-text {
   font-family: "Montserrat", Helvetica;
   font-weight: 700;

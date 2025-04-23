@@ -1,4 +1,10 @@
-<div class="scoreboard-container" [class.non-auxiliary]="!showAuxScoreboard">
+<div
+  class="scoreboard-container"
+  [class.non-auxiliary]="!showAuxScoreboard"
+  *ngIf="showScoreboard"
+  [@slideUpDown]="scoreboardAnimationState"
+  (@slideUpDown.done)="onAnimationDone($event)"
+>
   <div class="scoreboard-header-container">
     <div class="team-container">
       <div class="team-side-color">

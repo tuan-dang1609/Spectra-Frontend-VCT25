@@ -1,4 +1,4 @@
-import { Component, Input } from "@angular/core";
+import { Component, Input, OnChanges, SimpleChanges } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { trigger, transition, style, animate } from '@angular/animations';
 
@@ -7,23 +7,42 @@ import { trigger, transition, style, animate } from '@angular/animations';
   templateUrl: "./scoreboard.component.html",
   styleUrls: ["./scoreboard.component.scss"],
   animations: [
-    trigger('slideUp', [
-      transition(':enter', [
-        style({ transform: 'translateY(100%)', opacity: 0 }),
-        animate('400ms cubic-bezier(0.4,0,0.2,1)', style({ transform: 'translateY(0)', opacity: 1 }))
+    trigger("slideUpDown", [
+      transition(":enter", [
+        style({ transform: "translateY(100vh)", opacity: 0 }),
+        animate("500ms cubic-bezier(0.4,0,0.2,1)", style({ transform: "translateY(0)", opacity: 1 })),
       ]),
-      transition(':leave', [
-        animate('400ms cubic-bezier(0.4,0,0.2,1)', style({ transform: 'translateY(100%)', opacity: 0 }))
-      ])
-    ])
-  ]
+      transition(":leave", [
+        animate("500ms cubic-bezier(0.4,0,0.2,1)", style({ transform: "translateY(100vh)", opacity: 0 })),
+      ]),
+    ]),
+  ],
 })
-export class ScoreboardComponent {
+export class ScoreboardComponent implements OnChanges {
+  @Input() roundPhase!: string;
   @Input() match!: any;
   @Input() player!: any;
   @Input() hideAuxiliary = false;
 
+  showScoreboard = false;
+
   constructor(private route: ActivatedRoute) {}
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes["roundPhase"] && changes["roundPhase"].currentValue === "shopping") {
+      this.showScoreboard = true;
+    }
+  }
+
+  onAnimationDone(event: any) {
+    if (event.toState === "void" || event.toState === "out") {
+      this.showScoreboard = false;
+    }
+  }
+
+  get scoreboardAnimationState(): string {
+    return this.roundPhase === "shopping" ? "in" : "out";
+  }
 
   isMinimal(): boolean {
     if (this.route.snapshot.data["minimal"]) {

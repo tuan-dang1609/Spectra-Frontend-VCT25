@@ -1,4 +1,4 @@
-<div class="player-container" [class]="side">
+<div class="player-container" [class]="side" [class.dead]="!player.isAlive">
   <!-- <div class="rank-icon-container" *ngIf="match.ranksEnabled && match.ranksByName[player.name]">
         <img class="rank-icon" [class]="side" src="{{assets}}/ranks/{{match.ranksByName[player.name]}}_Rank.webp" />
     </div> -->
@@ -11,7 +11,7 @@
   </div>
   <div class="player-card" [ngClass]="{ observed: player.isObserved, 'dead': !player.isAlive }">
     <div id="aaa">
-      <svg class="aab">
+      <svg class="aab" [ngClass]="{ dead: !player.isAlive }">
         <linearGradient id="aab" spreadMethod="pad" x1="0.366" x2="0" y1="0.5" y2="0.5">
           <stop offset="0" stop-color="#292929" stop-opacity="0.71"></stop>
           <stop offset="0.4038" stop-color="#615c46" stop-opacity="0.749"></stop>
@@ -20,7 +20,7 @@
         <rect id="aab" rx="1" ry="1" x="0" y="0" width="348" height="37">
         </rect>
       </svg>
-      <svg class="aac">
+      <svg class="aac" [ngClass]="{ dead: !player.isAlive }">
         <linearGradient id="aac" spreadMethod="pad" x1="0" x2="0.526" y1="0.77" y2="0.765">
           <stop offset="0" stop-color="#b3a23e" stop-opacity="0.439"></stop>
           <stop offset="1" stop-color="#292929" stop-opacity="0.361"></stop>
@@ -32,7 +32,7 @@
         <rect id="aad" rx="2" ry="2" x="0" y="0" width="350" height="95">
         </rect>
       </svg>
-      <svg class="player-health-bg">
+      <svg class="player-health-bg" [ngClass]="{ dead: !player.isAlive }">
         <linearGradient id="aaf" spreadMethod="pad" x1="0.779" x2="0" y1="0.5" y2="0.5">
           <stop offset="0" stop-color="#2e2e2e" stop-opacity="1"></stop>
           <stop offset="1" stop-color="#808080" stop-opacity="0"></stop>

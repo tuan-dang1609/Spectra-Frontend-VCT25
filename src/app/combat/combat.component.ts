@@ -1,16 +1,72 @@
-import { Component, Input } from "@angular/core";
+import { Component, Input, OnChanges, SimpleChanges } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
+import { trigger, transition, style, animate } from "@angular/animations";
 
 @Component({
   selector: "app-combat",
   templateUrl: "./combat.component.html",
   styleUrls: ["./combat.component.scss"],
+  animations: [
+    trigger("slideInLeft", [
+      transition("void => in", [
+        style({ transform: "translateX(-100vw)", opacity: 0 }),
+        animate("500ms cubic-bezier(0.4,0,0.2,1)", style({ transform: "translateX(0)", opacity: 1 })),
+      ]),
+      transition("in => out", [
+        animate("500ms cubic-bezier(0.4,0,0.2,1)", style({ transform: "translateX(-100vw)", opacity: 0 })),
+      ]),
+      transition("static => out", [
+        animate("500ms cubic-bezier(0.4,0,0.2,1)", style({ transform: "translateX(-100vw)", opacity: 0 })),
+      ]),
+      // No animation for static state
+    ]),
+    trigger("slideInRight", [
+      transition("void => in", [
+        style({ transform: "translateX(100vw)", opacity: 0 }),
+        animate("500ms cubic-bezier(0.4,0,0.2,1)", style({ transform: "translateX(0)", opacity: 1 })),
+      ]),
+      transition("in => out", [
+        animate("500ms cubic-bezier(0.4,0,0.2,1)", style({ transform: "translateX(100vw)", opacity: 0 })),
+      ]),
+      transition("static => out", [
+        animate("500ms cubic-bezier(0.4,0,0.2,1)", style({ transform: "translateX(100vw)", opacity: 0 })),
+      ]),
+      // No animation for static state
+    ]),
+  ],
 })
-export class CombatComponent {
+export class CombatComponent implements OnChanges {
   @Input() match!: any;
   @Input() hideAuxiliary = false;
+  @Input() roundPhase!: string;
+  hidePlayercards = false;
 
   constructor(private route: ActivatedRoute) {}
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes["roundPhase"] && changes["roundPhase"].currentValue === "combat") {
+      this.hidePlayercards = false;
+    }
+  }
+
+  onAnimationDone(event: any) {
+    if (event.toState === 'out') {
+      this.hidePlayercards = true;
+    }
+    if (event.toState === 'in') {
+      this.hidePlayercards = false;
+    }
+  }
+
+  get playercardAnimationState(): string {
+    if (this.roundPhase === "combat") {
+      return "in";
+    }
+    if (this.roundPhase === "shopping") {
+      return "out";
+    }
+    return "static";
+  }
 
   isMinimal(): boolean {
     if (this.route.snapshot.data["minimal"]) {

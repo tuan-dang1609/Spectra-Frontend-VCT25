@@ -213,6 +213,10 @@
   right: 3px;
 }
 
+.spectator-icon-container.right {
+  transform: translateX(0px);
+}
+
 .spectator-icon {
   width: 18px;
   aspect-ratio: 1;

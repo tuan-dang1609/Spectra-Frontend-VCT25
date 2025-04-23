@@ -3,15 +3,14 @@
   <app-topscore [match]="match" />
   <app-endround *ngIf="match.roundPhase !== 'shopping'" [match]="match" [@fadeFast] />
   <app-combat
-    *ngIf="match.roundPhase !== 'shopping'"
     [match]="match"
     [hideAuxiliary]="hideAuxiliary"
-    [@fade]
+    [roundPhase]="match.roundPhase"
   />
   <app-scoreboard
-    *ngIf="match.roundPhase === 'shopping'"
     [match]="match"
     [hideAuxiliary]="hideAuxiliary"
-    [@fade]
-  />
+    [roundPhase]="match.roundPhase"
+    *ngIf="shouldDisplay()"
+  ></app-scoreboard>
 </div>

@@ -219,8 +219,9 @@
 }
 
 .side-swap-container-late {
-  margin-left: 2px;  // total of 35px
-  margin-right: 1.5px;
+  margin-left: 0.2px;  // total of 35px
+  margin-right: 4px;
+  transform: translateX(-1px);
   display: inline-flex;
   align-items: center;
   position: relative;
