@@ -3,14 +3,13 @@
     <div 
     class="team-info"
     [ngStyle]="{
-    transform: match.roundNumber >= 9 ? 'translate(-32px, 5px)' : 'translate(-45px, 5px)'
+    transform: match.roundNumber >= 9 ? 'translate(-60px, 5px)' : 'translate(-70px, 5px)'
     }">
       {{ match.teams[0].teamTricode }}
     </div>
     <div class="round-fade" *ngIf="match.roundNumber >= 9">
       <img src="{{ assets }}/scoreboard/roundReasons/roundFade.svg" />
     </div>
-    <!-- bind classes for attacking or defending -->
     <div class="team-roundsWon"
          [ngClass]="{ 'attacking': match.teams[0].isAttacking, 'defending': !match.teams[0].isAttacking }"
          [ngStyle]="{
@@ -26,49 +25,14 @@
         class="round-wrapper"
         [ngClass]="{ 'lost-round': record.type === 'lost' }"
       >
-        <!-- Show sideSwap, 51px margin before round 13; 35px after -->
-        <div
-          [ngClass]="{
-            'side-swap-container-early': match.roundNumber < match.switchRound,
-            'side-swap-container-late': match.roundNumber >= match.switchRound
-          }"
-          *ngIf="record.round === match.switchRound"
-        >
-          <img [src]="assets + '/scoreboard/roundReasons/sideSwap.svg'" class="side-swap" />
-        </div>
-
-        <div
-          class="round-svg-container"
-          *ngIf="record.round === 13 && record.type !== 'lost' && record.type !== 'upcoming'"
-        >
-        </div>
-
         <div
           class="six-square"
           *ngIf="record.round === 14 && match.roundNumber < 14"
         ></div>
 
-        <!-- Normal round-14 content only if current round >= 14 -->
-        <div
-          class="round-svg-container"
-          *ngIf="record.round === 14 && match.roundNumber >= 14 && record.type !== 'lost' && record.type !== 'upcoming'"
-        >
-          <!-- ...round 14 content here... -->
-        </div>
-
         <div
           class="round-svg-container"
           *ngIf="record.type !== 'lost' && record.type !== 'upcoming'"
-          [ngStyle]="{
-            transform: record.round === 13 || record.round > 14
-              ? 'translateX(3.5px)'
-              : 'translateX(0)'
-          }"
-          [ngStyle]="{
-            transform: record.round >= 13 && match.roundNumber >= 14
-              ? 'translateX(-45px)'
-              : 'translateX(0)'
-          }"
         >
           <img
             class="round-svg"
@@ -88,11 +52,7 @@
             record.type === 'lost' &&
             !(record.round === 14 && match.roundNumber < 14)
           "
-          [ngStyle]="{
-            transform: record.round >= 14 && match.roundNumber > 14
-              ? 'translateX(-47px)'
-              : 'translateX(0)'
-          }">
+          >
           <div class="round-number">{{ record.round }}</div>
         </div>
 
@@ -103,13 +63,10 @@
             !(record.round === 14 && match.roundNumber < 14)
           "
           [ngStyle]="{
-            transform: match.roundNumber >= 14
-              ? 'translateX(-47px)'
-              : 'translateX(0)'
+            transform: 'translateX(-2px)'
           }"
         >
             <div class="round-number-upcoming">{{ record.round }}</div>
-          <!-- CurrentRound SVG in the center of the upcoming round -->
           <div class="current-round-indicator" *ngIf="record.round === match.roundNumber">
             <img [src]="assets + '/scoreboard/roundReasons/currentRound.svg'" class="current-round-svg" />
           </div>
@@ -118,18 +75,24 @@
     </div>
   </div>
 
-  <div class="right-team">
+  <div class="right-team"
+    [ngStyle]="{
+      transform: match.teams[0].roundsWon === 0 ? 'translateY(9px)' : 'translateY(0px)'
+      }">
     <div 
     class="team-info"
     [ngStyle]="{
-      transform: match.roundNumber >= 9 ? 'translate(-32px, 5px)' : 'translate(-45px, 5px)'
+      transform: match.roundNumber >= 9 ? 'translate(-60px, 5px)' : 'translate(-70px, 5px)'
       }">
       {{ match.teams[1].teamTricode }}
+    </div>
+    <div class="round-fade" *ngIf="match.roundNumber >= 9">
+      <img style="opacity:0;pointer-events:none;" src="{{ assets }}/scoreboard/roundReasons/roundFade.svg" />
     </div>
     <div class="team-roundsWon"
          [ngClass]="{ 'attacking': match.teams[1].isAttacking, 'defending': !match.teams[1].isAttacking }"
          [ngStyle]="{
-          left: match.roundNumber >= 9 ? '64px' : '44px'
+          left: match.roundNumber >= 9 ? '60px' : '40px'
         }">
       {{ match.teams[1].roundsWon }}
     </div>
@@ -139,16 +102,10 @@
         | slice: getReasonStartIndex() : getReasonStartIndex() + roundRecordLength"
         class="round-wrapper"
         [ngClass]="{ 'lost-round': record.type === 'lost' }">
-
         <div
           class="round-svg-container"
           [ngClass]="record.wasAttack ? 'attacker' : 'defender'"
           *ngIf="record.type !== 'lost' && record.type !== 'upcoming'"
-          [ngStyle]="{
-            transform: record.round >= 13
-              ? 'translateX(30px)'
-              : 'translateX(0)'
-          }"
         >
           <img
             class="round-svg"
@@ -164,12 +121,7 @@
 
         <div 
         class="reason-color lost" 
-        *ngIf="record.type === 'lost'"
-        [ngStyle]="{
-          transform: record.round >= 13
-            ? 'translateX(29px)'
-            : 'translateX(0)'
-        }">
+        *ngIf="record.type === 'lost'">
           <div class="round-number">{{ record.round }}</div>
         </div>
       </div>

@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="861" height="273" viewBox="0 0 861 273">
+<svg id="Timeout_Component_Blue" data-name="Timeout Component_Blue" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="861" height="192" viewBox="0 0 861 192">
   <defs>
     <linearGradient id="linear-gradient" x1="1" y1="0.5" x2="0" y2="0.5" gradientUnits="objectBoundingBox">
       <stop offset="0" stop-color="#46f4cf" stop-opacity="0.38"/>
@@ -9,15 +9,13 @@
     </linearGradient>
     <linearGradient id="linear-gradient-2" x1="0" x2="1" xlink:href="#linear-gradient"/>
   </defs>
-  <g id="Timeout_Component" data-name="Timeout Component" transform="translate(0 1)">
-    <rect id="Rectangle_255" data-name="Rectangle 255" width="430" height="191" transform="translate(0 40)" fill="url(#linear-gradient)"/>
-    <rect id="Rectangle_304" data-name="Rectangle 304" width="430" height="191" transform="translate(430 40)" fill="url(#linear-gradient-2)"/>
-    <line id="Line_2" data-name="Line 2" x2="860" transform="translate(0.5 40.5)" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="1"/>
-    <line id="Line_3" data-name="Line 3" y1="1" x2="859" transform="translate(0.5 230.5)" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="1"/>
-    <rect id="Rectangle_251" data-name="Rectangle 251" width="24" height="4" transform="translate(0 40)" fill="#fff"/>
-    <rect id="Rectangle_252" data-name="Rectangle 252" width="24" height="4" transform="translate(0 228)" fill="#fff"/>
-    <rect id="Rectangle_253" data-name="Rectangle 253" width="24" height="4" transform="translate(836 227)" fill="#fff"/>
-    <rect id="Rectangle_254" data-name="Rectangle 254" width="24" height="4" transform="translate(837 40)" fill="#fff"/>
-    <text id="TIMEOUT" transform="translate(430 212)" fill="rgba(118,118,118,0.2)" stroke="#c7c7c7" stroke-width="1" font-size="180" font-family="Anton-Regular, Anton"><tspan x="-282.173" y="0">TIMEOUT</tspan></text>
-  </g>
+  <rect id="Rectangle_255" data-name="Rectangle 255" width="430" height="191" fill="url(#linear-gradient)"/>
+  <rect id="Rectangle_304" data-name="Rectangle 304" width="430" height="191" transform="translate(430)" fill="url(#linear-gradient-2)"/>
+  <line id="Line_2" data-name="Line 2" x2="860" transform="translate(0.5 0.5)" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="1"/>
+  <line id="Line_3" data-name="Line 3" y1="1" x2="859" transform="translate(0.5 190.5)" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="1"/>
+  <rect id="Rectangle_251" data-name="Rectangle 251" width="24" height="4" fill="#fff"/>
+  <rect id="Rectangle_252" data-name="Rectangle 252" width="24" height="4" transform="translate(0 188)" fill="#fff"/>
+  <rect id="Rectangle_253" data-name="Rectangle 253" width="24" height="4" transform="translate(836 187)" fill="#fff"/>
+  <rect id="Rectangle_254" data-name="Rectangle 254" width="24" height="4" transform="translate(837)" fill="#fff"/>
+  <path id="Path_18" data-name="Path 18" d="M-262.046,0V-124.98h-18.369v-29.707h67.676v29.707h-18.369V0Zm56.514,0V-154.687h29.883V0Zm42.188,0V-154.687h47.109l13.008,94.307,12.92-94.307h47.549V0h-28.3V-111.445L-88.813,0h-27.773L-135.4-111.445V0Zm134.3,0V-154.687H32.827V-124.8H2.417v30.146H31.6v29.092H2.417v35.42H34.849V0ZM81.958,1.406Q63.413,1.406,53.613-9.8t-9.8-32.388v-73.477q0-19.863,9.712-30.146t28.433-10.283q18.721,0,28.433,10.283t9.712,30.146v73.477q0,21.182-9.8,32.388T81.958,1.406Zm.264-28.477q7.031,0,7.031-13.623v-75.5q0-11.426-6.855-11.426-7.734,0-7.734,11.689v75.41q0,7.207,1.758,10.327A6.134,6.134,0,0,0,82.222-27.07ZM168.354,1.406q-19.336,0-28.477-10.854T130.737-41.4V-154.687H160.8V-42.627a60.612,60.612,0,0,0,.439,7.427,12.911,12.911,0,0,0,2.021,5.845q1.582,2.285,5.1,2.285,3.6,0,5.186-2.241a12.329,12.329,0,0,0,1.978-5.845,68.471,68.471,0,0,0,.4-7.471V-154.687h30.059V-41.4q0,21.094-9.141,31.948T168.354,1.406ZM231.108,0V-124.98H212.739v-29.707h67.676v29.707H262.046V0Z" transform="translate(430 172)" fill="rgba(118,118,118,0.2)" stroke="#c7c7c7" stroke-width="1"/>
 </svg>

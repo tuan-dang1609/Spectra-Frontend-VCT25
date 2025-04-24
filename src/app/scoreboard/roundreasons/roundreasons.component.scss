@@ -19,7 +19,7 @@
   background-color: transparent;
   border-radius: 6px;
   top: 20px;
-  left: -80px;
+  left: -50px;
 }
 
 .left-team {
@@ -36,7 +36,7 @@
   max-width: 75px;
   min-width: 75px;
   color: white;
-  transform: translate(-45px, 5px);
+  transform: translate(-70px, 5px);
   text-align: center;
   line-height: 40px;
   font-size: 20px;
@@ -78,7 +78,7 @@
   line-height: 40px;
   text-align: center;
   color: rgba(255, 255, 255, 0.8);
-  transform: translate(1px, 6px);
+  transform: translate(0px, 6px);
   font-size: 24px;
   word-spacing: -50px;
   font-family: "DIN Next W1G Bold", Helvetica;
@@ -219,9 +219,8 @@
 }
 
 .side-swap-container-late {
-  margin-left: 0.2px;  // total of 35px
-  margin-right: 4px;
-  transform: translateX(-1px);
+  margin-left: 2px;  // total of 35px
+  margin-right: 2px;
   display: inline-flex;
   align-items: center;
   position: relative;
@@ -269,7 +268,7 @@
 }
 
 .current-round-svg {
-  transform: translate(7px, 31px);
+  transform: translate(6px, 31px);
 }
 
 .round-fade {
