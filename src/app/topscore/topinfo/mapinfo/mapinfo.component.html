@@ -1,15 +1,24 @@
 <div class="container">
-  <div class="text" *ngIf="type === 'past'">
-    <div class="text">
+  <div class="pill-bg past" *ngIf="type === 'past'">
+    <div class="pill-content">
       {{ mapinfo.map }} <img src="{{ mapinfo.left.logo }}" class="logo" />
       {{ mapinfo.left.score }} - {{ mapinfo.right.score }}
       <img src="{{ mapinfo.right.logo }}" class="logo" />
     </div>
   </div>
-  <div class="text" *ngIf="type === 'present'">
-    <div class="text">Live: {{ map }} <img src="{{ mapinfo.logo }}" class="logo" /></div>
+  <div class="pill-bg present" *ngIf="type === 'present'">
+    <div class="pill-content">
+      CURRENT: {{ map }} <img src="{{ mapinfo.logo }}" class="logo" />
+    </div>
   </div>
-  <div class="text" *ngIf="type === 'future'">
-    <div class="text">Next: {{ mapinfo.map }} <img src="{{ mapinfo.logo }}" class="logo" /></div>
+  <div class="pill-bg future" *ngIf="type === 'future'">
+    <div class="pill-content">
+      <ng-container *ngIf="isDecider; else notDecider">
+        DECIDER: {{ mapinfo.map }}
+      </ng-container>
+      <ng-template #notDecider>
+        NEXT: {{ mapinfo.map }} <img src="{{ mapinfo.logo }}" class="logo" />
+      </ng-template>
+    </div>
   </div>
 </div>

@@ -6,7 +6,11 @@
     <app-mapinfo [map]="match.map" [mapinfo]="match.tools.seriesInfo.mapInfo[1]"></app-mapinfo>
   </div>
   <div class="topinfo-pill">
-    <app-mapinfo [map]="match.map" [mapinfo]="match.tools.seriesInfo.mapInfo[2]"></app-mapinfo>
+    <app-mapinfo
+    [map]="match.map"
+    [mapinfo]="match.tools.seriesInfo.mapInfo[2]"
+    [isDecider]="match.tools.seriesInfo.wonLeft + match.tools.seriesInfo.wonRight === match.tools.seriesInfo.needed || match.tools.seriesInfo.needed === 2"
+    ></app-mapinfo>
   </div>
 </div>
 <div class="topinfo-container-right">

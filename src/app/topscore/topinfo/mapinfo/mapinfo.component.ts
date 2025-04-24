@@ -8,6 +8,7 @@ import { Component, Input, OnChanges } from "@angular/core";
 export class MapinfoComponent implements OnChanges {
   @Input() map!: string;
   @Input() mapinfo!: any;
+  @Input() isDecider!: boolean;
   type: "past" | "present" | "future" = "future";
 
   ngOnChanges(): void {
