@@ -15,6 +15,7 @@ export class EndroundComponent implements OnChanges, OnInit, AfterViewChecked {
   private scoreboardCanvas!: HTMLCanvasElement | null;
   private canvasInitialized = false;
   private riveInstance!: Rive;
+  private previousRoundPhase: string | null = null;
 
   ngOnInit(): void {
     this.endRoundEnabled = this.match?.tools?.tournamentInfo?.enabled || false;
@@ -36,6 +37,9 @@ export class EndroundComponent implements OnChanges, OnInit, AfterViewChecked {
 
     // Preload the Rive animation
     this.preloadRiveAnimation();
+
+    // Initialize previousRoundPhase to the current phase if available
+    this.previousRoundPhase = this.match?.roundPhase ?? null;
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -51,14 +55,14 @@ export class EndroundComponent implements OnChanges, OnInit, AfterViewChecked {
           this.teamWon = match.teams[0].isAttacking ? 1 : 0;
         }
 
-        // Reset canvasInitialized when a new round ends
-        if (match.roundPhase === "end") {
+        // Only reset canvasInitialized if roundPhase transitions to "end"
+        if (
+          (this.previousRoundPhase !== "end" && match.roundPhase === "end") ||
+          (this.previousRoundPhase === null && match.roundPhase === "end")
+        ) {
           this.canvasInitialized = false;
-
-          if (this.initializeScoreboardCanvas()) {
-            this.scoreboardAnim();
-          }
         }
+        this.previousRoundPhase = match.roundPhase;
       }
     }
   }

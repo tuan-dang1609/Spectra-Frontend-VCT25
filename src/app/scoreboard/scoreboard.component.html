@@ -111,6 +111,11 @@
         [player]="player"
         [color]="match.teams[0].isAttacking ? 'attacker' : 'defender'"
         [hideAuxiliary]="hideAuxiliary"
+        [shiftUltimate]="
+          !player.auxiliaryAvailable?.abilities &&
+          numPlayersWithoutAbilities > 0 &&
+          numPlayersWithoutAbilities < 10
+        "
         side="left"
       ></app-playerscore>
     </div>
@@ -121,6 +126,11 @@
         [player]="player"
         [color]="match.teams[1].isAttacking ? 'attacker' : 'defender'"
         [hideAuxiliary]="hideAuxiliary"
+        [shiftUltimate]="
+          !player.auxiliaryAvailable?.abilities &&
+          numPlayersWithoutAbilities > 0 &&
+          numPlayersWithoutAbilities < 10
+        "
         side="right"
       ></app-playerscore>
     </div>

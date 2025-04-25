@@ -1,8 +1,8 @@
 @import url("https://fonts.googleapis.com/css2?family=Anton&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Source+Sans+3&display=swap");
 @font-face { 
-  font-family: DIN Next W1G Bold;
-  src: url("../../../public/assets/fonts/DINNextW1G/dinnextw1g_bold.otf") format("opentype");
+  font-family: DIN Next W1G Medium;
+  src: url("../../../public/assets/fonts/DINNextW1G/dinnextw1g_medium.otf") format("opentype");
 }
 .topscore {
   position: absolute;
@@ -31,11 +31,11 @@
   justify-content: center;
 }
 .round-number {
-  font-family: "DIN Next W1g Bold", Helvetica;
+  font-family: "DIN Next W1G Medium", Helvetica;
   color: #fefeff99;
   font-size: 15px;
   text-align: center;
-  letter-spacing: 0.39px;
+  letter-spacing: 4px;
   line-height: normal;
 }
 .top-score-box,

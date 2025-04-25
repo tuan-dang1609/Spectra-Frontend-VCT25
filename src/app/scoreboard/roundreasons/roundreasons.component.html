@@ -62,9 +62,6 @@
             record.type === 'upcoming' &&
             !(record.round === 14 && match.roundNumber < 14)
           "
-          [ngStyle]="{
-            transform: 'translateX(-2px)'
-          }"
         >
             <div class="round-number-upcoming">{{ record.round }}</div>
           <div class="current-round-indicator" *ngIf="record.round === match.roundNumber">

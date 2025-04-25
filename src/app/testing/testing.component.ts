@@ -50,8 +50,8 @@ export class TestingComponent implements AfterViewInit {
       { type: "detonated", wasAttack: true, round: 10 },
       { type: "kills", wasAttack: true, round: 11 },
       { type: "lost", wasAttack: true, round: 12 },
-      { type: "kills", wasAttack: false, round: 13 },
-      { type: "kills", wasAttack: false, round: 14 },
+      { type: "upcoming", wasAttack: false, round: 13 },
+      { type: "upcoming", wasAttack: false, round: 14 },
       { type: "upcoming", wasAttack: false, round: 15 },
     ];
 
@@ -68,8 +68,8 @@ export class TestingComponent implements AfterViewInit {
       { type: "lost", wasAttack: false, round: 10 },
       { type: "lost", wasAttack: false, round: 11 },
       { type: "kills", wasAttack: false, round: 12 },
-      { type: "lost", wasAttack: true, round: 13 },
-      { type: "lost", wasAttack: true, round: 14 },
+      { type: "upcoming", wasAttack: true, round: 13 },
+      { type: "upcoming", wasAttack: true, round: 14 },
       { type: "upcoming", wasAttack: true, round: 15 },
     ];
 

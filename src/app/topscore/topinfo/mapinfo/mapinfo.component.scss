@@ -11,10 +11,10 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  top: 0;
-  left: 0;
+  top: 50%;
+  left: 50%;
   height: 100%;
-  transform: translateY(-6px);
+  transform: translate(-4px, -6px);
 }
 
 .text {
@@ -50,12 +50,12 @@
 }
 
 .pill-bg.present {
-  transform: translateX(-9px);
+  transform: translateX(-10px);
   background-image: url('/assets/topscore/mapinfo/currentMap_pill.svg');
 }
 
 .pill-bg.future {
-  transform: translateX(-18px);
+  transform: translate(-20px, -1px);
   background-image: url('/assets/topscore/mapinfo/futureMap_pill.svg');
 }
 
@@ -74,7 +74,6 @@
   letter-spacing: 0;
   white-space: nowrap;
   z-index: 1;
-  top: 0.5px;
 }
 
 .logo {

@@ -383,3 +383,10 @@ app-abilities {
 .ultimate-container.right {
   transform: translate(-73px, -1.5px) scaleX(-1);
 }
+
+.ultimate-container.shift-ultimate {
+  transform: translate(-69px, -2px) !important;
+}
+.ultimate-container.shift-ultimate.right {
+  transform: translate(-68px, -1.5px) scaleX(-1) !important;
+}

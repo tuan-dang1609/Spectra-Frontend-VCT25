@@ -52,18 +52,20 @@
         />
       </div>
     </div>
-    <div class="ultimate-container" [class.right]="side === 'right'">
+    <div class="ultimate-container"
+         [class.right]="side === 'right'"
+         [class.shift-ultimate]="shiftUltimate">
       <app-ultimate
         [match]="match"
         [player]="player"
         [color]="
-        match.teams[0].players.includes(player)
-        ? match.teams[0].isAttacking
-          ? 'attacker'
-          : 'defender'
-        : match.teams[1].isAttacking
-        ? 'attacker'
-        : 'defender'
+          match.teams[0].players.includes(player)
+            ? match.teams[0].isAttacking
+              ? 'attacker'
+              : 'defender'
+            : match.teams[1].isAttacking
+            ? 'attacker'
+            : 'defender'
         "
         [hideAuxiliary]="hideAuxiliary">
       </app-ultimate>
