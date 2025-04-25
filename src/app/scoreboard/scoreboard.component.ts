@@ -70,6 +70,10 @@ export class ScoreboardComponent implements OnChanges {
     ].filter((p: any) => !p.auxiliaryAvailable?.abilities).length;
   }
 
+  get totalPlayers(): number {
+    return this.match.teams[0].players.length + this.match.teams[1].players.length;
+  }
+
   trackByPlayerId(index: number, player: any) {
     return player.playerId;
   }

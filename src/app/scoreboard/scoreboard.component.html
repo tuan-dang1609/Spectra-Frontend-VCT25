@@ -114,7 +114,7 @@
         [shiftUltimate]="
           !player.auxiliaryAvailable?.abilities &&
           numPlayersWithoutAbilities > 0 &&
-          numPlayersWithoutAbilities < 10
+          numPlayersWithoutAbilities < totalPlayers
         "
         side="left"
       ></app-playerscore>
@@ -129,7 +129,7 @@
         [shiftUltimate]="
           !player.auxiliaryAvailable?.abilities &&
           numPlayersWithoutAbilities > 0 &&
-          numPlayersWithoutAbilities < 10
+          numPlayersWithoutAbilities < totalPlayers
         "
         side="right"
       ></app-playerscore>
