@@ -30,7 +30,7 @@
             <div class="teamcodeBox-0">
               <div class="teamcode-0">{{ match.teams[0].teamTricode }}</div>
               <div class="teamseeding" *ngIf="match.tools.seedingInfo.left !== ''">
-                {{ match.tools.seedingInfo.right }}
+                {{ match.tools.seedingInfo.left }}
               </div>
             </div>
             <div class="teamscoreBox-0">
@@ -60,7 +60,7 @@
             <div class="teamcodeBox-1">
               <div class="teamcode-1">{{ match.teams[1].teamTricode }}</div>
               <div class="teamseeding" *ngIf="match.tools.seedingInfo.left !== ''">
-                {{ match.tools.seedingInfo.left }}
+                {{ match.tools.seedingInfo.right }}
               </div>
             </div>
             <div class="teamscoreBox-1">

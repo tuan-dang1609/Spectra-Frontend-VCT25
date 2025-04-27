@@ -265,7 +265,7 @@
   position: relative;
   justify-content: flex-end;
   flex: 0 0 auto;
-  left: 180px;
+  left: 170px;
   top: -25px;
   transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 
@@ -274,11 +274,11 @@
   }
 
   &.right.shifted {
-    transform: translateX(38px) scaleX(-1);
+    transform: translateX(48px) scaleX(-1);
   }
 
   &.right:not(.shifted) {
-    transform: translateX(0px) scaleX(-1);
+    transform: translateX(10px) scaleX(-1);
   }
 }
 
@@ -298,7 +298,8 @@
   line-height: normal;
   white-space: nowrap;
   color: white;
-  left: 0;
+  left: 10px;
+  top: -1px;
 }
 
 .username-container {

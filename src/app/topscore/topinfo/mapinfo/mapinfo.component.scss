@@ -14,7 +14,8 @@
   top: 50%;
   left: 50%;
   height: 100%;
-  transform: translate(-4px, -6px);
+  transform: translate(10px, -4px);
+  scale: 1.2;
 }
 
 .text {
@@ -50,12 +51,12 @@
 }
 
 .pill-bg.present {
-  transform: translateX(-10px);
+  transform: translateX(20px);
   background-image: url('/assets/topscore/mapinfo/currentMap_pill.svg');
 }
 
 .pill-bg.future {
-  transform: translate(-20px, -1px);
+  transform: translate(40px, -1px);
   background-image: url('/assets/topscore/mapinfo/futureMap_pill.svg');
 }
 
@@ -78,7 +79,7 @@
 
 .logo {
   padding: 2px 4px;
-  max-width: 16px;
-  max-height: 16px;
+  max-width: 14px;
+  max-height: 14px;
   vertical-align: middle;
 }
