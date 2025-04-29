@@ -1,24 +1,39 @@
 <div class="container">
-  <div class="pill-bg past" *ngIf="type === 'past'">
+  <div class="pill-bg">
+    <img
+      *ngIf="slotType === 'past'"
+      class="pill-bg-svg past"
+      src="/assets/topscore/mapinfo/pastMap_pill.svg"
+    />
+    <img
+      *ngIf="slotType === 'present'"
+      class="pill-bg-svg present"
+      src="/assets/topscore/mapinfo/currentMap_pill.svg"
+    />
+    <img
+      *ngIf="slotType === 'future'"
+      class="pill-bg-svg future"
+      src="/assets/topscore/mapinfo/futureMap_pill.svg"
+    />
     <div class="pill-content">
-      {{ mapinfo.map }} <img src="{{ mapinfo.left.logo }}" class="logo" />
-      {{ mapinfo.left.score }} - {{ mapinfo.right.score }}
-      <img src="{{ mapinfo.right.logo }}" class="logo" />
-    </div>
-  </div>
-  <div class="pill-bg present" *ngIf="type === 'present'">
-    <div class="pill-content">
-      CURRENT: {{ map }} <img src="{{ mapinfo.logo }}" class="logo" />
-    </div>
-  </div>
-  <div class="pill-bg future" *ngIf="type === 'future'">
-    <div class="pill-content">
-      <ng-container *ngIf="isDecider; else notDecider">
-        DECIDER: {{ mapinfo.map }}
+      <ng-container [ngSwitch]="mapinfo.type">
+        <ng-container *ngSwitchCase="'past'">
+          {{ mapinfo.map }} <img src="{{ mapinfo.left.logo }}" class="logo" />
+          {{ mapinfo.left.score }} - {{ mapinfo.right.score }}
+          <img src="{{ mapinfo.right.logo }}" class="logo" />
+        </ng-container>
+      <ng-container *ngSwitchCase="'present'">
+          CURRENT: {{ map }} <img src="{{ mapinfo.logo }}" class="logo" />
+        </ng-container>
+        <ng-container *ngSwitchCase="'future'">
+          <ng-container *ngIf="isDecider; else notDecider">
+            DECIDER: {{ mapinfo.map }}
+          </ng-container>
+          <ng-template #notDecider>
+            NEXT: {{ mapinfo.map }} <img src="{{ mapinfo.logo }}" class="logo" />
+          </ng-template>
+        </ng-container>
       </ng-container>
-      <ng-template #notDecider>
-        NEXT: {{ mapinfo.map }} <img src="{{ mapinfo.logo }}" class="logo" />
-      </ng-template>
     </div>
   </div>
 </div>

@@ -1,17 +1,22 @@
-<div class="topinfo-container" *ngIf="match.tools.seriesInfo.mapInfo.length > 0">
-  <div class="topinfo-pill">
-    <app-mapinfo [map]="match.map" [mapinfo]="match.tools.seriesInfo.mapInfo[0]"></app-mapinfo>
-  </div>
-  <div class="topinfo-pill">
-    <app-mapinfo [map]="match.map" [mapinfo]="match.tools.seriesInfo.mapInfo[1]"></app-mapinfo>
-  </div>
-  <div class="topinfo-pill">
-    <app-mapinfo
+<div class="topinfo-container">
+  <app-mapinfo
     [map]="match.map"
-    [mapinfo]="match.tools.seriesInfo.mapInfo[2]"
-    [isDecider]="match.tools.seriesInfo.wonLeft + match.tools.seriesInfo.wonRight === match.tools.seriesInfo.needed || match.tools.seriesInfo.needed === 2"
-    ></app-mapinfo>
-  </div>
+    [mapinfo]="mapInfoForSlot(0)"
+    [slotType]="'past'"
+    [isDecider]="isDeciderForSlot(0)">
+  </app-mapinfo>
+  <app-mapinfo
+    [map]="match.map"
+    [mapinfo]="mapInfoForSlot(1)"
+    [slotType]="'present'"
+    [isDecider]="isDeciderForSlot(1)">
+  </app-mapinfo>
+  <app-mapinfo
+    [map]="match.map"
+    [mapinfo]="mapInfoForSlot(2)"
+    [slotType]="'future'"
+    [isDecider]="isDeciderForSlot(2)">
+  </app-mapinfo>
 </div>
 <div class="topinfo-container-right">
 </div>
@@ -25,6 +30,14 @@
       alt="Sponsor Logo"
     />
   </ng-container>
+</div>
+
+<div
+  *ngIf="showEventName"
+  class="event-name-container"
+>
+  <img class="event-name-bg" src="/assets/topscore/topinfo/eventName.svg" alt="Event Name Background" />
+  <span class="event-name-text">{{ eventName }}</span>
 </div>
 
 <svg xmlns="http://www.w3.org/2000/svg" class="d-none">

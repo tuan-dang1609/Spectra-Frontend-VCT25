@@ -26,10 +26,10 @@ export class EndroundComponent implements OnChanges, OnInit, AfterViewChecked {
   // Add separate size variables for each asset
   private readonly tournamentBackgroundWidth = 830;
   private readonly tournamentBackgroundHeight = 250;
-  private readonly tournamentLogoWidth = 1400;
-  private readonly tournamentLogoHeight = 1400;
-  private readonly teamWonLogoWidth = 3600;
-  private readonly teamWonLogoHeight = 3600;
+  private readonly tournamentLogoWidth = 2000;
+  private readonly tournamentLogoHeight = 600;
+  private readonly teamWonLogoWidth = 4000;
+  private readonly teamWonLogoHeight = 4000;
 
   endRoundEnabled = false;
   teamWon = 0;
@@ -139,22 +139,29 @@ export class EndroundComponent implements OnChanges, OnInit, AfterViewChecked {
     
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    // Calculate the scaling factor to fit the image inside the box
-    const scale = Math.min(desiredWidth / img.width, desiredHeight / img.height);
-    const drawWidth = img.width * scale;
-    const drawHeight = img.height * scale;
+// Calculate scale factors separately
+const scaleX = desiredWidth / img.width;
+const scaleY = desiredHeight / img.height;
 
-    // Center the image inside the canvas
-    const dx = (desiredWidth - drawWidth) / 2;
-    const dy = (desiredHeight - drawHeight) / 2;
+// Choose the smaller scale to make sure the image fits completely inside
+const scale = Math.min(scaleX, scaleY);
 
-    ctx.drawImage(
-      img,
-      dx,
-      dy,
-      drawWidth,
-      drawHeight
-    );
+// Calculate size after scaling
+const drawWidth = img.width * scale;
+const drawHeight = img.height * scale;
+
+// Center the image inside the canvas (without cutting off any part)
+const dx = (desiredWidth - drawWidth) / 2;
+const dy = (desiredHeight - drawHeight) / 2;
+
+ctx.drawImage(
+  img,
+  dx,
+  dy,
+  drawWidth,
+  drawHeight
+);
+
 
   
     const blob = await new Promise<Blob>((resolve, reject) => {

@@ -12,6 +12,9 @@ export class Config {
   defenderColorSecondary = "#46F4CF";
   defenderColorShieldCurrency = "#46F4CF";
 
+  showEventName = true;
+  eventName = "Spectra Invitational 2025";
+
   public constructor(init?: Partial<Config>) {
     Object.assign(this, init);
   }

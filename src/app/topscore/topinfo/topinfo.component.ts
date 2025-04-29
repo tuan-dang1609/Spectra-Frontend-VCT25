@@ -19,10 +19,14 @@ export class TopinfoComponent implements OnInit {
   sponsorsAvailable = false;
   sponsorImages: string[] = [];
   currentSponsorIndex = 0;
+  showEventName!: boolean;
+  eventName!: string;
 
   constructor(private config: Config) {}
 
   ngOnInit() {
+    this.showEventName = this.config.showEventName;
+    this.eventName = this.config.eventName;
     this.sponsorsAvailable = this.config.sponsorImageUrls.length > 0;
     if (this.sponsorsAvailable) {
       this.sponsorImages = this.config.sponsorImageUrls;
@@ -35,5 +39,15 @@ export class TopinfoComponent implements OnInit {
 
   nextSponsor() {
     this.currentSponsorIndex = (this.currentSponsorIndex + 1) % this.config.sponsorImageUrls.length;
+  }
+
+  mapInfoForSlot(slot: number) {
+    // Return the mapinfo object for this slot, or a default if not available
+    return this.match.tools.seriesInfo.mapInfo[slot] || {};
+  }
+
+  isDeciderForSlot(slot: number) {
+    // Your logic for decider, if needed
+    return false;
   }
 }

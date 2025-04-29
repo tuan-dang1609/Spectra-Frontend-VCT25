@@ -5,6 +5,7 @@
   top: 0;
   left: 4px;
   border-radius: 0px 0px 8px 8px;
+  gap: 28px;
   overflow: visible;
   &-right {
     @extend .topinfo-container;
@@ -84,4 +85,45 @@
   position: absolute;
   left: 25%;
   opacity: 0;
+}
+
+.event-name-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 25px;
+  min-width: 278px;      // adjust as needed for your SVG
+  width: fit-content;      // set to your SVG's width
+  transform: translate(1320px);   // remove or adjust as needed
+}
+
+.event-name-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 0;
+  object-fit: contain;
+}
+
+.event-name-text {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  text-align: center;
+  font-family: "DIN Next W1G Medium", Helvetica, Arial, sans-serif;
+  font-size: 12px;
+  color: #fff;
+    text-transform: uppercase;
+  letter-spacing: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  white-space: nowrap;           // Prevents line breaks
+  overflow: hidden;              // Hides overflow
+  text-overflow: ellipsis;       // Adds ... if text is too long
+  padding: 0 12px;               // Adjust as needed, but keep it small
 }
