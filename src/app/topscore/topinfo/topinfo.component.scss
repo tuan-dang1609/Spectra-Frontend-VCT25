@@ -88,14 +88,14 @@
 }
 
 .event-name-container {
-  position: relative;
+  position: absolute;
   display: flex;
   align-items: center;
   justify-content: center;
   height: 25px;
   min-width: 278px;      // adjust as needed for your SVG
   width: fit-content;      // set to your SVG's width
-  transform: translate(1320px);   // remove or adjust as needed
+  left: 1320px;   // remove or adjust as needed
 }
 
 .event-name-bg {
