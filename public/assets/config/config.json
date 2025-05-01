@@ -1,6 +1,6 @@
 {
   "serverEndpoint": "https://na.valospectra.com:5200",
-  "redirectUrl": "https://vct25.nobii.dev/src/landing",
+  "redirectUrl": "https://nobii.dev/src/landing",
   "sponsorImageUrls": [
     "/assets/misc/logo.webp"
   ],

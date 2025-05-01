@@ -1,6 +1,6 @@
 export class Config {
   serverEndpoint = "http://localhost:5200";
-  redirectUrl = "https://vct25.nobii.dev/src/landing";
+  redirectUrl = "https://nobii.dev/src/landing";
   sponsorImageUrls: string[] = [];
   sponsorImageRotateSpeed = 5000; // in milliseconds
 
