@@ -1,6 +1,6 @@
 export class Config {
   serverEndpoint = "http://localhost:5200";
-  redirectUrl = "https://valospectra.com";
+  redirectUrl = "https://vct25.nobii.dev/src/landing";
   sponsorImageUrls: string[] = [];
   sponsorImageRotateSpeed = 5000; // in milliseconds
 
@@ -12,7 +12,7 @@ export class Config {
   defenderColorSecondary = "#46F4CF";
   defenderColorShieldCurrency = "#46F4CF";
 
-  showEventName = true;
+  showEventName = false;
   eventName = "Spectra Invitational 2025";
 
   public constructor(init?: Partial<Config>) {

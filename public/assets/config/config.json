@@ -1,6 +1,6 @@
 {
   "serverEndpoint": "https://na.valospectra.com:5200",
-  "redirectUrl": "https://valospectra.com",
+  "redirectUrl": "https://vct25.nobii.dev/src/landing",
   "sponsorImageUrls": [
     "/assets/misc/logo.webp"
   ],
@@ -11,6 +11,6 @@
   "defenderColorPrimary": "#25ac79",
   "defenderColorSecondary": "#61eab6",
   "defenderColorShieldCurrency": "#61eab6",
-  "showEventName": true,
+  "showEventName": false,
   "eventName": "Spectra Invitational 2025"
 }
