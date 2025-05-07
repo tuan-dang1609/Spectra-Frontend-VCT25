@@ -52,7 +52,7 @@ Inside `config` folder, create a file named `config.json` with the following con
   "defenderColorPrimary": "#25ac79",
   "defenderColorSecondary": "#61eab6",
   "defenderColorShieldCurrency": "#61eab6",
-  "showEventName: true,
+  "showEventName": false,
   "eventName": "Spectra Invitational 2025"
 }
 ```
