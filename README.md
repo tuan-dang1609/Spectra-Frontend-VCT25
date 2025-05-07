@@ -1,7 +1,7 @@
 # ValoSpectra - Frontend
 
 Spectra is your all-in-one solution for an amazing looking Valorant Tournament Overlay, enabling all Organizers to display information like held gun, available credits etc. with just a single spectator running software.
-To learn more and see a live demo, visit [valospectra.com](https://www.valospectra.com/).
+To learn more and see a live demo, visit [valospectra.com](https://www.valospectra.com/). 
 
 It is comprised of three parts:
 
