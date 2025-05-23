@@ -2744,10 +2744,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@rive-app/canvas@npm:^2.26.8":
-  version: 2.26.8
-  resolution: "@rive-app/canvas@npm:2.26.8"
-  checksum: 10c0/cf8873d2e8ca3df7b3a3acc8c37c20bd081dc54ed8137362260b25c2b799eee170b7d886a53fa6714a28b3b2630752b44adc4f5846d2520235675ae90715eab1
+"@rive-app/canvas@npm:^2.27.2":
+  version: 2.27.2
+  resolution: "@rive-app/canvas@npm:2.27.2"
+  checksum: 10c0/1337c511ea4a45749cba9409ffdf594e0144c2cf650494f8993acdf564701e3baa1a262fa702194fa98021f941bd9217a99758e267b4e9235f29eb8b524b6f0e
   languageName: node
   linkType: hard
 
@@ -9376,7 +9376,7 @@ __metadata:
     "@angular/platform-browser": "npm:^18.2.13"
     "@angular/platform-browser-dynamic": "npm:^18.2.13"
     "@angular/router": "npm:^18.2.13"
-    "@rive-app/canvas": "npm:^2.26.8"
+    "@rive-app/canvas": "npm:^2.27.2"
     "@types/jasmine": "npm:~5.1.7"
     angular-eslint: "npm:19.3.0"
     eslint: "npm:^9.23.0"
