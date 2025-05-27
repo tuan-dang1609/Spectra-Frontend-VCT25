@@ -35,7 +35,7 @@ const componentAnimations = [
       group([
         animate(
           "80ms cubic-bezier(0.4,0,0.2,1)",
-          style({ transform: "translateY(50px)" })
+          style({ transform: "translateY(52px)" })
         ),
         animate(
           "80ms cubic-bezier(0.4,0,0.2,1)",
@@ -44,16 +44,16 @@ const componentAnimations = [
       ]),
       animate(
         "120ms cubic-bezier(0.4,0,0.2,1)",
-        style({ transform: "translateY(50px) translateX(-140px)" })
+        style({ transform: "translateY(52px) translateX(-140px)" })
       ),
       // Keep the final transform after animation
-      style({ transform: "translateY(50px) translateX(-140px)" }),
+      style({ transform: "translateY(52px) translateX(-140px)" }),
     ]),
     transition("true => false", [
       // Animate back to original position
       animate(
         "120ms cubic-bezier(0.4,0,0.2,1)",
-        style({ transform: "translateY(50px)" })
+        style({ transform: "translateY(52px)" })
       ),
       animate(
         "80ms cubic-bezier(0.4,0,0.2,1)",

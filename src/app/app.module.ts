@@ -9,7 +9,7 @@ import { TestingComponent } from "./testing/testing.component";
 import { FormsModule } from "@angular/forms";
 import { TrackerComponent } from "./tracker/tracker.component";
 import { TopscoreComponent } from "./topscore/topscore-custom.component";
-import { ScoreboardComponent } from "./scoreboard/scoreboard.component";
+import { ScoreboardComponent, ScoreboardOrderPipe } from "./scoreboard/scoreboard.component";
 import { CombatComponent } from "./combat/combat.component";
 import { TopinfoComponent } from "./topscore/topinfo/topinfo.component";
 import {
@@ -67,7 +67,8 @@ import { Agent } from "http";
     AbilitiesComponent,
     InhouseTrackerPlayercardMinimalComponent,
     PlayerscoreMinimalComponent,
-    UltimateComponent,
+    ScoreboardOrderPipe,
+    UltimateComponent
   ],
   exports: [],
   bootstrap: [AppComponent],

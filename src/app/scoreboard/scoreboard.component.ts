@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, SimpleChanges } from "@angular/core";
+import { Component, Input, OnChanges, SimpleChanges, Pipe, PipeTransform } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { trigger, transition, style, animate } from '@angular/animations';
 
@@ -80,5 +80,19 @@ export class ScoreboardComponent implements OnChanges {
 
   numSequence(n: number): number[] {
     return Array(n);
+  }
+}
+
+@Pipe({
+  name: "scoreboardOrder",
+})
+export class ScoreboardOrderPipe implements PipeTransform {
+  transform(players: any[]): any[] {
+    if (!Array.isArray(players)) return [];
+    return [...players].sort((a: any, b: any) => {
+      if (a.kills < b.kills) return 1;
+      if (a.kills > b.kills) return -1;
+      return 0;
+    });
   }
 }
