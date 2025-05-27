@@ -1,7 +1,4 @@
 <div class="player-container" [class]="side" [class.dead]="!player.isAlive">
-  <!-- <div class="rank-icon-container" *ngIf="match.ranksEnabled && match.ranksByName[player.name]">
-        <img class="rank-icon" [class]="side" src="{{assets}}/ranks/{{match.ranksByName[player.name]}}_Rank.webp" />
-    </div> -->
   <div class="agent-icon-container">
     <img
       class="agent-icon"
@@ -11,35 +8,79 @@
   </div>
   <div class="player-card" [ngClass]="{ observed: player.isObserved, 'dead': !player.isAlive }">
     <div id="aaa">
-      <svg class="aab" [ngClass]="{ dead: !player.isAlive }">
-        <linearGradient id="aab" spreadMethod="pad" x1="0.366" x2="0" y1="0.5" y2="0.5">
-          <stop offset="0" stop-color="#292929" stop-opacity="0.71"></stop>
-          <stop offset="0.4038" stop-color="#615c46" stop-opacity="0.749"></stop>
-          <stop offset="1" stop-color="#cab857" stop-opacity="0.29"></stop>
+      <!-- Dead player gradient (priority over spectator) -->
+      <svg
+        *ngIf="!player.isAlive"
+        style="position: absolute; left: 1px; width: 252px; height: 45px;"
+        class="aab dead"
+      >
+        <linearGradient id="aab-dead" spreadMethod="pad" x1="0.238" x2="1.026" y1="0.5" y2="0.5">
+          <stop offset="0" stop-color="#292929" stop-opacity="0.361"></stop>
+          <stop offset="1" stop-color="#707070" stop-opacity="0"></stop>
         </linearGradient>
-        <rect id="aab" rx="1" ry="1" x="0" y="0" width="348" height="37">
+        <rect id="aab" rx="2" ry="2" x="0" y="0" width="252" height="45">
         </rect>
-      </svg>
-      <svg class="aac" [ngClass]="{ dead: !player.isAlive }">
-        <linearGradient id="aac" spreadMethod="pad" x1="0" x2="0.526" y1="0.77" y2="0.765">
-          <stop offset="0" stop-color="#b3a23e" stop-opacity="0.439"></stop>
-          <stop offset="1" stop-color="#292929" stop-opacity="0.361"></stop>
-        </linearGradient>    
-        <rect id="aac" rx="2" ry="2" x="0" y="0" width="350" height="95">
-        </rect>
-      </svg>
-      <svg class="aad">
-        <rect id="aad" rx="2" ry="2" x="0" y="0" width="350" height="95">
-        </rect>
-      </svg>
-      <svg class="player-health-bg" [ngClass]="{ dead: !player.isAlive }">
-        <linearGradient id="aaf" spreadMethod="pad" x1="0.779" x2="0" y1="0.5" y2="0.5">
-          <stop offset="0" stop-color="#2e2e2e" stop-opacity="1"></stop>
-          <stop offset="1" stop-color="#808080" stop-opacity="0"></stop>
+		  </svg>
+      <svg 
+        *ngIf="!player.isAlive"
+        class="aac dead"
+        style="position: absolute; left: 1px; width: 252px; height: 95px;"
+      >
+        <linearGradient id="aac-dead" spreadMethod="pad" x1="0.238" x2="1.026" y1="0.5" y2="0.5">
+          <stop offset="0" stop-color="#292929" stop-opacity="0.361"></stop>
+          <stop offset="1" stop-color="#707070" stop-opacity="0"></stop>
         </linearGradient>
-        <rect id="player-health-bg" rx="0" ry="0" x="0" y="0" width="348" height="7">
+        <rect id="aac" rx="2" ry="2" x="0" y="0" width="252" height="95">
+        </rect>
+		  </svg>
+      <svg
+        *ngIf="!player.isAlive"
+        class="player-health-bg dead"
+        style="position: absolute; left: 1px; top: 38px; width: 252px; height: 7px;"
+      >
+        <linearGradient id="aaf-dead" spreadMethod="pad" x1="0.38" x2="1.02" y1="0.5" y2="0.5">
+          <stop offset="0" stop-color="#292929" stop-opacity="1"></stop>
+          <stop offset="1" stop-color="#707070" stop-opacity="0"></stop>
+        </linearGradient>
+        <rect id="player-health-bg" rx="0" ry="0" x="0" y="0" width="252" height="7" fill="url(#aaf-dead)">
         </rect>
       </svg>
+      <!-- Everything else is wrapped and hidden if dead -->
+      <div [style.opacity]="!player.isAlive ? 0 : 1">
+        <!-- Spectator/Alive gradients (only show if not dead) -->
+        <svg
+          *ngIf="player.isAlive"
+          class="aab"
+          [ngClass]="{ observed: player.isObserved }"
+        >
+          <linearGradient id="aab" spreadMethod="pad" x1="0.366" x2="0" y1="0.5" y2="0.5">
+            <stop offset="0" stop-color="#292929" stop-opacity="0.71"></stop>
+            <stop offset="0.4038" stop-color="#615c46" stop-opacity="0.749"></stop>
+            <stop offset="1" stop-color="#cab857" stop-opacity="0.29"></stop>
+          </linearGradient>
+          <rect id="aab" rx="1" ry="1" x="0" y="0" width="348" height="37"></rect>
+        </svg>
+        <svg class="aac" [ngClass]="{ dead: !player.isAlive }">
+          <linearGradient id="aac" spreadMethod="pad" x1="0" x2="0.526" y1="0.77" y2="0.765">
+            <stop offset="0" stop-color="#b3a23e" stop-opacity="0.439"></stop>
+            <stop offset="1" stop-color="#292929" stop-opacity="0.361"></stop>
+          </linearGradient>
+          <rect id="aac" rx="2" ry="2" x="0" y="0" width="350" height="95">
+          </rect>
+        </svg>
+        <svg class="aad">
+          <rect id="aad" rx="2" ry="2" x="0" y="0" width="350" height="95">
+          </rect>
+        </svg>
+        <svg class="player-health-bg" [ngClass]="{ dead: !player.isAlive }">
+          <linearGradient id="aaf" spreadMethod="pad" x1="0.779" x2="0" y1="0.5" y2="0.5">
+            <stop offset="0" stop-color="#2e2e2e" stop-opacity="1"></stop>
+            <stop offset="1" stop-color="#808080" stop-opacity="0"></stop>
+          </linearGradient>
+          <rect id="player-health-bg" rx="0" ry="0" x="0" y="0" width="348" height="7">
+          </rect>
+        </svg>
+      </div>
     </div>
     <div
       class="player-info"
@@ -52,10 +93,22 @@
       "
     >
       <div class="spectator-icon-container" [class]="side" *ngIf="player.isObserved">
-        <img class="spectator-icon" src="{{ assets }}/misc/ObserverEye.svg" />
+        <img
+          class="spectator-icon"
+          src="{{ assets }}/misc/ObserverEye.svg"
+          @spectatorIconFade
+        />
         <svg class="spectator-box">
-          <rect id="spectator-box" rx="1" ry="1" x="0" y="0" width="25" height="95">
-          </rect>
+          <rect
+            id="spectator-box"
+            rx="1"
+            ry="1"
+            x="0"
+            y="0"
+            [@spectatorBoxGrow]="player.isObserved"
+            [attr.width]="spectatorBoxWidth"
+            height="95"
+          ></rect>
         </svg>
       </div>
       <div class="info-container">
@@ -102,9 +155,8 @@
           <div
             class="currency-container"
             [class]="side"
-            [ngClass]="{
-              'shifted': !player.auxiliaryAvailable.health || hideAuxiliary
-            }"
+            [@creditsDeathAnimation]="!player.isAlive"
+            [style.transform]="!player.isAlive ? 'translateY(50px) translateX(-140px)' : 'none'"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -123,11 +175,12 @@
             <div
               class="currency-title"
               [class]="color"
-              [ngStyle]="{
-                transform: !player.auxiliaryAvailable.health || !hideAuxiliary
-                  ? 'translateY(1px)'
-                  : 'translateY(0px)'
+               [ngStyle]="{
+                transform: 
+                  (side === 'right' ? 'scaleX(-1) ' : '') +
+                  (!player.auxiliaryAvailable.health || !hideAuxiliary ? 'translateY(1px)' : 'translateY(0px)')
               }"
+              
             >
               {{ player.money }}
             </div>
