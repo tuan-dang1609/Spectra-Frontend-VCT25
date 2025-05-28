@@ -1,6 +1,6 @@
-import { Component, Input, OnInit } from "@angular/core";
-import { Config } from "../../shared/config";
 import { animate, style, transition, trigger } from "@angular/animations";
+import { Component, Input, OnInit, OnDestroy } from "@angular/core";
+import { Config } from "../../shared/config";
 
 @Component({
   selector: "app-topinfo",
@@ -11,9 +11,19 @@ import { animate, style, transition, trigger } from "@angular/animations";
       transition(":enter", [style({ opacity: 0 }), animate("1s", style({ opacity: 1 }))]),
       transition(":leave", [animate("1s", style({ opacity: 0 }))]),
     ]),
+    trigger("fadeCycle", [
+      transition(":enter", [
+        style({ opacity: 0, position: "absolute", width: "100%", textAlign: "center" }),
+        animate("600ms ease-in-out", style({ opacity: 1 })),
+      ]),
+      transition(":leave", [
+        style({ opacity: 1, position: "absolute", width: "100%", textAlign: "center" }),
+        animate("600ms ease-in-out", style({ opacity: 0 })),
+      ]),
+    ]),
   ],
 })
-export class TopinfoComponent implements OnInit {
+export class TopinfoComponent implements OnInit, OnDestroy {
   @Input() match!: any;
 
   sponsorsAvailable = false;
@@ -21,6 +31,9 @@ export class TopinfoComponent implements OnInit {
   currentSponsorIndex = 0;
   showEventName!: boolean;
   eventName!: string;
+
+  displayAttributionContent = false;
+  private attributionIntervalId: any;
 
   constructor(private config: Config) {}
 
@@ -35,6 +48,29 @@ export class TopinfoComponent implements OnInit {
         setInterval(() => this.nextSponsor(), this.config.sponsorImageRotateSpeed);
       }
     }
+
+    if (this.showEventName) {
+      this.startAttributionCycle();
+    }
+  }
+
+  ngOnDestroy() {
+    this.clearAttributionInterval();
+  }
+
+  private startAttributionCycle(): void {
+    this.clearAttributionInterval();
+    this.displayAttributionContent = false;
+    this.attributionIntervalId = setInterval(() => {
+      this.displayAttributionContent = !this.displayAttributionContent;
+    }, 8000);
+  }
+
+  private clearAttributionInterval(): void {
+    if (this.attributionIntervalId) {
+      clearInterval(this.attributionIntervalId);
+      this.attributionIntervalId = null;
+    }
   }
 
   nextSponsor() {
@@ -42,12 +78,10 @@ export class TopinfoComponent implements OnInit {
   }
 
   mapInfoForSlot(slot: number) {
-    // Return the mapinfo object for this slot, or a default if not available
     return this.match.tools.seriesInfo.mapInfo[slot] || {};
   }
 
   isDeciderForSlot(slot: number) {
-    // Your logic for decider, if needed
     return false;
   }
 }
