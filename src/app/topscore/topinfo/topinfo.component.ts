@@ -1,5 +1,5 @@
 import { animate, style, transition, trigger } from "@angular/animations";
-import { Component, Input, OnInit, OnDestroy } from "@angular/core";
+import { Component, Input, OnInit, OnDestroy, OnChanges, SimpleChanges } from "@angular/core";
 import { Config } from "../../shared/config";
 
 @Component({
@@ -35,6 +35,8 @@ export class TopinfoComponent implements OnInit, OnDestroy {
   displayAttributionContent = false;
   private attributionIntervalId: any;
 
+  sponsorInterval: any;
+
   constructor(private config: Config) {}
 
   ngOnInit() {
@@ -46,6 +48,25 @@ export class TopinfoComponent implements OnInit, OnDestroy {
       this.currentSponsorIndex = 0;
       if (this.config.sponsorImageUrls.length > 1) {
         setInterval(() => this.nextSponsor(), this.config.sponsorImageRotateSpeed);
+      }
+    }
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    const newSponsors = changes["tools"]["currentValue"]["sponsorInfo"] as SponsorInfo;
+    if (newSponsors) {
+      if (newSponsors.enabled != this.sponsorsAvailable) {
+        this.sponsorsAvailable = newSponsors.enabled;
+      }
+      if (newSponsors.sponsors != this.sponsorImages) {
+        this.sponsorImages = newSponsors.sponsors;
+        this.currentSponsorIndex = 0; // Reset to first sponsor in case we might be out of bounds
+        if (this.sponsorInterval) {
+          clearInterval(this.sponsorInterval);
+        }
+        if (this.sponsorImages.length > 1) {
+          this.sponsorInterval = setInterval(() => this.nextSponsor(), newSponsors.duration);
+        }
       }
     }
 
@@ -71,10 +92,14 @@ export class TopinfoComponent implements OnInit, OnDestroy {
       clearInterval(this.attributionIntervalId);
       this.attributionIntervalId = null;
     }
+
+    if (this.showEventName) {
+      this.startAttributionCycle();
+    }
   }
 
   nextSponsor() {
-    this.currentSponsorIndex = (this.currentSponsorIndex + 1) % this.config.sponsorImageUrls.length;
+    this.currentSponsorIndex = (this.currentSponsorIndex + 1) % this.sponsorImages.length;
   }
 
   mapInfoForSlot(slot: number) {
@@ -84,4 +109,10 @@ export class TopinfoComponent implements OnInit, OnDestroy {
   isDeciderForSlot(slot: number) {
     return false;
   }
+}
+
+interface SponsorInfo {
+  enabled: boolean;
+  duration: number;
+  sponsors: string[];
 }
