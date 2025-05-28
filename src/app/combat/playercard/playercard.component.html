@@ -48,26 +48,50 @@
       <!-- Everything else is wrapped and hidden if dead -->
       <div [style.opacity]="!player.isAlive ? 0 : 1">
         <!-- Spectator/Alive gradients (only show if not dead) -->
+        <!-- Keep class for positioning/sizing -->
         <svg
           *ngIf="player.isAlive"
           class="aab"
-          [ngClass]="{ observed: player.isObserved }"
+          xmlns="http://www.w3.org/2000/svg"
         >
-          <linearGradient id="aab" spreadMethod="pad" x1="0.366" x2="0" y1="0.5" y2="0.5">
-            <stop offset="0" stop-color="#292929" stop-opacity="0.71"></stop>
-            <stop offset="0.4038" stop-color="#615c46" stop-opacity="0.749"></stop>
-            <stop offset="1" stop-color="#cab857" stop-opacity="0.29"></stop>
-          </linearGradient>
-          <rect id="aab" rx="1" ry="1" x="0" y="0" width="348" height="37"></rect>
+          <defs>
+            <linearGradient id="spectatorYellowGradient" spreadMethod="pad" x1="0.366" x2="0" y1="0.5" y2="0.5">
+              <stop offset="0" stop-color="#292929" stop-opacity="0.71"></stop>
+              <stop offset="0.4038" stop-color="#615c46" stop-opacity="0.749"></stop>
+              <stop offset="1" stop-color="#cab857" stop-opacity="0.29"></stop>
+            </linearGradient>
+          </defs>
+          <rect
+            rx="1"
+            ry="1"
+            x="0"
+            y="0"
+            width="348"
+            height="37"
+            [attr.fill]="player.isObserved ? 'url(#spectatorYellowGradient)' : 'rgba(41,41,41,0.71)'"
+          />
         </svg>
-        <svg class="aac" [ngClass]="{ dead: !player.isAlive }">
-          <linearGradient id="aac" spreadMethod="pad" x1="0" x2="0.526" y1="0.77" y2="0.765">
-            <stop offset="0" stop-color="#b3a23e" stop-opacity="0.439"></stop>
-            <stop offset="1" stop-color="#292929" stop-opacity="0.361"></stop>
-          </linearGradient>
-          <rect id="aac" rx="2" ry="2" x="0" y="0" width="350" height="95">
+        <!-- MODIFIED SVG.AAC BLOCK STARTS HERE -->
+        <svg class="aac" xmlns="http://www.w3.org/2000/svg">
+          <!-- Removed [ngClass] as it's not needed for fill here -->
+          <defs>
+            <linearGradient id="observedMainCardGradient" spreadMethod="pad" x1="0" x2="0.526" y1="0.77" y2="0.765">
+              <stop offset="0" stop-color="#b3a23e" stop-opacity="0.439"></stop>
+              <stop offset="1" stop-color="#292929" stop-opacity="0.361"></stop>
+            </linearGradient>
+          </defs>
+          <rect
+            rx="2" 
+            ry="2" 
+            x="0" 
+            y="0" 
+            width="350" 
+            height="95"
+            [attr.fill]="player.isObserved ? 'url(#observedMainCardGradient)' : 'rgba(41,41,41,0.361)'"
+          >
           </rect>
         </svg>
+        <!-- MODIFIED SVG.AAC BLOCK ENDS HERE -->
         <svg class="aad">
           <rect id="aad" rx="2" ry="2" x="0" y="0" width="350" height="95">
           </rect>
@@ -92,7 +116,7 @@
         (player.isObserved ? 'observed' : '')
       "
     >
-      <div class="spectator-icon-container" [class]="side" *ngIf="player.isObserved">
+      <div class="spectator-icon-container" [class]="side" *ngIf="player.isObserved && player.isAlive">
         <img
           class="spectator-icon"
           src="{{ assets }}/misc/ObserverEye.svg"
@@ -240,4 +264,3 @@
       <span *ngIf="player.hasSpike" class="spike-bg"></span>
   </div>
 </div>
-

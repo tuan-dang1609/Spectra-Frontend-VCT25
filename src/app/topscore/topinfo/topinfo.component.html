@@ -32,12 +32,28 @@
   </ng-container>
 </div>
 
-<div
-  *ngIf="showEventName"
-  class="event-name-container"
->
+
+<div class="event-name-container">
   <img class="event-name-bg" src="/assets/topscore/topinfo/eventName.svg" alt="Event Name Background" />
-  <span class="event-name-text">{{ eventName }}</span>
+
+  <div class="cycling-or-static-content-wrapper">
+    <ng-container *ngIf="showEventName">
+      <!-- CAUTION: Attribution is a required part of using Spectra, so please do not remove this portion of code, lest you be smited by the gods! -->
+      <span *ngIf="!displayAttributionContent" class="event-name-text-cycling" @fadeCycle>{{ eventName }}</span>
+      <div *ngIf="displayAttributionContent" class="attribution-content-cycling" @fadeCycle>
+        <img src="assets/misc/icon.webp" class="attribution-icon" alt="Spectra Icon">
+        <span class="attribution-text-part">OVERLAY BY SPECTRA</span>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="!showEventName">
+      <!-- CAUTION: Attribution is a required part of using Spectra, so please do not remove this portion of code, lest you be smited by the gods! -->
+      <div class="attribution-content-static">
+        <img src="assets/misc/icon.webp" class="attribution-icon" alt="Spectra Icon">
+        <span class="attribution-text-part">OVERLAY BY SPECTRA</span>
+      </div>
+    </ng-container>
+  </div>
 </div>
 
 <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
