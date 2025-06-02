@@ -1,4 +1,6 @@
-<div class="topinfo-container">
+<div class="topinfo-container"
+  [style.opacity]="!mapInfoForSlot(0).type ? '0' : '1'"
+>
   <app-mapinfo
     [map]="match.map"
     [mapinfo]="mapInfoForSlot(0)"

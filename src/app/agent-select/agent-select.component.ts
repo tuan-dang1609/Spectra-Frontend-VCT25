@@ -254,25 +254,28 @@ export class AgentSelectComponent implements OnInit, AfterViewInit, OnDestroy {
   }
   
   private updateRiveTextsAndInputs(): void {
-    if (!this.riveInstance || !this.match) return;
+    if (!this.riveInstance || !this.match) {
+      console.log("updateRiveTextsAndInputs: Skipping, Rive instance or match data not available.");
+      return;
+    }
+    console.log("updateRiveTextsAndInputs: Called");
 
-    // Example of updating Rive Inputs (if your Rive file uses them for colors)
-    // Replace 'LeftTeamColorInputName' with actual input names from your Rive file
-    // this.riveInstance.setInputState('LeftTeamColorInputName', this.match.teams[0].isAttacking ? "#1C8C74" : "#80152D");
-    // this.riveInstance.setInputState('RightTeamColorInputName', this.match.teams[1].isAttacking ? "#1C8C74" : "#80152D");
-    
-    // Update viewModel properties if they are directly accessible and used by Rive (less common for standard Rive inputs)
-     if ((this.riveInstance as any).viewModel) { // Check if viewModel exists
-       (this.riveInstance as any).viewModel.leftTeamSide = this.match.teams[0].isAttacking ? "#1C8C74" : "#80152D";
-       (this.riveInstance as any).viewModel.rightTeamSide = this.match.teams[1].isAttacking ? "#1C8C74" : "#80152D";
-     }
+    const viewModelInstance = (this.riveInstance as any).viewModelInstance;
+    console.log("updateRiveTextsAndInputs: viewModelInstance:", viewModelInstance);
 
-    const leftTeamSide = this.match.teams[0].isAttacking ? "ATK" : "DEF";
-    const rightTeamSide = this.match.teams[1].isAttacking ? "ATK" : "DEF";
+    if (viewModelInstance) {
+      // Color assignment logic removed
+      // setTimeout block for color assignment removed
+    } else {
+      console.error("Rive ViewModelInstance not found. Ensure 'autoBind: true' is set in Rive parameters and a default ViewModel (e.g., named 'Default') is configured in the Rive editor for the artboard.");
+    }
+
+    const leftTeamSideText = this.match.teams[0].isAttacking ? "ATK" : "DEF";
+    const rightTeamSideText = this.match.teams[1].isAttacking ? "ATK" : "DEF";
     this.riveInstance.setTextRunValue("leftTeamName", this.match.teams[0].teamName?.toUpperCase() || "");
-    this.riveInstance.setTextRunValue("leftTeamSide", leftTeamSide);
+    this.riveInstance.setTextRunValue("leftTeamSide", leftTeamSideText);
     this.riveInstance.setTextRunValue("rightTeamName", this.match.teams[1].teamName?.toUpperCase() || "");
-    this.riveInstance.setTextRunValue("rightTeamSide", rightTeamSide);
+    this.riveInstance.setTextRunValue("rightTeamSide", rightTeamSideText);
     this.riveInstance.setTextRunValue("mapName", this.match.map?.toUpperCase() || "");
 
     // Calculate current map number in the series
@@ -326,6 +329,7 @@ export class AgentSelectComponent implements OnInit, AfterViewInit, OnDestroy {
       src: "/assets/agentSelect/agent_select.riv",
       canvas: this.canvasElement,
       autoplay: false,
+      autoBind: true, 
       // @ts-ignore - Rive runtime supports async assetLoader, type definition is outdated
       assetLoader: async (asset: FileAsset, bytes: Uint8Array) => {
         const imageMatch = asset.name.match(/^([LR])(\d+)_agent$|^([LR])(\d+)_role$/i);
@@ -427,6 +431,28 @@ export class AgentSelectComponent implements OnInit, AfterViewInit, OnDestroy {
         if (!this.riveInstance || !this.canvasElement) { // Check for canvasElement too
             console.error("Rive onLoad: Rive instance or canvasElement is null.");
             return;
+        }
+        const animInstance = this.riveInstance.viewModelInstance;
+        const leftTeamColor = animInstance?.color('leftTeamSide');
+        const rightTeamColor = animInstance?.color('rightTeamSide');
+
+        if (this.match.teams?.[0]?.isAttacking) {
+          if (leftTeamColor) {
+            leftTeamColor.value = 0x80152D;
+          }
+        } else if (this.match.teams?.[1]?.isAttacking) {
+          if (leftTeamColor) {
+            leftTeamColor.value = 0x1C8C74;
+          }
+        }
+        if (this.match.teams?.[1]?.isAttacking) {
+          if (rightTeamColor) {
+            rightTeamColor.value = 0x80152D;
+          }
+        } else if (this.match.teams?.[0]?.isAttacking) {
+          if (rightTeamColor) {
+            rightTeamColor.value = 0x1C8C74;
+          }
         }
         console.log("Rive animation loaded. Setting initial texts.");
         this.updateRiveTextsAndInputs(); // Set initial texts and inputs
