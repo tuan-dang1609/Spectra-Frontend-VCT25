@@ -222,7 +222,7 @@
       <div
         class="health-bar"
         [class]="color"
-        [style.width.%]="182 * (player.health / 100)"
+        [style.width.%]="clamp(player.health * 1.82, 0, 182)" 
         [@deathAnimation]="player.isAlive"
         *ngIf="player.isAlive"
       ></div>
