@@ -9,7 +9,7 @@ import { TestingComponent } from "./testing/testing.component";
 import { FormsModule } from "@angular/forms";
 import { TrackerComponent } from "./tracker/tracker.component";
 import { TopscoreComponent } from "./topscore/topscore-custom.component";
-import { ScoreboardComponent } from "./scoreboard/scoreboard.component";
+import { ScoreboardComponent, ScoreboardOrderPipe } from "./scoreboard/scoreboard.component";
 import { CombatComponent } from "./combat/combat.component";
 import { TopinfoComponent } from "./topscore/topinfo/topinfo.component";
 import {
@@ -29,6 +29,7 @@ import { ShieldIconComponent } from "./combat/playercard/shield-icon/shield-icon
 import { MapinfoComponent } from "./topscore/topinfo/mapinfo/mapinfo.component";
 import { JsonPipe } from "@angular/common";
 import { AgentSelectComponent } from "./agent-select/agent-select.component";
+import { AgentSelectTestingComponent } from "./testing/agent-select/agent-select-testing";
 import { SelectTeamInfoComponent } from "./agent-select/select-team-info/select-team-info.component";
 import { SelectPlayerInfoComponent } from "./agent-select/select-player-info/select-player-info.component";
 import { AutoswitchComponent } from "./autoswitch/autoswitch.component";
@@ -36,6 +37,7 @@ import { RedirectComponent } from "./redirect/redirect.component";
 import { TimeoutComponent } from "./timeout/timeout.component";
 import { AbilitiesComponent } from "./abilities/abilities.component";
 import { UltimateComponent } from "./ultimate/ultimate.component";
+import { Agent } from "http";
 
 @NgModule({
   declarations: [
@@ -56,6 +58,7 @@ import { UltimateComponent } from "./ultimate/ultimate.component";
     ShieldIconComponent,
     MapinfoComponent,
     AgentSelectComponent,
+    AgentSelectTestingComponent,
     SelectTeamInfoComponent,
     SelectPlayerInfoComponent,
     AutoswitchComponent,
@@ -64,7 +67,8 @@ import { UltimateComponent } from "./ultimate/ultimate.component";
     AbilitiesComponent,
     InhouseTrackerPlayercardMinimalComponent,
     PlayerscoreMinimalComponent,
-    UltimateComponent,
+    ScoreboardOrderPipe,
+    UltimateComponent
   ],
   exports: [],
   bootstrap: [AppComponent],

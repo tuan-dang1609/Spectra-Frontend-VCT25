@@ -127,3 +127,53 @@
   text-overflow: ellipsis;       // Adds ... if text is too long
   padding: 0 12px;               // Adjust as needed, but keep it small
 }
+
+// Wrapper for the content that will be centered over the background
+.cycling-or-static-content-wrapper {
+  position: absolute; // To overlay on top of event-name-bg
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1; // Above .event-name-bg
+  // Base text styles, can be overridden by specific text classes
+  font-family: "DIN Next W1G Medium", Helvetica, Arial, sans-serif;
+  font-size: 12px;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-align: center; // Fallback for non-flex content, though children are flexed
+}
+
+// Specific class for event name text when it's part of the cycle
+.event-name-text-cycling {
+  // Inherits most styles from .cycling-or-static-content-wrapper
+  // Add any specific overrides if needed
+  display: flex; // Ensure it behaves like original .event-name-text
+  align-items: center;
+  justify-content: center;
+}
+
+// Container for attribution content (both cycling and static versions)
+.attribution-content-cycling,
+.attribution-content-static {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  // Inherits text styles from .cycling-or-static-content-wrapper
+}
+
+.attribution-icon {
+  height: 18px; // Adjust size to fit well within the 25px height of event-name-container
+  width: auto;
+  margin-right: 6px; // Space between icon and text
+}
+
+.attribution-text-part {
+  // Text styles are inherited from .cycling-or-static-content-wrapper
+  // No specific overrides needed unless desired
+  white-space: nowrap; // Prevent "OVERLAY BY SPECTRA" from wrapping
+}
