@@ -1,30 +1,29 @@
 <div class="wrapper">
   <div class="iner-wrapper" *ngIf="anyTimeout" [@timeoutPopup]>
     <div class="timeout-box-content">
-      <div class="info-box">
+      <div class="info-box" *ngIf="match && timeout"><!-- Added guard -->
         <!-- Left team timeout -->
-        <img
-          *ngIf="timeout.techPause === false && timeout.leftTeam && match.teams[0].isAttacking"
-          class="info-image"
-          src="/assets/timeout/redTimeout.svg"
-        />
-        <img
-          *ngIf="timeout.techPause === false && timeout.leftTeam && !match.teams[0].isAttacking"
-          class="info-image"
-          src="/assets/timeout/greenTimeout.svg"
-        />
+        <div class="timeout-content-wrapper" *ngIf="timeout.techPause === false && timeout.leftTeam">
+          <img
+            class="info-image"
+            [src]="match.teams[0].isAttacking ? '/assets/timeout/redTimeout.svg' : '/assets/timeout/greenTimeout.svg'"
+          />
+          <div class="team-overlay-info">
+            <img class="team-logo-timeout" [src]="match.teams[0].teamUrl" alt="{{ match.teams[0].teamName }} logo" />
+            <div class="team-name-timeout">{{ match.teams[0].teamName | uppercase }}</div>
+          </div>
+        </div>
         <!-- Right team timeout -->
-        <img
-          *ngIf="timeout.techPause === false && !timeout.leftTeam && match.teams[1].isAttacking"
-          class="info-image"
-          src="/assets/timeout/redTimeout.svg"
-        />
-        <img
-          *ngIf="timeout.techPause === false && !timeout.leftTeam && !match.teams[1].isAttacking"
-          class="info-image"
-          src="/assets/timeout/greenTimeout.svg"
-        />
-
+        <div class="timeout-content-wrapper" *ngIf="timeout.techPause === false && !timeout.leftTeam && timeout.rightTeam">
+          <img
+            class="info-image"
+            [src]="match.teams[1].isAttacking ? '/assets/timeout/redTimeout.svg' : '/assets/timeout/greenTimeout.svg'"
+          />
+          <div class="team-overlay-info">
+            <img class="team-logo-timeout" [src]="match.teams[1].teamUrl" alt="{{ match.teams[1].teamName }} logo" />
+            <div class="team-name-timeout">{{ match.teams[1].teamName | uppercase }}</div>
+          </div>
+        </div>
         <!-- Tech pause handling remains unchanged -->
         <div *ngIf="timeout.techPause === true" class="pause-tech">
           <img class="info-image" src="/assets/timeout/techTimeout.svg" />
