@@ -1,5 +1,5 @@
-import { animate, style, transition, trigger } from "@angular/animations";
 import { Component, Input, OnInit, OnDestroy, OnChanges, SimpleChanges } from "@angular/core";
+import { animate, style, transition, trigger } from "@angular/animations";
 import { Config } from "../../shared/config";
 
 @Component({
@@ -23,7 +23,7 @@ import { Config } from "../../shared/config";
     ]),
   ],
 })
-export class TopinfoComponent implements OnInit, OnDestroy {
+export class TopinfoComponent implements OnInit, OnDestroy, OnChanges {
   @Input() match!: any;
 
   sponsorsAvailable = false;
@@ -34,57 +34,111 @@ export class TopinfoComponent implements OnInit, OnDestroy {
 
   displayAttributionContent = false;
   private attributionIntervalId: any;
-
-  sponsorInterval: any;
+  private sponsorIntervalId: any; // Added for sponsor cycling
 
   constructor(private config: Config) {}
 
   ngOnInit() {
     this.showEventName = this.config.showEventName;
     this.eventName = this.config.eventName;
-    this.sponsorsAvailable = this.config.sponsorImageUrls.length > 0;
-    if (this.sponsorsAvailable) {
-      this.sponsorImages = this.config.sponsorImageUrls;
-      this.currentSponsorIndex = 0;
-      if (this.config.sponsorImageUrls.length > 1) {
-        setInterval(() => this.nextSponsor(), this.config.sponsorImageRotateSpeed);
-      }
+
+    // Initialize sponsors from config as a baseline
+    this.sponsorImages = this.config.sponsorImageUrls;
+    this.sponsorsAvailable = this.sponsorImages.length > 0;
+    this.currentSponsorIndex = 0;
+    this.startSponsorCycle(); // Start sponsor cycle with config settings
+
+    if (this.showEventName) {
+      this.startAttributionCycle(); // Assuming this method is correctly defined
     }
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    const newSponsors = changes["tools"]["currentValue"]["sponsorInfo"] as SponsorInfo;
-    if (newSponsors) {
-      if (newSponsors.enabled != this.sponsorsAvailable) {
-        this.sponsorsAvailable = newSponsors.enabled;
-      }
-      if (newSponsors.sponsors != this.sponsorImages) {
-        this.sponsorImages = newSponsors.sponsors;
-        this.currentSponsorIndex = 0; // Reset to first sponsor in case we might be out of bounds
-        if (this.sponsorInterval) {
-          clearInterval(this.sponsorInterval);
-        }
-        if (this.sponsorImages.length > 1) {
-          this.sponsorInterval = setInterval(() => this.nextSponsor(), newSponsors.duration);
-        }
-      }
-    }
+    if (changes["match"] && changes["match"].currentValue) {
+      const currentMatch = changes["match"].currentValue;
+      const sponsorInfo = currentMatch.tools?.sponsorInfo;
 
-    if (this.showEventName) {
-      this.startAttributionCycle();
+      // Determine which sponsors to use: from match data or fallback to config
+      if (sponsorInfo !== undefined) {
+        // sponsorInfo object is present in match.tools
+        if (sponsorInfo.enabled && sponsorInfo.sponsors?.length) {
+          // Use sponsors from match data
+          this.sponsorImages = sponsorInfo.sponsors;
+          this.sponsorsAvailable = true;
+        } else {
+          // sponsorInfo is present but disabled or has no sponsors, so no sponsors shown
+          this.sponsorsAvailable = false;
+          this.sponsorImages = [];
+        }
+      } else {
+        // sponsorInfo object is NOT present in match.tools, so use config sponsors
+        this.sponsorImages = this.config.sponsorImageUrls;
+        this.sponsorsAvailable = this.sponsorImages.length > 0;
+      }
+      this.currentSponsorIndex = 0; // Reset index when sponsor source might change
+
+      // Restart the sponsor cycle with the potentially new set of sponsors and speed
+      this.startSponsorCycle();
     }
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.clearAttributionInterval();
+    this.clearSponsorInterval();
   }
 
+  private startSponsorCycle(): void {
+    this.clearSponsorInterval(); // Always clear any existing interval
+
+    if (this.sponsorsAvailable && this.sponsorImages.length > 1) {
+      let rotateSpeed = this.config.sponsorImageRotateSpeed; // Default speed from config
+
+      // If current sponsors are from match data and match data provides a duration
+      if (
+        this.match?.tools?.sponsorInfo?.enabled &&
+        this.match.tools.sponsorInfo.sponsors === this.sponsorImages && // Check if current images are from match
+        this.match.tools.sponsorInfo.duration > 0
+      ) {
+        rotateSpeed = this.match.tools.sponsorInfo.duration;
+      }
+
+      this.sponsorIntervalId = setInterval(() => {
+        this.nextSponsor();
+      }, rotateSpeed);
+    }
+  }
+
+  private clearSponsorInterval(): void {
+    if (this.sponsorIntervalId) {
+      clearInterval(this.sponsorIntervalId);
+      this.sponsorIntervalId = null;
+    }
+  }
+
+  nextSponsor() {
+    if (this.sponsorImages.length > 0) {
+      // Guard against operating on an empty array
+      this.currentSponsorIndex = (this.currentSponsorIndex + 1) % this.sponsorImages.length;
+    }
+  }
+
+  mapInfoForSlot(slot: number) {
+    // Added optional chaining for safety
+    return this.match?.tools?.seriesInfo?.mapInfo[slot] || {};
+  }
+
+  isDeciderForSlot(slot: number) {
+    // Placeholder for actual logic if needed
+    return false;
+  }
+
+  // Assuming attribution cycle methods are defined as they were from previous context
   private startAttributionCycle(): void {
     this.clearAttributionInterval();
-    this.displayAttributionContent = false;
+    // Ensure displayAttributionContent is initialized if necessary
     this.attributionIntervalId = setInterval(() => {
       this.displayAttributionContent = !this.displayAttributionContent;
-    }, 8000);
+    }, 8000); // Cycle every 8 seconds, adjust as needed
   }
 
   private clearAttributionInterval(): void {
@@ -92,27 +146,11 @@ export class TopinfoComponent implements OnInit, OnDestroy {
       clearInterval(this.attributionIntervalId);
       this.attributionIntervalId = null;
     }
-
-    if (this.showEventName) {
-      this.startAttributionCycle();
-    }
-  }
-
-  nextSponsor() {
-    this.currentSponsorIndex = (this.currentSponsorIndex + 1) % this.sponsorImages.length;
-  }
-
-  mapInfoForSlot(slot: number) {
-    return this.match.tools.seriesInfo.mapInfo[slot] || {};
-  }
-
-  isDeciderForSlot(slot: number) {
-    return false;
   }
 }
 
 interface SponsorInfo {
   enabled: boolean;
-  duration: number;
+  duration: number; // This is the rotation speed for sponsors from match data
   sponsors: string[];
 }

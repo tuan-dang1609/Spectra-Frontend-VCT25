@@ -37,7 +37,7 @@
 }
 
 .info-box {
-  position: relative;
+  position: relative; // Needed for absolute positioning of children if any
   flex-grow: 1;
   display: flex;
   flex-direction: column;
@@ -48,10 +48,38 @@
   row-gap: 10px;
 }
 
+.timeout-content-wrapper {
+  position: relative; // To allow absolute positioning of team-overlay-info
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .info-image {
-  position: relative;
+  position: relative; // Or static, depending on original layout
   max-height: 120px;
   max-width: 400px;
+}
+
+.team-overlay-info {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px; // Space between logo and name
+  z-index: 1; // Ensure it's above the info-image
+  pointer-events: none; // If no interaction is needed
+}
+
+.team-logo-timeout {
+  max-width: 36px;
+  transform: translateY(4px); // was 80px
+  max-height: 36px; // was 80px
+  object-fit: contain;
 }
 
 .info-text {
@@ -107,4 +135,13 @@
   font-size: 18px;
   z-index: 2;
   text-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+}
+
+.team-name-timeout {
+  font-family: "Anton", sans-serif;
+  font-size: 18px; // was 42px
+  color: white;
+  text-transform: uppercase;
+  text-align: center;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); // Optional: for better readability
 }
