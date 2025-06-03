@@ -97,16 +97,16 @@ export class AgentSelectTestingComponent implements OnInit, AfterViewInit {
       roundPhase: "LOBBY",
       teams: [
         {
-          teamName: "G2 Esports",
+          teamName: "The Naturals",
           teamTricode: "INT",
-          teamUrl: "assets/misc/g2.png",
+          teamUrl: "assets/misc/icon.webp",
           players: [],
           isAttacking: true
         },
         {
-          teamName: "Sentinels",
+          teamName: "The Zoologists",
           teamTricode: "ZOO",
-          teamUrl: "assets/misc/sentinels.png",
+          teamUrl: "assets/misc/icon.webp",
           players: [],
           isAttacking: false
         }
