@@ -2,6 +2,7 @@ import { AfterViewInit, Component, ViewChild } from "@angular/core";
 import { TrackerComponent } from "../tracker/tracker.component";
 import { ActivatedRoute } from "@angular/router";
 import { TeamControllerComponent } from "./team-controller/team-controller.component";
+import { HttpClient } from "@angular/common/http";
 
 @Component({
   selector: "app-testing",
@@ -18,22 +19,56 @@ export class TestingComponent implements AfterViewInit {
   roundPhase: "shopping" | "combat" | "end" = "combat";
   hideAuxiliary = false;
 
+  loadingPreview = false;
+  loadingPreviewText = "Loading preview match data...";
+  previewCode = "";
+  previewMatch = undefined;
+
   showInterface = true;
   showBackground = true;
   backgroundClass = "bg1";
   backgroundClassId = 1;
 
 
-  constructor(private route: ActivatedRoute) {
+  constructor(
+    private route: ActivatedRoute,
+    private http: HttpClient,
+  ) {
     this.route.queryParams.subscribe((params) => {
       this.hideAuxiliary = params["hideAuxiliary"] != undefined;
+      this.previewCode = params["previewCode"] || "";
     });
   }
 
-  ngAfterViewInit(): void {
-    this.matchData = this.trackerComponent.match;
-    this.matchData.teams[0] = this.team1.getData();
-    this.matchData.teams[1] = this.team2.getData();
+  async ngAfterViewInit() {
+    if (this.previewCode !== "") {
+      this.loadingPreview = true;
+      this.http.get(`http://localhost:5101/preview/${this.previewCode}`).subscribe({
+        next: (data: any) => {
+          this.previewMatch = data;
+          this.matchData = this.previewMatch;
+          console.log("Preview match data loaded:", this.matchData);
+          this.team2.swapColor();
+          this.trackerComponent.updateMatch(this.matchData);
+          for (let i = 0; i < 5; i++) {
+            this.team1.addPlayer();
+            this.team2.addPlayer();
+          }
+
+          this.roundPhase = this.matchData.roundPhase;
+
+          this.loadingPreview = false;
+        },
+        error: (err) => {
+          console.error("Error fetching preview match data:", err);
+          this.previewCode = "";
+          this.ngAfterViewInit();
+        },
+      });
+    } else {
+      this.matchData = this.trackerComponent.match;
+      this.matchData.teams[0] = this.team1.getData();
+      this.matchData.teams[1] = this.team2.getData();
 
     this.matchData.switchRound = 13;
 
@@ -121,7 +156,8 @@ export class TestingComponent implements AfterViewInit {
       this.team2.addPlayer();
     }
 
-    this.roundPhase = this.matchData.roundPhase;
+      this.roundPhase = this.matchData.roundPhase;
+    }
   }
 
   changeRoundPhase(): void {
