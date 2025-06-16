@@ -127,9 +127,35 @@ export class TopinfoComponent implements OnInit, OnDestroy, OnChanges {
     return this.match?.tools?.seriesInfo?.mapInfo[slot] || {};
   }
 
-  isDeciderForSlot(slot: number) {
-    // Placeholder for actual logic if needed
-    return false;
+  isDeciderForSlot(slotIndex: number): boolean {
+    const seriesInfo = this.match?.tools?.seriesInfo;
+
+    if (!seriesInfo || typeof seriesInfo.needed !== 'number' || seriesInfo.needed <= 0) {
+      return false;
+    }
+
+    const pillMapData = this.mapInfoForSlot(slotIndex);
+
+    // Show decider only on maps labeled as 'future'
+    if (pillMapData.type !== 'future') {
+      return false;
+    }
+
+    // Calculate series progression
+    const mapsPlayedCount = (seriesInfo.wonLeft || 0) + (seriesInfo.wonRight || 0);
+    const maxMapsPossibleInSeries = (seriesInfo.needed * 2) - 1;
+
+    // The decider map is the last possible map in the series (0-indexed).
+    const deciderMapOverallIndex = maxMapsPossibleInSeries - 1;
+
+    // The "future" pill displays the map that comes after the current map
+    // If 0 maps have been played, the current map is map 0 (0-indexed), and the future pill shows map 1 (0-indexed)
+    // If 1 map has been played, the current map is map 1 (0-indexed), and the future pill shows map 2 (0-indexed)
+    // So, the 0-indexed number of the map that this 'future' pill represents is mapsPlayedCount + 1
+    const overallIndexForTheMapInThisFuturePill = mapsPlayedCount + 1;
+    
+    // This pill represents the decider if the map it's set to display is the decider map of the series
+    return overallIndexForTheMapInThisFuturePill === deciderMapOverallIndex;
   }
 
   // Assuming attribution cycle methods are defined as they were from previous context

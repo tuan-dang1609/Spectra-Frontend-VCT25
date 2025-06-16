@@ -75,9 +75,9 @@ export class TestingComponent implements AfterViewInit {
 
     this.matchData.tools = {
       seriesInfo: {
-        needed: 3,
-        wonLeft: 2,
-        wonRight: 1,
+        needed: 2,
+        wonLeft: 1,
+        wonRight: 0,
         mapInfo: [
           {
             type: "past",

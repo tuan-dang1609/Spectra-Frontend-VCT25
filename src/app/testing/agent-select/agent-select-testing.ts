@@ -113,7 +113,7 @@ export class AgentSelectTestingComponent implements OnInit, AfterViewInit {
       ],
       spikeState: { planted: false },
       map: "Pearl",
-      tools: { seriesInfo: { needed: 1, wonLeft: 0, wonRight: 0, mapInfo: [] } }
+      tools: { seriesInfo: { needed: 3, wonLeft: 2, wonRight: 2, mapInfo: [] } }
     };
     this.fillAllAgents();
   }

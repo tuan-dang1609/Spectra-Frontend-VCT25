@@ -17,9 +17,14 @@ import {
 import { AgentNameService } from "../services/agentName.service";
 import { AgentRoleService } from "../services/agentRole.service";
 
-// Define loadAndDecodeImage outside or as a static/private helper method
-// if it doesn't need `this` context from the class instance directly,
-// or pass necessary context if it does.
+// Helper functions for CJK character detection
+// Hiragana and Katakana (Japanese specific scripts)
+const JAPANESE_KANA_REGEX = /[\u3040-\u30ff\uFF66-\uFF9F]/;
+// Hangul (Korean specific script)
+const KOREAN_HANGUL_REGEX = /[\uAC00-\uD7AF\u1100-\u11FF\u3130-\u318F]/;
+// CJK Unified Ideographs (covers Chinese Hanzi, Japanese Kanji)
+const CJK_IDEOGRAPHS_REGEX = /[\u4E00-\u9FFF\u3400-\u4DBF\uF900-\uFAFF]/;
+
 async function loadAndDecodeImageHelper(asset: FileAsset, url: string, targetWidth?: number, targetHeight?: number): Promise<boolean> {
   let imageBitmap: ImageBitmap | null = null; // Declare imageBitmap here so it's visible in finally
   try {
@@ -280,17 +285,23 @@ export class AgentSelectComponent implements OnInit, AfterViewInit, OnDestroy {
 
     // Calculate current map number in the series
     const seriesInfo = this.match.tools?.seriesInfo;
-    let mapNum = 1;
-    if (seriesInfo) {
+    let mapNumText = ""; // Initialize to empty string
+    if (seriesInfo && seriesInfo.needed > 1) {
+      let mapNum = 1;
       const mapsPlayed = (seriesInfo.wonLeft || 0) + (seriesInfo.wonRight || 0);
       mapNum = mapsPlayed + 1;
-      // Clamp to max needed if you want to avoid showing e.g. "MAP 4" in a Bo3
-      if (seriesInfo.needed && mapNum > seriesInfo.needed) {
-        mapNum = seriesInfo.needed;
+      
+      // Calculate the maximum number of maps possible in the series
+      const maxMapsPossibleInSeries = (seriesInfo.needed * 2) - 1;
+
+      // Clamp mapNum to the maximum possible maps in the series
+      if (mapNum > maxMapsPossibleInSeries) {
+        mapNum = maxMapsPossibleInSeries;
       }
+      mapNumText = "MAP " + mapNum;
     }
 
-    this.riveInstance.setTextRunValue("mapNum", "MAP " + mapNum);
+    this.riveInstance.setTextRunValue("mapNum", mapNumText);
 
     const leftPlayers = this.match.teams[0].players;
     const rightPlayers = this.match.teams[1].players;
@@ -310,6 +321,52 @@ export class AgentSelectComponent implements OnInit, AfterViewInit, OnDestroy {
       return;
     }
 
+    // Determine the best font for "Noto Sans Mono" based on player names
+    let finalFontUrlForNotoSansMono = "/assets/fonts/NotoSansMono/NotoSansMono-Bold.ttf"; // Default
+    const playerNames: string[] = [];
+
+    if (this.match && this.match.teams) {
+      this.match.teams.forEach((team: any) => {
+        if (team.players) {
+          team.players.forEach((player: any) => {
+            if (player && player.name && typeof player.name === 'string') {
+              playerNames.push(player.name);
+            }
+          });
+        }
+      });
+    }
+
+    let hasJapaneseKanaChars = false;
+    let hasKoreanHangulChars = false;
+    let hasIdeographChars = false;
+
+    for (const name of playerNames) {
+      if (JAPANESE_KANA_REGEX.test(name)) {
+        hasJapaneseKanaChars = true;
+      }
+      if (KOREAN_HANGUL_REGEX.test(name)) {
+        hasKoreanHangulChars = true;
+      }
+      if (CJK_IDEOGRAPHS_REGEX.test(name)) {
+        hasIdeographChars = true;
+      }
+    }
+
+    // Priority: Japanese (Kana) > Korean (Hangul) > CJK Ideographs (Chinese/Kanji) > Default Latin Mono.
+    // This uses BOLD CJK fonts from your assets.
+    // WARNING: As mentioned, NotoSansJP-Bold, NotoSansKR-Bold, NotoSansSC-Bold are PROPORTIONAL.
+    // If Rive's "Noto Sans Mono" text elements require a MONOSPACED font, this may affect layout.
+    // Consider acquiring monospaced CJK fonts.
+    if (hasJapaneseKanaChars) {
+      finalFontUrlForNotoSansMono = "/assets/fonts/NotoSansMono/NotoSansJP-Bold.ttf";
+    } else if (hasKoreanHangulChars) {
+      finalFontUrlForNotoSansMono = "/assets/fonts/NotoSansMono/NotoSansKR-Bold.ttf";
+    } else if (hasIdeographChars) { // Catches Chinese characters or Japanese Kanji if no specific Kana/Hangul
+      finalFontUrlForNotoSansMono = "/assets/fonts/NotoSansMono/NotoSansSC-Bold.ttf"; // Using SC as a general ideograph fallback
+    }
+    // If no CJK characters are detected by the above, it remains the default NotoSansMono-Bold.ttf
+
     const container = document.querySelector(".agent-select-animation");
     if (!container) {
       console.error("Rive container .agent-select-animation not found.");
@@ -319,7 +376,6 @@ export class AgentSelectComponent implements OnInit, AfterViewInit, OnDestroy {
     this.canvasElement = document.createElement("canvas");
     this.canvasElement.width = 1920;
     this.canvasElement.height = 1080;
-    // Hide the canvas initially to prevent flash of placeholder text
     this.canvasElement.style.visibility = 'hidden'; 
     
     container.querySelectorAll("canvas").forEach((c) => c.remove()); 
@@ -382,7 +438,7 @@ export class AgentSelectComponent implements OnInit, AfterViewInit, OnDestroy {
             console.warn(`Map name not available in this.match for Rive asset '${asset.name}'. Cannot load.`);
             return false;
           }
-          const url = `/assets/maps/${mapName}.jpg`;
+          const url = `/assets/maps/${mapName}.webp`;
           return loadAndDecodeImageHelper(asset, url, 1500, 1500);
         }
 
@@ -391,32 +447,40 @@ export class AgentSelectComponent implements OnInit, AfterViewInit, OnDestroy {
               ? this.match.tools.tournamentInfo.logoUrl
               : "../../assets/misc/logo.webp"; 
           if (/^https?:\/\//.test(url) && !url.startsWith('/proxy-image')) url = `/proxy-image?url=${encodeURIComponent(url)}`;
-          return loadAndDecodeImageHelper(asset, url, 1000, 1000);
+          return loadAndDecodeImageHelper(asset, url, 1200, 1200);
         }
-
+        
         if (asset.isFont) {
-          let fontUrl = "";
-          if (asset.name.includes("Noto Sans Mono") || asset.name.toLowerCase().includes("notosansmono")) {
-            fontUrl = "/assets/fonts/NotoSansMono/NotoSansMono-Bold.ttf";
+          let fontUrlToLoad = ""; 
+          // Check if this is the font asset designated for player names.
+          // The Rive file asset name appears to be "Noto Sans Mono" (with spaces).
+          if (asset.name.toLowerCase().includes("noto sans mono")) { // Corrected this line
+            fontUrlToLoad = finalFontUrlForNotoSansMono; // Use the dynamically determined font URL
+            console.log(`AssetLoader: Using font '${fontUrlToLoad}' for Rive font asset '${asset.name}'.`);
           }
+          // You can add 'else if' blocks here to handle other specific font assets from your Rive file
+          // else if (asset.name.toLowerCase().includes("someotherfontname")) {
+          //   fontUrlToLoad = "/assets/fonts/SomeOtherFont/SomeOtherFont-Regular.ttf";
+          // }
 
-          if (fontUrl) {
+          if (fontUrlToLoad) {
             try {
-              const response = await fetch(fontUrl);
+              const response = await fetch(fontUrlToLoad);
               if (!response.ok) {
-                console.error(`Font fetch failed for ${asset.name} from ${fontUrl}: ${response.status}`);
+                console.error(`Font fetch failed for Rive asset '${asset.name}' from '${fontUrlToLoad}': ${response.status}`);
                 return false; 
               }
               const fontBuffer = await response.arrayBuffer();
               (asset as FontAsset).decode(new Uint8Array(fontBuffer));
               return true;
             } catch (e) {
-              console.error(`Failed to load or decode font ${asset.name} from ${fontUrl}`, e);
+              console.error(`Failed to load or decode font for Rive asset '${asset.name}' from '${fontUrlToLoad}'`, e);
               return false;
             }
           }
-          console.warn(`Font asset '${asset.name}' not handled or font file path not found.`);
-          return false;
+          // If fontUrlToLoad wasn't set (asset.name didn't match known fonts)
+          console.warn(`Font asset '${asset.name}' in Rive file is not explicitly handled by the assetLoader. Rive might use a fallback or render incorrectly.`);
+          return false; // Or true if you want Rive to attempt system fallback, though behavior might be inconsistent.
         }
 
         if (asset.isImage && asset.name === "img_13") {
@@ -428,7 +492,7 @@ export class AgentSelectComponent implements OnInit, AfterViewInit, OnDestroy {
         return false;
       },
       onLoad: () => {
-        if (!this.riveInstance || !this.canvasElement) { // Check for canvasElement too
+        if (!this.riveInstance || !this.canvasElement) { 
             console.error("Rive onLoad: Rive instance or canvasElement is null.");
             return;
         }
@@ -472,7 +536,7 @@ export class AgentSelectComponent implements OnInit, AfterViewInit, OnDestroy {
       onError: (error: any) => {
         console.error("Rive load error:", error);
         this.riveInitialized = false; 
-        if (this.canvasElement) { // If canvas was created, ensure it's hidden on error too
+        if (this.canvasElement) { 
             this.canvasElement.style.visibility = 'hidden';
         }
       }
