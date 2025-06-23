@@ -29,7 +29,6 @@ export class TestingComponent implements AfterViewInit {
   backgroundClass = "bg1";
   backgroundClassId = 1;
 
-
   constructor(
     private route: ActivatedRoute,
     private http: HttpClient,
@@ -38,6 +37,13 @@ export class TestingComponent implements AfterViewInit {
       this.hideAuxiliary = params["hideAuxiliary"] != undefined;
       this.previewCode = params["previewCode"] || "";
     });
+  }
+
+  private pushUpdatesToTracker(): void {
+    if (this.trackerComponent && this.matchData) {
+      // Create a new object reference to trigger OnChanges in child components of the tracker.
+      this.trackerComponent.updateMatch({ ...this.matchData });
+    }
   }
 
   async ngAfterViewInit() {
@@ -70,94 +76,100 @@ export class TestingComponent implements AfterViewInit {
       this.matchData.teams[0] = this.team1.getData();
       this.matchData.teams[1] = this.team2.getData();
 
-    this.matchData.switchRound = 13;
+      this.matchData.switchRound = 13;
 
-    this.matchData.teams[0].roundRecord = [
-      { type: "detonated", wasAttack: true, round: 1 },
-      { type: "lost", wasAttack: true, round: 2 },
-      { type: "kills", wasAttack: true, round: 3 },
-      { type: "detonated", wasAttack: true, round: 4 },
-      { type: "lost", wasAttack: true, round: 5 },
-      { type: "kills", wasAttack: true, round: 6 },
-      { type: "lost", wasAttack: true, round: 7 },
-      { type: "detonated", wasAttack: true, round: 8 },
-      { type: "lost", wasAttack: true, round: 9 },
-      { type: "detonated", wasAttack: true, round: 10 },
-      { type: "kills", wasAttack: true, round: 11 },
-      { type: "lost", wasAttack: true, round: 12 },
-      { type: "upcoming", wasAttack: false, round: 13 },
-      { type: "upcoming", wasAttack: false, round: 14 },
-      { type: "upcoming", wasAttack: false, round: 15 },
-    ];
+      this.matchData.teams[0].roundRecord = [
+        { type: "detonated", wasAttack: true, round: 1 },
+        { type: "lost", wasAttack: true, round: 2 },
+        { type: "kills", wasAttack: true, round: 3 },
+        { type: "detonated", wasAttack: true, round: 4 },
+        { type: "lost", wasAttack: true, round: 5 },
+        { type: "kills", wasAttack: true, round: 6 },
+        { type: "lost", wasAttack: true, round: 7 },
+        { type: "detonated", wasAttack: true, round: 8 },
+        { type: "lost", wasAttack: true, round: 9 },
+        { type: "detonated", wasAttack: true, round: 10 },
+        { type: "kills", wasAttack: true, round: 11 },
+        { type: "lost", wasAttack: true, round: 12 },
+        { type: "upcoming", wasAttack: false, round: 13 },
+        { type: "upcoming", wasAttack: false, round: 14 },
+        { type: "upcoming", wasAttack: false, round: 15 },
+      ];
 
-    this.matchData.teams[1].roundRecord = [
-      { type: "lost", wasAttack: false, round: 1 },
-      { type: "defused", wasAttack: false, round: 2 },
-      { type: "lost", wasAttack: false, round: 3 },
-      { type: "lost", wasAttack: false, round: 4 },
-      { type: "kills", wasAttack: false, round: 5 },
-      { type: "lost", wasAttack: false, round: 6 },
-      { type: "defused", wasAttack: false, round: 7 },
-      { type: "lost", wasAttack: false, round: 8 },
-      { type: "timeout", wasAttack: false, round: 9 },
-      { type: "lost", wasAttack: false, round: 10 },
-      { type: "lost", wasAttack: false, round: 11 },
-      { type: "kills", wasAttack: false, round: 12 },
-      { type: "upcoming", wasAttack: true, round: 13 },
-      { type: "upcoming", wasAttack: true, round: 14 },
-      { type: "upcoming", wasAttack: true, round: 15 },
-    ];
+      this.matchData.teams[1].roundRecord = [
+        { type: "lost", wasAttack: false, round: 1 },
+        { type: "defused", wasAttack: false, round: 2 },
+        { type: "lost", wasAttack: false, round: 3 },
+        { type: "lost", wasAttack: false, round: 4 },
+        { type: "kills", wasAttack: false, round: 5 },
+        { type: "lost", wasAttack: false, round: 6 },
+        { type: "defused", wasAttack: false, round: 7 },
+        { type: "lost", wasAttack: false, round: 8 },
+        { type: "timeout", wasAttack: false, round: 9 },
+        { type: "lost", wasAttack: false, round: 10 },
+        { type: "lost", wasAttack: false, round: 11 },
+        { type: "kills", wasAttack: false, round: 12 },
+        { type: "upcoming", wasAttack: true, round: 13 },
+        { type: "upcoming", wasAttack: true, round: 14 },
+        { type: "upcoming", wasAttack: true, round: 15 },
+      ];
 
-    this.matchData.tools = {
-      seriesInfo: {
-        needed: 2,
-        wonLeft: 1,
-        wonRight: 0,
-        mapInfo: [
-          {
-            type: "past",
-            map: "Fracture",
-            left: {
-              score: 13,
+      this.matchData.tools = {
+        seriesInfo: {
+          needed: 2,
+          wonLeft: 1,
+          wonRight: 0,
+          mapInfo: [
+            {
+              type: "past",
+              map: "Fracture",
+              left: {
+                score: 13,
+                logo: "assets/misc/icon.webp",
+              },
+              right: {
+                score: 9,
+                logo: "assets/misc/icon.webp",
+              },
+            },
+            {
+              type: "present",
               logo: "assets/misc/icon.webp",
             },
-            right: {
-              score: 9,
+            {
+              type: "future",
+              map: "Haven",
               logo: "assets/misc/icon.webp",
             },
-          },
-          {
-            type: "present",
-            logo: "assets/misc/icon.webp",
-          },
-          {
-            type: "future",
-            map: "Haven",
-            logo: "assets/misc/icon.webp",
-          },
-        ],
-      },
-      seedingInfo: {
-        left: "Group A",
-        right: "Group B",
-      },
-      tournamentInfo: {
-        name: "",
-        logoUrl: "",
-        backdropUrl: "",
-        enabled: true,
-      },
-    };
+          ],
+        },
+        seedingInfo: {
+          left: "Group A",
+          right: "Group B",
+        },
+        tournamentInfo: {
+          name: "",
+          logoUrl: "",
+          backdropUrl: "",
+          enabled: true,
+        },
+        watermarkInfo: {
+          spectraWatermark: true,
+          customTextEnabled: true,
+          customText: "SPECTRA INVITATIONAL",
+        },
+      };
 
-    this.team2.swapColor();
-    this.trackerComponent.updateMatch(this.matchData);
-    for (let i = 0; i < 5; i++) {
-      this.team1.addPlayer();
-      this.team2.addPlayer();
-    }
+      this.team2.swapColor();
+      this.trackerComponent.updateMatch(this.matchData);
+      for (let i = 0; i < 5; i++) {
+        this.team1.addPlayer();
+        this.team2.addPlayer();
+      }
 
       this.roundPhase = this.matchData.roundPhase;
     }
+    this.pushUpdatesToTracker();
   }
 
   changeRoundPhase(): void {
@@ -171,17 +183,20 @@ export class TestingComponent implements AfterViewInit {
       this.matchData.roundPhase = "shopping";
     }
     this.roundPhase = this.matchData.roundPhase;
+    this.pushUpdatesToTracker();
   }
 
   swapTeamColors(): void {
     this.team1.swapColor();
     this.team2.swapColor();
+    this.pushUpdatesToTracker();
   }
 
   updateRoundNumber(): void {
     const a = this.team1.teamObject.roundsWon;
     const b = this.team2.teamObject.roundsWon;
     this.matchData.roundNumber = 1 + (a + b);
+    this.pushUpdatesToTracker();
   }
 
   plantSpike(): void {
@@ -192,11 +207,13 @@ export class TestingComponent implements AfterViewInit {
     if (this.backgroundClassId == 1 || this.backgroundClassId == 3) {
       this.switchBackground();
     }
+    this.pushUpdatesToTracker();
   }
 
   detonateDefuseSpike(): void {
     this.matchData.spikeState = { planted: false, detonated: false, defused: false };
     this.isSpikePlanted = false;
+    this.pushUpdatesToTracker();
   }
 
   toggleInterface(): void {

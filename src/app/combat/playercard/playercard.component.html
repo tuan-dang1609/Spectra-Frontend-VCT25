@@ -219,7 +219,7 @@
         <span 
           class="kda-text"
           [style.display]="'inline-block'"
-          [style.transform]="side === 'right' ? 'scaleX(-1)' : 'none'"
+          [style.transform]="side === 'right' ? 'scaleX(-1) translateY(1px)' : 'none'"
         >
           {{ player.kills }} / {{ player.deaths }}<span *ngIf="showAssistCounts"> / {{ player.assists }}</span>
         </span>

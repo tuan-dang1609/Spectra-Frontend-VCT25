@@ -29,8 +29,12 @@ export class TopinfoComponent implements OnInit, OnDestroy, OnChanges {
   sponsorsAvailable = false;
   sponsorImages: string[] = [];
   currentSponsorIndex = 0;
-  showEventName!: boolean;
-  eventName!: string;
+
+  // Watermark properties
+  showSpectraWatermark = true;
+  showCustomText = false;
+  customText = "";
+  isCyclingAttribution = false;
 
   displayAttributionContent = false;
   private attributionIntervalId: any;
@@ -39,24 +43,18 @@ export class TopinfoComponent implements OnInit, OnDestroy, OnChanges {
   constructor(private config: Config) {}
 
   ngOnInit() {
-    this.showEventName = this.config.showEventName;
-    this.eventName = this.config.eventName;
-
     // Initialize sponsors from config as a baseline
     this.sponsorImages = this.config.sponsorImageUrls;
     this.sponsorsAvailable = this.sponsorImages.length > 0;
     this.currentSponsorIndex = 0;
     this.startSponsorCycle(); // Start sponsor cycle with config settings
-
-    if (this.showEventName) {
-      this.startAttributionCycle(); // Assuming this method is correctly defined
-    }
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes["match"] && changes["match"].currentValue) {
       const currentMatch = changes["match"].currentValue;
       const sponsorInfo = currentMatch.tools?.sponsorInfo;
+      const watermarkInfo = currentMatch.tools?.watermarkInfo;
 
       // Determine which sponsors to use: from match data or fallback to config
       if (sponsorInfo !== undefined) {
@@ -79,6 +77,21 @@ export class TopinfoComponent implements OnInit, OnDestroy, OnChanges {
 
       // Restart the sponsor cycle with the potentially new set of sponsors and speed
       this.startSponsorCycle();
+
+      // Handle watermark/attribution display
+      if (watermarkInfo) {
+        this.showSpectraWatermark = watermarkInfo.spectraWatermark;
+        this.showCustomText = watermarkInfo.customTextEnabled;
+        this.customText = watermarkInfo.customText || "";
+
+        this.isCyclingAttribution = this.showSpectraWatermark && this.showCustomText;
+
+        if (this.isCyclingAttribution) {
+          this.startAttributionCycle();
+        } else {
+          this.clearAttributionInterval();
+        }
+      }
     }
   }
 
@@ -161,7 +174,8 @@ export class TopinfoComponent implements OnInit, OnDestroy, OnChanges {
   // Assuming attribution cycle methods are defined as they were from previous context
   private startAttributionCycle(): void {
     this.clearAttributionInterval();
-    // Ensure displayAttributionContent is initialized if necessary
+    // Ensure displayAttributionContent is initialized to show custom text first
+    this.displayAttributionContent = false;
     this.attributionIntervalId = setInterval(() => {
       this.displayAttributionContent = !this.displayAttributionContent;
     }, 8000); // Cycle every 8 seconds, adjust as needed
