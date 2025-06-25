@@ -202,7 +202,7 @@ export class AgentSelectComponent implements OnInit, AfterViewInit, OnDestroy {
     this.imagesToPreload.push(team2Url);
 
     if (this.match.map) {
-      this.imagesToPreload.push(`/assets/maps/${this.match.map}.jpg`);
+      this.imagesToPreload.push(`/assets/maps/agent-select/${this.match.map}.webp`);
     }
     let eventLogoUrl = this.match.tools?.tournamentInfo?.logoUrl && this.match.tools.tournamentInfo.logoUrl !== ""
           ? this.match.tools.tournamentInfo.logoUrl
@@ -438,8 +438,8 @@ export class AgentSelectComponent implements OnInit, AfterViewInit, OnDestroy {
             console.warn(`Map name not available in this.match for Rive asset '${asset.name}'. Cannot load.`);
             return false;
           }
-          const url = `/assets/maps/${mapName}.webp`;
-          return loadAndDecodeImageHelper(asset, url, 1500, 1500);
+          const url = `/assets/maps/agent-select/${mapName}.webp`;
+          return loadAndDecodeImageHelper(asset, url);
         }
 
         if (asset.isImage && asset.name === "eventLogo") {
