@@ -29,8 +29,12 @@ export class TopinfoComponent implements OnInit, OnDestroy, OnChanges {
   sponsorsAvailable = false;
   sponsorImages: string[] = [];
   currentSponsorIndex = 0;
-  showEventName!: boolean;
-  eventName!: string;
+
+  // Watermark properties
+  showSpectraWatermark = true;
+  showCustomText = false;
+  customText = "";
+  isCyclingAttribution = false;
 
   displayAttributionContent = false;
   private attributionIntervalId: any;
@@ -39,24 +43,18 @@ export class TopinfoComponent implements OnInit, OnDestroy, OnChanges {
   constructor(private config: Config) {}
 
   ngOnInit() {
-    this.showEventName = this.config.showEventName;
-    this.eventName = this.config.eventName;
-
     // Initialize sponsors from config as a baseline
     this.sponsorImages = this.config.sponsorImageUrls;
     this.sponsorsAvailable = this.sponsorImages.length > 0;
     this.currentSponsorIndex = 0;
     this.startSponsorCycle(); // Start sponsor cycle with config settings
-
-    if (this.showEventName) {
-      this.startAttributionCycle(); // Assuming this method is correctly defined
-    }
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes["match"] && changes["match"].currentValue) {
       const currentMatch = changes["match"].currentValue;
       const sponsorInfo = currentMatch.tools?.sponsorInfo;
+      const watermarkInfo = currentMatch.tools?.watermarkInfo;
 
       // Determine which sponsors to use: from match data or fallback to config
       if (sponsorInfo !== undefined) {
@@ -79,6 +77,21 @@ export class TopinfoComponent implements OnInit, OnDestroy, OnChanges {
 
       // Restart the sponsor cycle with the potentially new set of sponsors and speed
       this.startSponsorCycle();
+
+      // Handle watermark/attribution display
+      if (watermarkInfo) {
+        this.showSpectraWatermark = watermarkInfo.spectraWatermark;
+        this.showCustomText = watermarkInfo.customTextEnabled;
+        this.customText = watermarkInfo.customText || "";
+
+        this.isCyclingAttribution = this.showSpectraWatermark && this.showCustomText;
+
+        if (this.isCyclingAttribution) {
+          this.startAttributionCycle();
+        } else {
+          this.clearAttributionInterval();
+        }
+      }
     }
   }
 
@@ -127,15 +140,42 @@ export class TopinfoComponent implements OnInit, OnDestroy, OnChanges {
     return this.match?.tools?.seriesInfo?.mapInfo[slot] || {};
   }
 
-  isDeciderForSlot(slot: number) {
-    // Placeholder for actual logic if needed
-    return false;
+  isDeciderForSlot(slotIndex: number): boolean {
+    const seriesInfo = this.match?.tools?.seriesInfo;
+
+    if (!seriesInfo || typeof seriesInfo.needed !== 'number' || seriesInfo.needed <= 0) {
+      return false;
+    }
+
+    const pillMapData = this.mapInfoForSlot(slotIndex);
+
+    // Show decider only on maps labeled as 'future'
+    if (pillMapData.type !== 'future') {
+      return false;
+    }
+
+    // Calculate series progression
+    const mapsPlayedCount = (seriesInfo.wonLeft || 0) + (seriesInfo.wonRight || 0);
+    const maxMapsPossibleInSeries = (seriesInfo.needed * 2) - 1;
+
+    // The decider map is the last possible map in the series (0-indexed).
+    const deciderMapOverallIndex = maxMapsPossibleInSeries - 1;
+
+    // The "future" pill displays the map that comes after the current map
+    // If 0 maps have been played, the current map is map 0 (0-indexed), and the future pill shows map 1 (0-indexed)
+    // If 1 map has been played, the current map is map 1 (0-indexed), and the future pill shows map 2 (0-indexed)
+    // So, the 0-indexed number of the map that this 'future' pill represents is mapsPlayedCount + 1
+    const overallIndexForTheMapInThisFuturePill = mapsPlayedCount + 1;
+    
+    // This pill represents the decider if the map it's set to display is the decider map of the series
+    return overallIndexForTheMapInThisFuturePill === deciderMapOverallIndex;
   }
 
   // Assuming attribution cycle methods are defined as they were from previous context
   private startAttributionCycle(): void {
     this.clearAttributionInterval();
-    // Ensure displayAttributionContent is initialized if necessary
+    // Ensure displayAttributionContent is initialized to show custom text first
+    this.displayAttributionContent = false;
     this.attributionIntervalId = setInterval(() => {
       this.displayAttributionContent = !this.displayAttributionContent;
     }, 8000); // Cycle every 8 seconds, adjust as needed

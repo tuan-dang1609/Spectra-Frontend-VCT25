@@ -1,4 +1,4 @@
-import { trigger, transition, style, animate, group } from "@angular/animations";
+import { trigger, transition, style, animate, group, keyframes } from "@angular/animations";
 import { Component, Input } from "@angular/core";
 import { Config } from "../../shared/config";
 import { AgentNameService } from "../../services/agentName.service";
@@ -61,6 +61,21 @@ const componentAnimations = [
       ),
       // Ensure the transform is reset
       style({ transform: "none" }),
+    ]),
+  ]),
+  trigger("kdaDeathAnimation", [
+    transition(":enter", [
+      style({
+        opacity: 0,
+        transform: "translateX(0px)",
+      }),
+      animate(
+        "100ms 120ms cubic-bezier(0.4, 0, 0.2, 1)",
+        style({
+          opacity: 1,
+          transform: "translateX(-40px)",
+        })
+      ),
     ]),
   ]),
   trigger("spectatorBoxGrow", [
