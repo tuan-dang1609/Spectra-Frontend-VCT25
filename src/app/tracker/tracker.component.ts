@@ -62,6 +62,11 @@ export class TrackerComponent implements OnInit {
           duration: 5000,
           sponsors: [],
         },
+        watermarkInfo: {
+          spectraWatermark: true,
+          customTextEnabled: false,
+          customText: "",
+        },
       },
       timeoutState: {
         techPause: false,

@@ -35,22 +35,27 @@
 </div>
 
 
-<div class="event-name-container">
+<div class="event-name-container" *ngIf="showSpectraWatermark || showCustomText">
   <img class="event-name-bg" src="/assets/topscore/topinfo/eventName.svg" alt="Event Name Background" />
 
+  <!-- CAUTION: Attribution is a required part of using Spectra, so please do not remove this portion of code, lest you be smited by the gods! -->
   <div class="cycling-or-static-content-wrapper">
-    <ng-container *ngIf="showEventName">
-      <!-- CAUTION: Attribution is a required part of using Spectra, so please do not remove this portion of code, lest you be smited by the gods! -->
-      <span *ngIf="!displayAttributionContent" class="event-name-text-cycling" @fadeCycle>{{ eventName }}</span>
+    <!-- Cycling between custom text and Spectra attribution -->
+    <ng-container *ngIf="isCyclingAttribution">
+      <span *ngIf="!displayAttributionContent" class="event-name-text-cycling" @fadeCycle>{{ customText }}</span>
       <div *ngIf="displayAttributionContent" class="attribution-content-cycling" @fadeCycle>
         <img src="assets/misc/icon.webp" class="attribution-icon" alt="Spectra Icon">
         <span class="attribution-text-part">OVERLAY BY SPECTRA</span>
       </div>
     </ng-container>
 
-    <ng-container *ngIf="!showEventName">
-      <!-- CAUTION: Attribution is a required part of using Spectra, so please do not remove this portion of code, lest you be smited by the gods! -->
-      <div class="attribution-content-static">
+    <!-- CAUTION: Attribution is a required part of using Spectra, so please do not remove this portion of code, lest you be smited by the gods! -->
+    <!-- Static display -->
+    <ng-container *ngIf="!isCyclingAttribution">
+      <!-- Only show custom text -->
+      <span *ngIf="showCustomText" class="event-name-text">{{ customText }}</span>
+      <!-- Only show Spectra attribution if custom text is NOT enabled -->
+      <div *ngIf="!showCustomText && showSpectraWatermark" class="attribution-content-static">
         <img src="assets/misc/icon.webp" class="attribution-icon" alt="Spectra Icon">
         <span class="attribution-text-part">OVERLAY BY SPECTRA</span>
       </div>

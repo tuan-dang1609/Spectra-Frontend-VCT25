@@ -203,64 +203,79 @@
                 transform: 
                   (side === 'right' ? 'scaleX(-1) ' : '') +
                   (!player.auxiliaryAvailable.health || !hideAuxiliary ? 'translateY(1px)' : 'translateY(0px)')
-              }"
-              
-            >
-              {{ player.money }}
-            </div>
-          </div>
-        </div>
-        <div class="username-container">
-          <div class="username-title" [class]="side">{{ player.name }}</div>
-          <img
-            class="captain-icon"
-            *ngIf="player.isCaptain"
-            src="{{ assets }}/misc/TeamCaptain.svg"
-          />
+          }"
+          
+        >
+          {{ player.money }}
         </div>
       </div>
-      <div
-        class="health-bar"
-        [class]="color"
-        [style.width.%]="clamp(player.health * 1.82, 0, 182)" 
-        [@deathAnimation]="player.isAlive"
-        *ngIf="player.isAlive"
-      ></div>
-    </div>
-    <div
-      class="utility-container"
-      [class]="color"
-      *ngIf="player.isAlive"
-      [@deathAnimation]="player.isAlive"
-    >
-      <div class="weapon-icon-wrapper">
-        <img
-          class="weapon-icon"
-          src="{{ assets }}/weapons/{{ player.highestWeapon }}Killfeed.webp"
-        />
+      <div 
+        class="kda-container" 
+        *ngIf="!player.isAlive" 
+        @kdaDeathAnimation
+        [style.transform]="'translateX(-40px)'"
+        [style.opacity]="1"
+      >
+        <span 
+          class="kda-text"
+          [style.display]="'inline-block'"
+          [style.transform]="side === 'right' ? 'scaleX(-1) translateY(1px)' : 'none'"
+        >
+          {{ player.kills }} / {{ player.deaths }}<span *ngIf="showAssistCounts"> / {{ player.assists }}</span>
+        </span>
       </div>
     </div>
-    <div class="ultimate-tracker-container" [class]="(player.isAlive ? 'alive' : 'dead')">
-      <div class="ultimate-container" [class.right]="side === 'right'">
-        <app-ultimate
-          [match]="match"
-          [player]="player"
-          [color]="
-          match.teams[0].players.includes(player)
-          ? match.teams[0].isAttacking
-            ? 'attacker'
-            : 'defender'
-          : match.teams[1].isAttacking
-          ? 'attacker'
-          : 'defender'
-          "
-          [hideAuxiliary]="hideAuxiliary">
-        </app-ultimate>
-      </div>
+    <div class="username-container">
+      <div class="username-title" [class]="side">{{ player.name }}</div>
+      <img
+        class="captain-icon"
+        *ngIf="player.isCaptain"
+        src="{{ assets }}/misc/TeamCaptain.svg"
+      />
     </div>
   </div>
-  <div class="spike-icon-wrapper">
-      <img class="spike-icon" *ngIf="player.hasSpike" src="{{ assets }}/misc/Spike_Icon.svg" />
-      <span *ngIf="player.hasSpike" class="spike-bg"></span>
+  <div
+    class="health-bar"
+    [class]="color"
+    [style.width.%]="clamp(player.health * 1.82, 0, 182)" 
+    [@deathAnimation]="player.isAlive"
+    *ngIf="player.isAlive"
+  ></div>
+</div>
+<div
+  class="utility-container"
+  [class]="color"
+  *ngIf="player.isAlive"
+  [@deathAnimation]="player.isAlive"
+>
+  <div class="weapon-icon-wrapper">
+    <img
+      class="weapon-icon"
+      src="{{ assets }}/weapons/{{ player.highestWeapon }}Killfeed.webp"
+    />
   </div>
+</div>
+<div class="ultimate-tracker-container" [class]="(player.isAlive ? 'alive' : 'dead')">
+  <div class="ultimate-container" [class.right]="side === 'right'">
+    <app-ultimate
+      [match]="match"
+      [player]="player"
+      [color]="
+      match.teams[0].players.includes(player)
+      ? match.teams[0].isAttacking
+        ? 'attacker'
+        : 'defender'
+      : match.teams[1].isAttacking
+      ? 'attacker'
+      : 'defender'
+      "
+      [hideAuxiliary]="hideAuxiliary">
+    </app-ultimate>
+  </div>
+</div>
+</div>
+<div class="spike-icon-wrapper">
+    <img class="spike-icon" *ngIf="player.hasSpike" src="{{ assets }}/misc/Spike_Icon.svg" />
+    <span *ngIf="player.hasSpike" class="spike-bg"></span>
+</div>
 </div>

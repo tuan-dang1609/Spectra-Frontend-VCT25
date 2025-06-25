@@ -26,8 +26,8 @@ export class EndroundComponent implements OnChanges, OnInit, AfterViewChecked {
   // Add separate size variables for each asset
   private readonly tournamentBackgroundWidth = 830;
   private readonly tournamentBackgroundHeight = 250;
-  private readonly tournamentLogoWidth = 2000;
-  private readonly tournamentLogoHeight = 600;
+  private readonly tournamentLogoWidth = 2100;
+  private readonly tournamentLogoHeight = 650;
   private readonly teamWonLogoWidth = 4000;
   private readonly teamWonLogoHeight = 4000;
 
