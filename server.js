@@ -1,5 +1,5 @@
 const express = require("express");
-const fetch = require("node-fetch"); // or const fetch = (...await import('node-fetch')).default; for ESM
+const axios = require("axios");
 const app = express();
 const path = require("path");
 
@@ -19,40 +19,19 @@ app.get("/proxy-image", async (req, res) => {
   if (!imageUrl) {
     return res.status(400).send("Missing url query parameter");
   }
+
   try {
-    const fetchOptions = {
-      headers: {
-        // Add any necessary headers, e.g., User-Agent, if the image host requires it
-        "User-Agent": "SpectraImageProxy/1.0",
-      },
-    };
-    const response = await fetch(imageUrl, fetchOptions);
-    if (!response.ok) {
-      console.error(
-        `Proxy failed to fetch image: ${imageUrl}, Status: ${response.status}`
-      );
-      return res
-        .status(response.status)
-        .send(`Failed to fetch image from origin: ${response.statusText}`);
-    }
+    const response = await axios({
+      method: "get",
+      url: imageUrl,
+      responseType: "stream",
+    });
 
-    const contentType = response.headers.get("content-type");
-    if (!contentType || !contentType.startsWith("image/")) {
-      console.warn(
-        `Proxied resource is not an image type: ${imageUrl}, Content-Type: ${contentType}`
-      );
-      // Optionally, you could try to stream the response anyway, or return an error
-      // For now, let's return an error if it's clearly not an image.
-      return res.status(400).send(
-        `Proxied resource at ${imageUrl} is not a valid image type. Content-Type: ${contentType}`
-      );
-    }
-
-    res.set("Access-Control-Allow-Origin", "*"); // Consider making this more restrictive if needed
-    res.set("Content-Type", contentType);
-    response.body.pipe(res);
-  } catch (e) {
-    console.error(`Error in /proxy-image for ${imageUrl}:`, e);
+    res.set("Access-Control-Allow-Origin", "*");
+    res.set("Content-Type", response.headers["content-type"]);
+    response.data.pipe(res);
+  } catch (error) {
+    console.error(`Error in /proxy-image for ${imageUrl}:`, error);
     res.status(500).send("Proxy encountered an error");
   }
 });

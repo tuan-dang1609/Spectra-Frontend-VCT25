@@ -119,6 +119,14 @@ export class AgentSelectComponent implements OnInit, AfterViewInit, OnDestroy {
   private imagesToPreload: string[] = [];
   private canvasElement: HTMLCanvasElement | null = null;
 
+  private getProxiedUrl(url: string | undefined, defaultUrl: string): string {
+    const finalUrl = url && url.trim() !== "" ? url : defaultUrl;
+    if (/^https?:\/\//.test(finalUrl)) {
+      return `/proxy-image?url=${encodeURIComponent(finalUrl)}`;
+    }
+    return finalUrl;
+  }
+
   constructor(private route: ActivatedRoute, private config: Config) {
     this.route.queryParams.subscribe((params) => {
       this.groupCode = params["groupCode"]?.toUpperCase() || "UNKNOWN";
@@ -189,28 +197,13 @@ export class AgentSelectComponent implements OnInit, AfterViewInit, OnDestroy {
     });
 
     // Team logos
-    let team1Url = this.match.teams[0].teamUrl || "../../assets/misc/icon.webp";
-    if (/^https?:\/\//.test(team1Url) && !team1Url.startsWith('/proxy-image')) {
-      team1Url = `/proxy-image?url=${encodeURIComponent(team1Url)}`;
-    }
-    this.imagesToPreload.push(team1Url);
-
-    let team2Url = this.match.teams[1].teamUrl || "../../assets/misc/icon.webp";
-    if (/^https?:\/\//.test(team2Url) && !team2Url.startsWith('/proxy-image')) {
-      team2Url = `/proxy-image?url=${encodeURIComponent(team2Url)}`;
-    }
-    this.imagesToPreload.push(team2Url);
+    this.imagesToPreload.push(this.getProxiedUrl(this.match.teams[0].teamUrl, "../../assets/misc/icon.webp"));
+    this.imagesToPreload.push(this.getProxiedUrl(this.match.teams[1].teamUrl, "../../assets/misc/icon.webp"));
 
     if (this.match.map) {
       this.imagesToPreload.push(`/assets/maps/agent-select/${this.match.map}.webp`);
     }
-    let eventLogoUrl = this.match.tools?.tournamentInfo?.logoUrl && this.match.tools.tournamentInfo.logoUrl !== ""
-          ? this.match.tools.tournamentInfo.logoUrl
-          : "../../assets/misc/logo.webp";
-    if (/^https?:\/\//.test(eventLogoUrl) && !eventLogoUrl.startsWith('/proxy-image')) {
-      eventLogoUrl = `/proxy-image?url=${encodeURIComponent(eventLogoUrl)}`;
-    }
-    this.imagesToPreload.push(eventLogoUrl);
+    this.imagesToPreload.push(this.getProxiedUrl(this.match.tools?.tournamentInfo?.logoUrl, "../../assets/misc/logo.webp"));
     this.imagesToPreload.push("/assets/agentSelect/img_13-3594105.png"); // Static asset
     // Add font URLs if you were to preload them, though Rive handles font fetching via assetLoader
   }
@@ -421,14 +414,12 @@ export class AgentSelectComponent implements OnInit, AfterViewInit, OnDestroy {
         }
 
         if (asset.isImage && asset.name === "leftTeamLogo") {
-          let url = this.match?.teams?.[0]?.teamUrl || "../../assets/misc/icon.webp";
-          if (/^https?:\/\//.test(url) && !url.startsWith('/proxy-image')) url = `/proxy-image?url=${encodeURIComponent(url)}`;
+          const url = this.getProxiedUrl(this.match?.teams?.[0]?.teamUrl, "../../assets/misc/icon.webp");
           return loadAndDecodeImageHelper(asset, url, this.logoWidth, this.logoHeight);
         }
 
         if (asset.isImage && asset.name === "rightTeamLogo") {
-          let url = this.match?.teams?.[1]?.teamUrl || "../../assets/misc/icon.webp";
-          if (/^https?:\/\//.test(url) && !url.startsWith('/proxy-image')) url = `/proxy-image?url=${encodeURIComponent(url)}`;
+          const url = this.getProxiedUrl(this.match?.teams?.[1]?.teamUrl, "../../assets/misc/icon.webp");
           return loadAndDecodeImageHelper(asset, url, this.logoWidth, this.logoHeight);
         }
 
@@ -443,10 +434,7 @@ export class AgentSelectComponent implements OnInit, AfterViewInit, OnDestroy {
         }
 
         if (asset.isImage && asset.name === "eventLogo") {
-          let url = this.match?.tools?.tournamentInfo?.logoUrl && this.match.tools.tournamentInfo.logoUrl !== ""
-              ? this.match.tools.tournamentInfo.logoUrl
-              : "../../assets/misc/logo.webp"; 
-          if (/^https?:\/\//.test(url) && !url.startsWith('/proxy-image')) url = `/proxy-image?url=${encodeURIComponent(url)}`;
+          const url = this.getProxiedUrl(this.match?.tools?.tournamentInfo?.logoUrl, "../../assets/misc/logo.webp");
           return loadAndDecodeImageHelper(asset, url, 1200, 1200);
         }
         

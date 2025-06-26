@@ -40,20 +40,27 @@ export class EndroundComponent implements OnChanges, OnInit, AfterViewChecked {
   private readonly desiredImageWidth = 512; // <-- SET your fixed width
   private readonly desiredImageHeight = 512; // <-- SET your fixed height
 
+  private getProxiedUrl(url: string | undefined, defaultUrl: string): string {
+    if (url && url.trim() !== "") {
+      if (url.startsWith("http")) {
+        return `/proxy-image?url=${encodeURIComponent(url)}`;
+      }
+      return url;
+    }
+    return defaultUrl;
+  }
+
   ngOnInit(): void {
     this.endRoundEnabled = this.match?.tools?.tournamentInfo?.enabled || false;
     if (!this.endRoundEnabled) return;
 
     this.tournamentUrl =
-      this.match?.tools?.tournamentInfo?.logoUrl && this.match.tools.tournamentInfo.logoUrl !== ""
-        ? this.match.tools.tournamentInfo.logoUrl
-        : "../../assets/misc/logo_endround.webp";
+      this.getProxiedUrl(this.match?.tools?.tournamentInfo?.logoUrl, "../../assets/misc/logo_endround.webp");
 
-    this.tournamentBackgroundUrl =
-      this.match?.tools?.tournamentInfo?.backdropUrl &&
-      this.match.tools.tournamentInfo.backdropUrl !== ""
-        ? this.match.tools.tournamentInfo.backdropUrl
-        : "../../assets/misc/backdrop.png";
+    this.tournamentBackgroundUrl = this.getProxiedUrl(
+      this.match?.tools?.tournamentInfo?.backdropUrl,
+      "../../assets/misc/backdrop.png"
+    );
     // Preload the Rive animation
     this.preloadRiveAnimation();
 
@@ -75,10 +82,10 @@ export class EndroundComponent implements OnChanges, OnInit, AfterViewChecked {
         }
 
         // Update the teamWonLogoUrl after teamWon is set
-        this.teamWonLogoUrl =
-          match.teams?.[this.teamWon]?.teamUrl && match.teams[this.teamWon].teamUrl !== ""
-            ? match.teams[this.teamWon].teamUrl
-            : "../../assets/misc/icon_endround.webp";
+        this.teamWonLogoUrl = this.getProxiedUrl(
+          match.teams?.[this.teamWon]?.teamUrl,
+          "../../assets/misc/icon_endround.webp"
+        );
 
         // Only reset canvasInitialized if roundPhase transitions to "end"
         if (
@@ -128,7 +135,6 @@ export class EndroundComponent implements OnChanges, OnInit, AfterViewChecked {
 
   private async resizeAndFetchImage(url: string, desiredWidth: number, desiredHeight: number): Promise<Uint8Array> {
     const img: HTMLImageElement = document.createElement('img');
-    img.crossOrigin = "anonymous" as const;
     img.src = url;
     await img.decode();
   
