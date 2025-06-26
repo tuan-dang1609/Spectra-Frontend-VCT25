@@ -3,37 +3,38 @@ import { ActivatedRoute } from "@angular/router";
 import { trigger, transition, style, animate } from "@angular/animations";
 
 @Component({
-  selector: "app-combat",
-  templateUrl: "./combat.component.html",
-  styleUrls: ["./combat.component.scss"],
-  animations: [
-    trigger("slideInLeft", [
-      transition("void => in", [
-        style({ transform: "translateX(-100vw)", opacity: 0 }),
-        animate("500ms cubic-bezier(0.4,0,0.2,1)", style({ transform: "translateX(0)", opacity: 1 })),
-      ]),
-      transition("in => out", [
-        animate("500ms cubic-bezier(0.4,0,0.2,1)", style({ transform: "translateX(-100vw)", opacity: 0 })),
-      ]),
-      transition("static => out", [
-        animate("500ms cubic-bezier(0.4,0,0.2,1)", style({ transform: "translateX(-100vw)", opacity: 0 })),
-      ]),
-      // No animation for static state
-    ]),
-    trigger("slideInRight", [
-      transition("void => in", [
-        style({ transform: "translateX(100vw)", opacity: 0 }),
-        animate("500ms cubic-bezier(0.4,0,0.2,1)", style({ transform: "translateX(0)", opacity: 1 })),
-      ]),
-      transition("in => out", [
-        animate("500ms cubic-bezier(0.4,0,0.2,1)", style({ transform: "translateX(100vw)", opacity: 0 })),
-      ]),
-      transition("static => out", [
-        animate("500ms cubic-bezier(0.4,0,0.2,1)", style({ transform: "translateX(100vw)", opacity: 0 })),
-      ]),
-      // No animation for static state
-    ]),
-  ],
+    selector: "app-combat",
+    templateUrl: "./combat.component.html",
+    styleUrls: ["./combat.component.scss"],
+    animations: [
+        trigger("slideInLeft", [
+            transition("void => in", [
+                style({ transform: "translateX(-100vw)", opacity: 0 }),
+                animate("500ms cubic-bezier(0.4,0,0.2,1)", style({ transform: "translateX(0)", opacity: 1 })),
+            ]),
+            transition("in => out", [
+                animate("500ms cubic-bezier(0.4,0,0.2,1)", style({ transform: "translateX(-100vw)", opacity: 0 })),
+            ]),
+            transition("static => out", [
+                animate("500ms cubic-bezier(0.4,0,0.2,1)", style({ transform: "translateX(-100vw)", opacity: 0 })),
+            ]),
+            // No animation for static state
+        ]),
+        trigger("slideInRight", [
+            transition("void => in", [
+                style({ transform: "translateX(100vw)", opacity: 0 }),
+                animate("500ms cubic-bezier(0.4,0,0.2,1)", style({ transform: "translateX(0)", opacity: 1 })),
+            ]),
+            transition("in => out", [
+                animate("500ms cubic-bezier(0.4,0,0.2,1)", style({ transform: "translateX(100vw)", opacity: 0 })),
+            ]),
+            transition("static => out", [
+                animate("500ms cubic-bezier(0.4,0,0.2,1)", style({ transform: "translateX(100vw)", opacity: 0 })),
+            ]),
+            // No animation for static state
+        ]),
+    ],
+    standalone: false
 })
 export class CombatComponent implements OnChanges {
   @Input() match!: any;

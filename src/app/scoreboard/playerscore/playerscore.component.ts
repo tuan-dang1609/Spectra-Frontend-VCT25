@@ -3,9 +3,10 @@ import { AgentNameService } from "../../services/agentName.service";
 import { AgentRoleService } from "../../services/agentRole.service";
 
 @Component({
-  selector: "app-playerscore",
-  templateUrl: "./playerscore.component.html",
-  styleUrls: ["./playerscore.component.scss"],
+    selector: "app-playerscore",
+    templateUrl: "./playerscore.component.html",
+    styleUrls: ["./playerscore.component.scss"],
+    standalone: false
 })
 export class PlayerscoreComponent {
   public readonly assets: string = "../../../assets";
@@ -46,8 +47,9 @@ export class PlayerscoreComponent {
 }
 
 @Component({
-  selector: "app-playerscore-minimal",
-  templateUrl: "./playerscore-minimal.component.html",
-  styleUrls: ["./playerscore.component.scss"],
+    selector: "app-playerscore-minimal",
+    templateUrl: "./playerscore-minimal.component.html",
+    styleUrls: ["./playerscore.component.scss"],
+    standalone: false
 })
 export class PlayerscoreMinimalComponent extends PlayerscoreComponent {}

@@ -3,20 +3,21 @@ import { ActivatedRoute } from "@angular/router";
 import { trigger, transition, style, animate } from '@angular/animations';
 
 @Component({
-  selector: "app-scoreboard",
-  templateUrl: "./scoreboard.component.html",
-  styleUrls: ["./scoreboard.component.scss"],
-  animations: [
-    trigger("slideUpDown", [
-      transition(":enter", [
-        style({ transform: "translateY(100vh)", opacity: 0 }),
-        animate("500ms cubic-bezier(0.4,0,0.2,1)", style({ transform: "translateY(0)", opacity: 1 })),
-      ]),
-      transition(":leave", [
-        animate("500ms cubic-bezier(0.4,0,0.2,1)", style({ transform: "translateY(100vh)", opacity: 0 })),
-      ]),
-    ]),
-  ],
+    selector: "app-scoreboard",
+    templateUrl: "./scoreboard.component.html",
+    styleUrls: ["./scoreboard.component.scss"],
+    animations: [
+        trigger("slideUpDown", [
+            transition(":enter", [
+                style({ transform: "translateY(100vh)", opacity: 0 }),
+                animate("500ms cubic-bezier(0.4,0,0.2,1)", style({ transform: "translateY(0)", opacity: 1 })),
+            ]),
+            transition(":leave", [
+                animate("500ms cubic-bezier(0.4,0,0.2,1)", style({ transform: "translateY(100vh)", opacity: 0 })),
+            ]),
+        ]),
+    ],
+    standalone: false
 })
 export class ScoreboardComponent implements OnChanges {
   @Input() roundPhase!: string;
@@ -84,7 +85,8 @@ export class ScoreboardComponent implements OnChanges {
 }
 
 @Pipe({
-  name: "scoreboardOrder",
+    name: "scoreboardOrder",
+    standalone: false
 })
 export class ScoreboardOrderPipe implements PipeTransform {
   transform(players: any[]): any[] {

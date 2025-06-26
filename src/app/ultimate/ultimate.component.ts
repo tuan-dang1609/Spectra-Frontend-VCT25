@@ -2,9 +2,10 @@ import { Config } from "../shared/config";
 import { Component, Input, AfterViewInit, OnChanges, DoCheck, ViewChild, ElementRef, ChangeDetectorRef } from "@angular/core";
 
 @Component({
-  selector: "app-ultimate",
-  templateUrl: "./ultimate.component.html",
-  styleUrls: ["./ultimate.component.scss"],
+    selector: "app-ultimate",
+    templateUrl: "./ultimate.component.html",
+    styleUrls: ["./ultimate.component.scss"],
+    standalone: false
 })
 export class UltimateComponent implements AfterViewInit, OnChanges, DoCheck {
   public readonly assets: string = "../../../assets";

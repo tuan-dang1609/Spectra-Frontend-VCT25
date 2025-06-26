@@ -13,9 +13,10 @@ import {
 import { Image } from "@rive-app/canvas/rive_advanced.mjs";
 
 @Component({
-  selector: "app-endround",
-  templateUrl: "./endround.component.html",
-  styleUrls: ["./endround.component.scss"],
+    selector: "app-endround",
+    templateUrl: "./endround.component.html",
+    styleUrls: ["./endround.component.scss"],
+    standalone: false
 })
 export class EndroundComponent implements OnChanges, OnInit, AfterViewChecked {
   @Input() match!: any;

@@ -5,9 +5,10 @@ import { TeamControllerComponent } from "./team-controller/team-controller.compo
 import { HttpClient } from "@angular/common/http";
 
 @Component({
-  selector: "app-testing",
-  templateUrl: "./testing.component.html",
-  styleUrls: ["./testing.component.scss"],
+    selector: "app-testing",
+    templateUrl: "./testing.component.html",
+    styleUrls: ["./testing.component.scss"],
+    standalone: false
 })
 export class TestingComponent implements AfterViewInit {
   @ViewChild(TrackerComponent) trackerComponent!: TrackerComponent;

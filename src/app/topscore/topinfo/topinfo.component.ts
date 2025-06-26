@@ -3,25 +3,26 @@ import { animate, style, transition, trigger } from "@angular/animations";
 import { Config } from "../../shared/config";
 
 @Component({
-  selector: "app-topinfo",
-  templateUrl: "./topinfo.component.html",
-  styleUrls: ["./topinfo.component.scss"],
-  animations: [
-    trigger("fadeInOut", [
-      transition(":enter", [style({ opacity: 0 }), animate("1s", style({ opacity: 1 }))]),
-      transition(":leave", [animate("1s", style({ opacity: 0 }))]),
-    ]),
-    trigger("fadeCycle", [
-      transition(":enter", [
-        style({ opacity: 0, position: "absolute", width: "100%", textAlign: "center" }),
-        animate("600ms ease-in-out", style({ opacity: 1 })),
-      ]),
-      transition(":leave", [
-        style({ opacity: 1, position: "absolute", width: "100%", textAlign: "center" }),
-        animate("600ms ease-in-out", style({ opacity: 0 })),
-      ]),
-    ]),
-  ],
+    selector: "app-topinfo",
+    templateUrl: "./topinfo.component.html",
+    styleUrls: ["./topinfo.component.scss"],
+    animations: [
+        trigger("fadeInOut", [
+            transition(":enter", [style({ opacity: 0 }), animate("1s", style({ opacity: 1 }))]),
+            transition(":leave", [animate("1s", style({ opacity: 0 }))]),
+        ]),
+        trigger("fadeCycle", [
+            transition(":enter", [
+                style({ opacity: 0, position: "absolute", width: "100%", textAlign: "center" }),
+                animate("600ms ease-in-out", style({ opacity: 1 })),
+            ]),
+            transition(":leave", [
+                style({ opacity: 1, position: "absolute", width: "100%", textAlign: "center" }),
+                animate("600ms ease-in-out", style({ opacity: 0 })),
+            ]),
+        ]),
+    ],
+    standalone: false
 })
 export class TopinfoComponent implements OnInit, OnDestroy, OnChanges {
   @Input() match!: any;

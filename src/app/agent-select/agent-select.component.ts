@@ -97,9 +97,10 @@ async function loadAndDecodeImageHelper(asset: FileAsset, url: string, targetWid
 }
 
 @Component({
-  selector: "app-agent-select",
-  templateUrl: "./agent-select.component.html",
-  styleUrls: ["./agent-select.component.scss"],
+    selector: "app-agent-select",
+    templateUrl: "./agent-select.component.html",
+    styleUrls: ["./agent-select.component.scss"],
+    standalone: false
 })
 export class AgentSelectComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild(TrackerComponent) trackerComponent!: TrackerComponent;

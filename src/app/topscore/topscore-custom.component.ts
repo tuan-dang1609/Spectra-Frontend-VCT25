@@ -2,27 +2,28 @@ import { animate, style, transition, trigger, state } from "@angular/animations"
 import { Component, Input, SimpleChanges, OnChanges } from "@angular/core";
 
 @Component({
-  selector: "app-topscore",
-  templateUrl: "./topscore-custom.component.html",
-  styleUrls: ["./topscore-custom.component.scss"],
-  animations: [
-    trigger("spikeMoveUp", [
-      state('*', style({
-        transform: 'translateY(6px) scale(1.25)', // Final Y scaled up by 30%
-        opacity: 1
-      })),
-      transition(':enter', [ 
-        style({
-          transform: 'translateY(84px) scale(1)', 
-          opacity: 1 
-        }),
-        animate('500ms cubic-bezier(0.4, 0, 0.2, 1)')
-      ]),
-      transition(':leave', [ 
-        animate('300ms ease-out', style({ opacity: 0 }))
-      ]),
-    ]),
-  ],
+    selector: "app-topscore",
+    templateUrl: "./topscore-custom.component.html",
+    styleUrls: ["./topscore-custom.component.scss"],
+    animations: [
+        trigger("spikeMoveUp", [
+            state('*', style({
+                transform: 'translateY(6px) scale(1.25)', // Final Y scaled up by 30%
+                opacity: 1
+            })),
+            transition(':enter', [
+                style({
+                    transform: 'translateY(84px) scale(1)',
+                    opacity: 1
+                }),
+                animate('500ms cubic-bezier(0.4, 0, 0.2, 1)')
+            ]),
+            transition(':leave', [
+                animate('300ms ease-out', style({ opacity: 0 }))
+            ]),
+        ]),
+    ],
+    standalone: false
 })
 export class TopscoreComponent implements OnChanges {
   @Input() match!: any;

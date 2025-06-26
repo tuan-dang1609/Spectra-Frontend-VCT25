@@ -99,10 +99,11 @@ const componentAnimations = [
 ];
 
 @Component({
-  selector: "app-playercard",
-  templateUrl: "./playercard.component.html",
-  styleUrls: ["./playercard.component.scss"],
-  animations: componentAnimations,
+    selector: "app-playercard",
+    templateUrl: "./playercard.component.html",
+    styleUrls: ["./playercard.component.scss"],
+    animations: componentAnimations,
+    standalone: false
 })
 export class InhouseTrackerPlayercardComponent {
   public readonly assets: string = "../../../assets";
@@ -157,9 +158,10 @@ export class InhouseTrackerPlayercardComponent {
 }
 
 @Component({
-  selector: "app-playercard-minimal",
-  templateUrl: "./playercard-minimal.component.html",
-  styleUrls: ["./playercard.component.scss"],
-  animations: componentAnimations,
+    selector: "app-playercard-minimal",
+    templateUrl: "./playercard-minimal.component.html",
+    styleUrls: ["./playercard.component.scss"],
+    animations: componentAnimations,
+    standalone: false
 })
 export class InhouseTrackerPlayercardMinimalComponent extends InhouseTrackerPlayercardComponent {}

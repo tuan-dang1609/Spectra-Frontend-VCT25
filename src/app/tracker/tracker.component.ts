@@ -4,16 +4,17 @@ import { ActivatedRoute } from "@angular/router";
 import { AutoswitchComponent } from "../autoswitch/autoswitch.component";
 
 @Component({
-  selector: "app-tracker",
-  templateUrl: "./tracker.component.html",
-  styleUrls: ["./tracker.component.scss"],
-  animations: [
-    trigger("fade", [
-      transition(":enter", [style({ opacity: "0" }), animate("0.5s", style({ opacity: "1" }))]),
-      transition(":leave", animate("0.5s", style({ opacity: "0" }))),
-    ]),
-    trigger("fadeFast", [transition(":leave", animate("0.25s ease-out", style({ opacity: "0" })))]),
-  ],
+    selector: "app-tracker",
+    templateUrl: "./tracker.component.html",
+    styleUrls: ["./tracker.component.scss"],
+    animations: [
+        trigger("fade", [
+            transition(":enter", [style({ opacity: "0" }), animate("0.5s", style({ opacity: "1" }))]),
+            transition(":leave", animate("0.5s", style({ opacity: "0" }))),
+        ]),
+        trigger("fadeFast", [transition(":leave", animate("0.25s ease-out", style({ opacity: "0" })))]),
+    ],
+    standalone: false
 })
 export class TrackerComponent implements OnInit {
   @Input() hideAuxiliary = false;

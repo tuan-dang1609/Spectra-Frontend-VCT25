@@ -12,9 +12,10 @@ import {
 import { PlayerControllerComponent } from "../player-controller/player-controller.component";
 
 @Component({
-  selector: "app-team-controller",
-  templateUrl: "./team-controller.component.html",
-  styleUrl: "./team-controller.component.scss",
+    selector: "app-team-controller",
+    templateUrl: "./team-controller.component.html",
+    styleUrl: "./team-controller.component.scss",
+    standalone: false
 })
 export class TeamControllerComponent {
   @ViewChild("playerControllerSpace", { read: ViewContainerRef })

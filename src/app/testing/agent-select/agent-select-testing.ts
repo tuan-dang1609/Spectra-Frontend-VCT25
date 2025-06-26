@@ -2,8 +2,8 @@ import { Component, OnInit, ViewChild, AfterViewInit } from "@angular/core";
 import { AgentSelectComponent } from "../../agent-select/agent-select.component";
 
 @Component({
-  selector: "app-agent-select-testing",
-  template: `
+    selector: "app-agent-select-testing",
+    template: `
     <div class="testing-controls">
       <div>
         <h3>Team 1</h3>
@@ -23,7 +23,7 @@ import { AgentSelectComponent } from "../../agent-select/agent-select.component"
       <app-agent-select></app-agent-select>
     </div>
   `,
-  styles: [`
+    styles: [`
     .testing-controls {
       position: fixed;
       top: 0;
@@ -76,7 +76,8 @@ import { AgentSelectComponent } from "../../agent-select/agent-select.component"
       justify-content: center;
       /* The canvas from AgentSelectComponent will be centered */
     }
-  `]
+  `],
+    standalone: false
 })
 export class AgentSelectTestingComponent implements OnInit, AfterViewInit {
   @ViewChild(AgentSelectComponent) agentSelectComponent!: AgentSelectComponent;
