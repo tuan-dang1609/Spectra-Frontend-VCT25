@@ -1,8 +1,10 @@
 import { Component, OnInit } from "@angular/core";
 import { Config } from "./shared/config";
+import { RouterOutlet } from "@angular/router";
 
 @Component({
   selector: "app-root",
+  standalone: false,
   templateUrl: "./app.component.html",
   styleUrls: ["./app.component.scss"],
 })

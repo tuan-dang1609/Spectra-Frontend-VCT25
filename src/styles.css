@@ -34,7 +34,6 @@ body {
   --chat-msg: #dbdee1;
   --cerise: #e52e5e;
   --slate: #262626;
-  --accent: #ffc700;
   --blue-dodger: #24affe;
   --tile-dark: #ffc700;
   --tile-light: #fffbd3;
@@ -45,11 +44,3 @@ body {
   fill: yellow !important;
   opacity: 0.5 !important;
 }
-
-// rect.black {
-//   fill: var(--tile-dark) !important;
-// }
-
-// rect.white {
-//   fill: var(--tile-light) !important;
-// }

@@ -38,10 +38,19 @@ import { TimeoutComponent } from "./timeout/timeout.component";
 import { AbilitiesComponent } from "./abilities/abilities.component";
 import { UltimateComponent } from "./ultimate/ultimate.component";
 import { Agent } from "http";
+import { MapbanUiComponent } from "./mapban-ui/mapban-ui.component";
+import { MapbanMapComponent } from "./mapban-ui/mapban-map/mapban-map.component";
 
 @NgModule({
-  declarations: [
-    AppComponent,
+  declarations: [AppComponent],
+  exports: [],
+  bootstrap: [AppComponent],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    FormsModule,
+    BrowserAnimationsModule,
+    JsonPipe,
     TestingComponent,
     TrackerComponent,
     TopscoreComponent,
@@ -68,11 +77,10 @@ import { Agent } from "http";
     InhouseTrackerPlayercardMinimalComponent,
     PlayerscoreMinimalComponent,
     ScoreboardOrderPipe,
-    UltimateComponent
+    UltimateComponent,
+    MapbanUiComponent,
+    MapbanMapComponent,
   ],
-  exports: [],
-  bootstrap: [AppComponent],
-  imports: [BrowserModule, AppRoutingModule, FormsModule, BrowserAnimationsModule, JsonPipe],
   providers: [provideHttpClient(withInterceptorsFromDi())],
 })
 export class AppModule {}

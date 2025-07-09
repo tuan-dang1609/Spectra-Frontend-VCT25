@@ -12,10 +12,13 @@ import {
  } from "@rive-app/canvas";
 import { Image } from "@rive-app/canvas/rive_advanced.mjs";
 
+import { NgIf } from "@angular/common";
 @Component({
   selector: "app-endround",
+  standalone: true,
   templateUrl: "./endround.component.html",
   styleUrls: ["./endround.component.scss"],
+  imports: [NgIf],
 })
 export class EndroundComponent implements OnChanges, OnInit, AfterViewChecked {
   @Input() match!: any;

@@ -1,11 +1,23 @@
 import { Component, Input, OnChanges, SimpleChanges } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { trigger, transition, style, animate } from "@angular/animations";
+import { NgIf, NgFor } from "@angular/common";
+import {
+  InhouseTrackerPlayercardComponent,
+  InhouseTrackerPlayercardMinimalComponent,
+} from "./playercard/playercard.component";
 
 @Component({
   selector: "app-combat",
+  standalone: true,
   templateUrl: "./combat.component.html",
   styleUrls: ["./combat.component.scss"],
+  imports: [
+    NgIf,
+    NgFor,
+    InhouseTrackerPlayercardComponent,
+    InhouseTrackerPlayercardMinimalComponent,
+  ],
   animations: [
     trigger("slideInLeft", [
       transition("void => in", [

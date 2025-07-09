@@ -1,9 +1,13 @@
 import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from "@angular/core";
+import { trigger, transition, style, animate } from "@angular/animations";
 import { TrackerComponent } from "../tracker/tracker.component";
 import { ActivatedRoute } from "@angular/router";
 import { SocketService } from "../services/SocketService";
 import { Config } from "../shared/config";
 import { AutoswitchComponent } from "../autoswitch/autoswitch.component";
+import { NgIf, NgFor } from "@angular/common";
+import { SelectPlayerInfoComponent } from "./select-player-info/select-player-info.component";
+import { SelectTeamInfoComponent } from "./select-team-info/select-team-info.component";
 import {
   Rive,
   Fit,
@@ -100,6 +104,14 @@ async function loadAndDecodeImageHelper(asset: FileAsset, url: string, targetWid
   selector: "app-agent-select",
   templateUrl: "./agent-select.component.html",
   styleUrls: ["./agent-select.component.scss"],
+  standalone: true,
+  animations: [
+    trigger("fade", [
+      transition(":enter", [style({ opacity: "0" }), animate("0.5s", style({ opacity: "1" }))]),
+      transition(":leave", animate("0.5s", style({ opacity: "0" }))),
+    ]),
+  ],
+  imports: [NgIf],
 })
 export class AgentSelectComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild(TrackerComponent) trackerComponent!: TrackerComponent;
@@ -138,11 +150,11 @@ export class AgentSelectComponent implements OnInit, AfterViewInit, OnDestroy {
         console.log("All assets preloaded (cache warmed). Initializing Rive.");
         
         // Initialize and subscribe to socket service after preloading and Rive setup
-        this.socketService = SocketService.getInstance(
+        this.socketService = SocketService.getInstance().connectMatch(
           this.config.serverEndpoint,
-          this.groupCode
+          this.groupCode,
         );
-        this.socketService.subscribe((data: any) => {
+        this.socketService.subscribeMatch((data: any) => {
           this.updateMatch(data);
         });
       })

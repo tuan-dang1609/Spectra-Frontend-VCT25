@@ -4,9 +4,11 @@ export class Config {
   sponsorImageUrls: string[] = [];
   sponsorImageRotateSpeed = 5000; // in milliseconds
 
-  attackerColorPrimary = "#E02853";
-  attackerColorSecondary = "#E02853";
-  attackerColorShieldCurrency = "#E02853";
+  mapbanEndpoint = "http://localhost:11201";
+
+  attackerColorPrimary = "#b82e3c";
+  attackerColorSecondary = "#ff4557";
+  attackerColorShieldCurrency = "#ff838f";
 
   defenderColorPrimary = "#46F4CF";
   defenderColorSecondary = "#46F4CF";

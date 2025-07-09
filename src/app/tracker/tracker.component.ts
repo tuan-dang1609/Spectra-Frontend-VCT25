@@ -2,9 +2,16 @@ import { Component, Input, OnInit } from "@angular/core";
 import { trigger, transition, style, animate } from "@angular/animations";
 import { ActivatedRoute } from "@angular/router";
 import { AutoswitchComponent } from "../autoswitch/autoswitch.component";
+import { NgIf } from "@angular/common";
+import { TopinfoComponent } from "../topscore/topinfo/topinfo.component";
+import { TopscoreComponent } from "../topscore/topscore-custom.component";
+import { EndroundComponent } from "../endround/endround.component";
+import { CombatComponent } from "../combat/combat.component";
+import { ScoreboardComponent } from "../scoreboard/scoreboard.component";
 
 @Component({
   selector: "app-tracker",
+  standalone: true,
   templateUrl: "./tracker.component.html",
   styleUrls: ["./tracker.component.scss"],
   animations: [
@@ -13,6 +20,14 @@ import { AutoswitchComponent } from "../autoswitch/autoswitch.component";
       transition(":leave", animate("0.5s", style({ opacity: "0" }))),
     ]),
     trigger("fadeFast", [transition(":leave", animate("0.25s ease-out", style({ opacity: "0" })))]),
+  ],
+  imports: [
+    NgIf,
+    TopinfoComponent,
+    TopscoreComponent,
+    EndroundComponent,
+    CombatComponent,
+    ScoreboardComponent,
   ],
 })
 export class TrackerComponent implements OnInit {
