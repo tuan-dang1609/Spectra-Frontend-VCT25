@@ -4,10 +4,11 @@ import { ActivatedRoute } from "@angular/router";
 import { SocketService } from "../services/SocketService";
 import { Config } from "../shared/config";
 import { MapbanMapComponent } from "./mapban-map/mapban-map.component";
+import { NgFor, NgIf } from "@angular/common"; // Add this import
 
 @Component({
   standalone: true,
-  imports: [MapbanMapComponent],
+  imports: [MapbanMapComponent, NgFor, NgIf], // Add NgFor and NgIf
   selector: "app-mapban-ui",
   templateUrl: "./mapban-ui.component.html",
   styleUrl: "./mapban-ui.component.css",

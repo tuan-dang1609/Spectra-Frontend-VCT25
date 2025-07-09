@@ -42,9 +42,9 @@ import { MapbanUiComponent } from "./mapban-ui/mapban-ui.component";
 import { MapbanMapComponent } from "./mapban-ui/mapban-map/mapban-map.component";
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [],
   exports: [],
-  bootstrap: [AppComponent],
+  bootstrap: [],
   imports: [
     BrowserModule,
     AppRoutingModule,

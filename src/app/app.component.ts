@@ -4,9 +4,10 @@ import { RouterOutlet } from "@angular/router";
 
 @Component({
   selector: "app-root",
-  standalone: false,
+  standalone: true,
   templateUrl: "./app.component.html",
   styleUrls: ["./app.component.scss"],
+  imports: [RouterOutlet],
 })
 export class AppComponent implements OnInit {
   title = "SpectraFrontend";

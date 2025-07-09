@@ -2,9 +2,9 @@ import { Component, Input, OnInit } from "@angular/core";
 import { trigger, transition, style, animate } from "@angular/animations";
 import { ActivatedRoute } from "@angular/router";
 import { AutoswitchComponent } from "../autoswitch/autoswitch.component";
-import { NgIf } from "@angular/common";
-import { TopinfoComponent } from "../topscore/topinfo/topinfo.component";
+import { NgIf, NgFor } from "@angular/common";
 import { TopscoreComponent } from "../topscore/topscore-custom.component";
+import { TopinfoComponent } from "../topscore/topinfo/topinfo.component";
 import { EndroundComponent } from "../endround/endround.component";
 import { CombatComponent } from "../combat/combat.component";
 import { ScoreboardComponent } from "../scoreboard/scoreboard.component";
@@ -23,8 +23,9 @@ import { ScoreboardComponent } from "../scoreboard/scoreboard.component";
   ],
   imports: [
     NgIf,
-    TopinfoComponent,
+    NgFor,
     TopscoreComponent,
+    TopinfoComponent,
     EndroundComponent,
     CombatComponent,
     ScoreboardComponent,

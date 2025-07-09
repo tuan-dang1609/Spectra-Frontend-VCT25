@@ -9,7 +9,7 @@ import { TimeoutComponent } from "./timeout/timeout.component";
 import { AgentSelectTestingComponent } from "./testing/agent-select/agent-select-testing";
 import { MapbanUiComponent } from "./mapban-ui/mapban-ui.component";
 
-const routes: Routes = [
+export const routes: Routes = [
   {
     path: "",
     component: RedirectComponent,
