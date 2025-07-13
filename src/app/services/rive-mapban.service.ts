@@ -1,0 +1,593 @@
+import { Injectable } from '@angular/core';
+import { Rive, Layout, Fit, Alignment } from '@rive-app/canvas';
+
+export interface MapbanAssets {
+  sponsor?: string;
+  eventLogo?: string;
+  t2_logo?: string;
+  t1_logo?: string;
+  map_7?: string;
+  map_6?: string;
+  map_5?: string;
+  map_4?: string;
+  map_3?: string;
+  map_2?: string;
+  map_1?: string;
+}
+
+interface ResizeConfig {
+  width: number;
+  height: number;
+  maintainAspectRatio: boolean;
+}
+
+// Interface for sponsor information from match data
+export interface SponsorInfo {
+  enabled: boolean;
+  sponsors: string[];
+  duration?: number;
+}
+
+// Interface for map states
+export interface MapState {
+  mapNumber: number;
+  isBanned: boolean;
+  isPicked: boolean;
+  bannedBy?: number;
+  pickedBy?: number;
+}
+
+// Interface for Rive input states
+export interface RiveInputStates {
+  sponsorsEnabled: boolean;
+  currentSponsorImage?: string;
+  mapStates: MapState[];
+}
+
+// Interface for team information
+export interface TeamInfo {
+  tricode: string;
+  name: string;
+}
+
+// Interface for side selection (attack/defense)
+export interface SideSelection {
+  team: number;
+  side: 'ATTACK' | 'DEFENSE';
+}
+
+@Injectable({
+  providedIn: 'root'
+})
+export class RiveMapbanService {
+  private rive: Rive | null = null;
+  private canvas: HTMLCanvasElement | null = null;
+  private currentInputStates: RiveInputStates = {
+    sponsorsEnabled: false,
+    mapStates: []
+  };
+  
+  // Store team information for text updates
+  private teamInfo: { [teamNumber: number]: TeamInfo } = {};
+  
+  // Define standard sizes for different asset types
+  private readonly assetSizeConfig: Record<string, ResizeConfig> = {
+    // Logo assets - consistent size for team/sponsor logos
+    sponsor: { width: 1000, height: 500, maintainAspectRatio: true },
+    eventLogo: { width: 220, height: 220, maintainAspectRatio: true },
+    t1_logo: { width: 220, height: 220, maintainAspectRatio: true },
+    t2_logo: { width: 220, height: 220, maintainAspectRatio: true },
+  };
+
+  // Preloading methods for performance optimization
+  async preloadAndProcessAsset(url: string): Promise<Uint8Array> {
+    try {
+      // Fetch the image
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error(`Failed to fetch ${url}: ${response.status}`);
+      }
+      const arrayBuffer = await response.arrayBuffer();
+      
+      // Process the image immediately with proper resizing
+      const processedData = await this.processImageAsset(arrayBuffer, url);
+      return processedData;
+    } catch (error) {
+      console.error(`Error preloading asset ${url}:`, error);
+      throw error;
+    }
+  }
+
+  private async processImageAsset(arrayBuffer: ArrayBuffer, assetUrl: string): Promise<Uint8Array> {
+    return new Promise((resolve, reject) => {
+      const blob = new Blob([arrayBuffer]);
+      const imageUrl = URL.createObjectURL(blob);
+      const img = new Image();
+      
+      img.onload = () => {
+        try {
+          // Get resize config for this asset type
+          const assetType = this.getAssetType(assetUrl);
+          const resizeConfig = this.assetSizeConfig[assetType];
+          
+          let { width, height } = resizeConfig || { width: img.width, height: img.height, maintainAspectRatio: true };
+          
+          // Calculate aspect ratio preserving dimensions
+          if (resizeConfig?.maintainAspectRatio) {
+            const aspectRatio = img.width / img.height;
+            if (aspectRatio > 1) {
+              height = width / aspectRatio;
+            } else {
+              width = height * aspectRatio;
+            }
+          }
+          
+          // Create canvas and resize
+          const canvas = document.createElement('canvas');
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext('2d')!;
+          
+          // Enable high quality resizing
+          ctx.imageSmoothingEnabled = true;
+          ctx.imageSmoothingQuality = 'high';
+          
+          // Draw resized image
+          ctx.drawImage(img, 0, 0, width, height);
+          
+          // Convert to blob and then to Uint8Array
+          canvas.toBlob((blob) => {
+            if (blob) {
+              const reader = new FileReader();
+              reader.onload = () => {
+                const result = reader.result as ArrayBuffer;
+                resolve(new Uint8Array(result));
+                URL.revokeObjectURL(imageUrl);
+              };
+              reader.onerror = () => {
+                reject(new Error('Failed to convert blob to ArrayBuffer'));
+                URL.revokeObjectURL(imageUrl);
+              };
+              reader.readAsArrayBuffer(blob);
+            } else {
+              reject(new Error('Failed to create blob from canvas'));
+              URL.revokeObjectURL(imageUrl);
+            }
+          }, 'image/webp', 0.95);
+          
+        } catch (error) {
+          URL.revokeObjectURL(imageUrl);
+          reject(error);
+        }
+      };
+      
+      img.onerror = () => {
+        URL.revokeObjectURL(imageUrl);
+        reject(new Error(`Failed to load image: ${assetUrl}`));
+      };
+      
+      img.src = imageUrl;
+    });
+  }
+
+  private getAssetType(assetUrl: string): string {
+    if (assetUrl.includes('sponsor') || assetUrl.includes('logo.webp')) return 'sponsor';
+    if (assetUrl.includes('eventLogo') || assetUrl.includes('icon.webp')) return 'eventLogo';
+    if (assetUrl.includes('t1_logo') || assetUrl.includes('t2_logo')) return 't1_logo';
+    if (assetUrl.includes('map_') || assetUrl.includes('/maps/wide/')) return 'sponsor'; // Use same config as sponsor for maps
+    return 'sponsor'; // Default
+  }
+
+  initializeRive(canvas: HTMLCanvasElement, assets: MapbanAssets, preloadedAssets?: Map<string, Uint8Array>): Promise<Rive> {
+    return new Promise((resolve, reject) => {
+      this.canvas = canvas;
+      
+      // Set canvas to native resolution to prevent blurriness
+      const dpr = window.devicePixelRatio || 1;
+      const rect = canvas.getBoundingClientRect();
+      canvas.width = rect.width * dpr;
+      canvas.height = rect.height * dpr;
+      canvas.style.width = rect.width + 'px';
+      canvas.style.height = rect.height + 'px';
+      
+      // Create optimized asset loader using preloaded assets
+      const assetLoader = (asset: any): boolean => {
+        const assetName = asset.name;
+        const assetUrl = assets[assetName as keyof MapbanAssets];
+        
+        if (assetUrl && preloadedAssets?.has(assetUrl)) {
+          // Use preloaded asset - this should be instant!
+          const processedImageData = preloadedAssets.get(assetUrl)!;
+          try {
+            asset.decode(processedImageData);
+            return true;
+          } catch (error) {
+            console.error(`Failed to decode preloaded asset ${assetName}:`, error);
+            return false;
+          }
+        } else if (assetUrl) {
+          // Fallback to loading if not preloaded (with proper resizing)
+          console.warn(`Asset ${assetName} not preloaded, loading on demand`);
+          this.loadAndResizeAsset(assetUrl, assetName)
+            .then((processedImageData: Uint8Array) => {
+              asset.decode(processedImageData);
+            })
+            .catch((error: any) => {
+              console.error(`Failed to load and resize asset ${assetName}:`, error);
+            });
+          return true;
+        }
+        
+        console.warn(`Asset not found: ${assetName}`);
+        return false;
+      };
+
+      this.rive = new Rive({
+        src: '/assets/mapban/mapban.riv',
+        canvas: canvas,
+        layout: new Layout({
+          fit: Fit.Cover,
+          alignment: Alignment.Center,
+        }),
+        autoplay: true,
+        assetLoader: assetLoader,
+        onLoad: () => {
+          resolve(this.rive!);
+        },
+        onLoadError: (error) => {
+          console.error('Rive animation failed to load:', error);
+          reject(error);
+        },
+      });
+    });
+  }
+
+  updateAssetsFromPreloaded(assets: MapbanAssets, preloadedAssets: Map<string, Uint8Array>): void {
+    if (!this.rive) return;
+    
+    // Update assets using the standard updateAssets method
+    // Since assets are preloaded, the asset loader will use cached versions
+    this.updateAssets(assets);
+  }
+
+  updateAssets(assets: MapbanAssets): void {
+    if (!this.rive) return;
+    
+    // The Rive instance will automatically call the asset loader for any new assets
+    // Since we have preloaded assets, this should be very fast
+    console.log('Updating assets with preloaded data');
+  }
+
+  // Method that needs to exist for fallback loading
+  private async loadAndResizeAsset(url: string, assetName: string): Promise<Uint8Array> {
+    // This is the fallback method for when assets aren't preloaded
+    return this.preloadAndProcessAsset(url);
+  }
+
+  /**
+   * Update sponsor information and trigger sponsor artboard animations
+   */
+  updateSponsorInfo(sponsorInfo: SponsorInfo): void {
+    this.currentInputStates.sponsorsEnabled = sponsorInfo.enabled;
+    
+    if (sponsorInfo.enabled && sponsorInfo.sponsors.length > 0) {
+      // Set the first sponsor image as current
+      this.currentInputStates.currentSponsorImage = sponsorInfo.sponsors[0];
+      // Fire the sponsors trigger using the nested artboard path
+      this.setRiveInput('sponsorsEnabled', true, 'Sponsors');
+      console.log('Sponsors enabled, showing first sponsor:', sponsorInfo.sponsors[0]);
+    } else {
+      this.currentInputStates.currentSponsorImage = undefined;
+      this.setRiveInput('sponsorsEnabled', false, 'Sponsors');
+      console.log('Sponsors disabled');
+    }
+  }
+
+  /**
+   * Update map states for bans and picks
+   */
+  updateMapStates(mapStates: MapState[]): void {
+    this.currentInputStates.mapStates = mapStates;
+    
+    // Update Rive inputs for each map state using correct nested artboard paths
+    mapStates.forEach((mapState) => {
+      // First set the map number on the main artboard
+      this.setRiveInput('map', mapState.mapNumber);
+      
+      // Then trigger ban or pick animations using the correct nested artboard paths
+      if (mapState.isBanned) {
+        this.setRiveInput('isBanned', true, `Ban ${mapState.mapNumber}`);
+      }
+      if (mapState.isPicked) {
+        this.setRiveInput('isPicked', true, `Pick ${mapState.mapNumber}`);
+      }
+      
+      console.log(`Map ${mapState.mapNumber}: banned=${mapState.isBanned}, picked=${mapState.isPicked}`);
+    });
+  }
+
+  /**
+   * Update a specific map's ban/pick status
+   */
+  updateMapStatus(mapNumber: number, isBanned: boolean, isPicked: boolean, actionBy?: number, mapName?: string, sideSelection?: SideSelection): void {
+    // Find and update the map state
+    let mapState = this.currentInputStates.mapStates.find(m => m.mapNumber === mapNumber);
+    
+    if (!mapState) {
+      mapState = { mapNumber, isBanned: false, isPicked: false };
+      this.currentInputStates.mapStates.push(mapState);
+    }
+    
+    mapState.isBanned = isBanned;
+    mapState.isPicked = isPicked;
+    
+    if (isBanned && actionBy !== undefined) {
+      mapState.bannedBy = actionBy;
+    }
+    if (isPicked && actionBy !== undefined) {
+      mapState.pickedBy = actionBy;
+    }
+    
+    // Update map name text if provided
+    if (mapName) {
+      this.updateMapNameText(mapNumber, mapName);
+    }
+    
+    // Update Rive using correct nested artboard paths
+    if (isBanned) {
+      this.setRiveInput('map', mapNumber);
+      this.setRiveInput('isBanned', true, `Ban ${mapNumber}`);
+      
+      // Update veto text for ban action
+      this.updateVetoText(mapNumber, 'VETO', actionBy);
+      
+      console.log(`Map ${mapNumber} banned by team ${actionBy}`);
+    }
+    
+    if (isPicked) {
+      this.setRiveInput('map', mapNumber);
+      this.setRiveInput('isPicked', true, `Pick ${mapNumber}`);
+      
+      // Update veto text for pick action
+      this.updateVetoText(mapNumber, 'SELECT', actionBy);
+      
+      // Update pick text with side selection if provided
+      if (sideSelection && sideSelection.team === actionBy) {
+        this.updatePickText(sideSelection.team, sideSelection.side, `Pick ${mapNumber}`);
+      }
+      
+      console.log(`Map ${mapNumber} picked by team ${actionBy}`);
+    }
+  }
+
+  /**
+   * Reset all map states
+   */
+  resetMapStates(): void {
+    this.currentInputStates.mapStates = [];
+    
+    // Reset all map-related inputs in both Pick and Ban nested artboards
+    for (let i = 1; i <= 7; i++) {
+      this.setRiveInput('isBanned', false, `Ban ${i}`);
+      this.setRiveInput('isPicked', false, `Pick ${i}`);
+    }
+    
+    console.log('All map states reset');
+  }
+
+  /**
+   * Cycle through sponsor images
+   */
+  cycleSponsor(sponsors: string[], currentIndex: number): void {
+    if (sponsors.length > 0) {
+      this.currentInputStates.currentSponsorImage = sponsors[currentIndex];
+      console.log(`Cycling to sponsor: ${sponsors[currentIndex]}`);
+    }
+  }
+
+  /**
+   * Set a Rive input value with optional nested artboard path
+   */
+  setRiveInput(inputName: string, value: any, artboardPath?: string): void {
+    if (!this.rive) return;
+
+    try {
+      if (artboardPath) {
+        // Use the proper nested artboard API methods
+        if (typeof value === 'boolean') {
+          this.rive.setBooleanStateAtPath(inputName, value as boolean, artboardPath);
+          console.log(`Set nested boolean input '${inputName}' to ${value} at path '${artboardPath}'`);
+        } else if (typeof value === 'number') {
+          this.rive.setNumberStateAtPath(inputName, value as number, artboardPath);
+          console.log(`Set nested number input '${inputName}' to ${value} at path '${artboardPath}'`);
+        } else if (typeof value === 'string') {
+          // For trigger inputs, fire the state at the specified path
+          this.rive.fireStateAtPath(inputName, artboardPath);
+          console.log(`Fired nested trigger input '${inputName}' at path '${artboardPath}'`);
+        }
+      } else {
+        // Use regular input setting for main artboard
+        const inputs = this.rive.stateMachineInputs('State Machine 1');
+        if (!inputs) {
+          console.warn('No state machine inputs found for main artboard');
+          return;
+        }
+
+        const input = inputs.find(i => i.name === inputName);
+        if (input) {
+          if (typeof value === 'boolean') {
+            (input as any).value = value;
+          } else if (typeof value === 'number') {
+            (input as any).value = value;
+          } else if (typeof value === 'string') {
+            // For trigger inputs
+            (input as any).fire();
+          }
+          console.log(`Set main artboard input '${inputName}' to ${value}`);
+        } else {
+          console.warn(`Input '${inputName}' not found in main artboard`);
+        }
+      }
+    } catch (error) {
+      console.error(`Error setting Rive input '${inputName}' at path '${artboardPath}':`, error);
+    }
+  }
+
+  /**
+   * Debug method to list all available inputs and test text runs
+   */
+  debugListInputs(): void {
+    if (!this.rive) {
+      console.log('Rive not initialized');
+      return;
+    }
+
+    // Check main artboard inputs
+    const mainInputs = this.rive.stateMachineInputs('State Machine 1');
+    if (mainInputs) {
+      console.log('Main artboard inputs:', mainInputs.map(input => ({
+        name: input.name,
+        type: input.constructor.name,
+        value: (input as any).value
+      })));
+    } else {
+      console.log('No main artboard inputs found');
+    }
+
+    // Test nested artboard paths to see what's available
+    const testPaths = [
+      'Pick 1', 'Pick 2', 'Pick 3', 'Pick 4', 'Pick 5', 'Pick 6', 'Pick 7',
+      'Ban 1', 'Ban 2', 'Ban 3', 'Ban 4', 'Ban 5', 'Ban 6', 'Ban 7',
+      'Sponsors'
+    ];
+    
+    console.log('Testing nested artboard access:');
+    testPaths.forEach(path => {
+      try {
+        // Try to access nested inputs using the path-based methods
+        this.rive!.setBooleanStateAtPath('test', false, path);
+        console.log(`✓ Path '${path}' is accessible`);
+      } catch (error) {
+        console.log(`✗ Path '${path}' is not accessible:`, (error as Error).message);
+      }
+    });
+
+    // Test text runs
+    console.log('Testing text run access:');
+    const testTextRuns = ['MAP 1', 'MAP 2', 'VETO 1', 'VETO 2', 'PICK'];
+    
+    testTextRuns.forEach(textRunName => {
+      try {
+        this.rive!.setTextRunValue(textRunName, 'TEST');
+        console.log(`✓ Text run '${textRunName}' is accessible`);
+      } catch (error) {
+        console.log(`✗ Text run '${textRunName}' is not accessible:`, (error as Error).message);
+      }
+    });
+  }
+
+  /**
+   * Get current input states for debugging
+   */
+  getCurrentStates(): RiveInputStates {
+    return { ...this.currentInputStates };
+  }
+
+  cleanup() {
+    if (this.rive) {
+      this.rive.cleanup();
+      this.rive = null;
+    }
+  }
+
+  getRive(): Rive | null {
+    return this.rive;
+  }
+
+  /**
+   * Set team information for text runs
+   */
+  setTeamInfo(teamNumber: number, teamInfo: TeamInfo): void {
+    this.teamInfo[teamNumber] = teamInfo;
+    console.log(`Team ${teamNumber} info set:`, teamInfo);
+  }
+
+  /**
+   * Update map name text run
+   */
+  updateMapNameText(mapNumber: number, mapName: string): void {
+    if (!this.rive) return;
+    
+    try {
+      const textRunName = `MAP ${mapNumber}`;
+      // Ensure map name is uppercase
+      const upperMapName = mapName.toUpperCase();
+      this.rive.setTextRunValue(textRunName, upperMapName);
+      console.log(`Updated map text '${textRunName}' to: ${upperMapName}`);
+    } catch (error) {
+      console.error(`Error updating map name text for map ${mapNumber}:`, error);
+    }
+  }
+
+  /**
+   * Update veto/select text based on action type and team
+   */
+  updateVetoText(mapNumber: number, actionType: 'VETO' | 'SELECT' | 'DECIDER', teamNumber?: number): void {
+    if (!this.rive) return;
+    
+    try {
+      const textRunName = `VETO ${mapNumber}`;
+      let textValue: string;
+      
+      if (actionType === 'DECIDER') {
+        textValue = 'DECIDER\nMAP';
+      } else {
+        const team = (teamNumber !== undefined) ? this.teamInfo[teamNumber] : null;
+        const teamTricode = team ? team.tricode : 'TEAM';
+        textValue = `${teamTricode}\n${actionType} MAP`;
+      }
+      
+      this.rive.setTextRunValue(textRunName, textValue);
+      console.log(`Updated veto text '${textRunName}' to: ${textValue}`);
+    } catch (error) {
+      console.error(`Error updating veto text for map ${mapNumber}:`, error);
+    }
+  }
+
+  /**
+   * Update pick animation text with team and side information
+   */
+  updatePickText(teamNumber: number, side: 'ATTACK' | 'DEFENSE', artboardPath: string): void {
+    if (!this.rive) return;
+    
+    try {
+      const team = this.teamInfo[teamNumber];
+      const teamTricode = team ? team.tricode : 'TEAM';
+      const textValue = `${teamTricode} PICKS\n${side}`;
+      
+      // Set text in the nested artboard
+      this.rive.setTextRunValueAtPath('PICK', textValue, artboardPath);
+      console.log(`Updated pick text in '${artboardPath}' to: ${textValue}`);
+    } catch (error) {
+      console.error(`Error updating pick text in ${artboardPath}:`, error);
+    }
+  }
+
+  /**
+   * Set a map as the decider map
+   */
+  setDeciderMap(mapNumber: number, mapName?: string): void {
+    // Update map name if provided
+    if (mapName) {
+      this.updateMapNameText(mapNumber, mapName);
+    }
+    
+    // Update veto text for decider
+    this.updateVetoText(mapNumber, 'DECIDER');
+    
+    // Set the map number on the main artboard
+    this.setRiveInput('map', mapNumber);
+    
+    console.log(`Map ${mapNumber} set as decider map`);
+  }
+}

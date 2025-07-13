@@ -9,7 +9,7 @@ import { CommonModule } from "@angular/common";
 @Component({
   selector: "app-timeout",
   standalone: true,
-  imports: [CommonModule],
+  imports: [TrackerComponent, CommonModule],
   templateUrl: "./timeout.component.html",
   styleUrls: ["./timeout.component.scss"],
   animations: [

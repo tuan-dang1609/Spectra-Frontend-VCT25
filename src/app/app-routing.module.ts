@@ -8,6 +8,7 @@ import { RedirectComponent } from "./redirect/redirect.component";
 import { TimeoutComponent } from "./timeout/timeout.component";
 import { AgentSelectTestingComponent } from "./testing/agent-select/agent-select-testing";
 import { MapbanUiComponent } from "./mapban-ui/mapban-ui.component";
+import { MapbanTestingComponent } from "./testing/mapban/mapban-testing";
 
 export const routes: Routes = [
   {
@@ -77,6 +78,10 @@ export const routes: Routes = [
   {
     path: "mapban",
     component: MapbanUiComponent,
+  },
+  {
+    path: "testing/mapban",
+    component: MapbanTestingComponent,
   },
 ];
 

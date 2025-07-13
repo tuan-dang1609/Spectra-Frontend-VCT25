@@ -1,5 +1,5 @@
 import { trigger, transition, style, animate } from "@angular/animations";
-import { AfterViewInit, Component, inject, OnInit } from "@angular/core";
+import { AfterViewInit, Component, inject, Input, OnChanges, OnInit, SimpleChanges } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { SocketService } from "../services/SocketService";
 import { Config } from "../shared/config";
@@ -20,14 +20,14 @@ import { NgFor, NgIf } from "@angular/common"; // Add this import
     ]),
   ],
 })
-export class MapbanUiComponent implements OnInit, AfterViewInit {
+export class MapbanUiComponent implements OnInit, AfterViewInit, OnChanges {
   private route = inject(ActivatedRoute);
   private config = inject(Config);
+  @Input() data!: ISessionData;
 
   sessionCode = "UNKNOWN";
   socketService!: SocketService;
 
-  data!: ISessionData;
   availableMapNames: string[] = [];
   selectedMaps: SessionMap[] = [];
   logoIndex = 1;
@@ -51,6 +51,12 @@ export class MapbanUiComponent implements OnInit, AfterViewInit {
     this.socketService.subscribeMatch((data: any) => {
       this.updateMapbanData(data);
     });
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes["data"] && changes["data"].currentValue) {
+      this.updateMapbanData({ data: changes["data"].currentValue });
+    }
   }
 
   public updateMapbanData(data: { data: ISessionData }) {

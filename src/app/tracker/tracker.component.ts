@@ -99,7 +99,8 @@ export class TrackerComponent implements OnInit {
   }
 
   isAutoswitch(): boolean {
-    return this.route.component === AutoswitchComponent;
+    // Check for the route name instead of the component reference
+    return this.route.snapshot.url.join('/').includes('autoswitch');
   }
 
   isMinimal(): boolean {
