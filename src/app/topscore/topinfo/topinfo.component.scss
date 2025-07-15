@@ -23,7 +23,6 @@
   font-style: normal;
   text-align: center;
   text-transform: uppercase;
-  letter-spacing: 0;
   line-height: normal;
   white-space: nowrap;
 }
@@ -93,9 +92,9 @@
   align-items: center;
   justify-content: center;
   height: 25px;
-  min-width: 278px;      // adjust as needed for your SVG
-  width: fit-content;      // set to your SVG's width
-  left: 1320px;   // remove or adjust as needed
+  min-width: 278px; // adjust as needed for your SVG
+  width: fit-content; // set to your SVG's width
+  left: 1320px; // remove or adjust as needed
 }
 
 .event-name-bg {
@@ -116,16 +115,15 @@
   font-family: "DIN Next W1G Medium", Helvetica, Arial, sans-serif;
   font-size: 12px;
   color: #fff;
-    text-transform: uppercase;
-  letter-spacing: 2px;
+  text-transform: uppercase;
   display: flex;
   align-items: center;
   justify-content: center;
   height: 100%;
-  white-space: nowrap;           // Prevents line breaks
-  overflow: hidden;              // Hides overflow
-  text-overflow: ellipsis;       // Adds ... if text is too long
-  padding: 0 12px;               // Adjust as needed, but keep it small
+  white-space: nowrap; // Prevents line breaks
+  overflow: hidden; // Hides overflow
+  text-overflow: ellipsis; // Adds ... if text is too long
+  padding: 0 12px; // Adjust as needed, but keep it small
 }
 
 // Wrapper for the content that will be centered over the background
@@ -144,7 +142,7 @@
   font-size: 12px;
   color: #fff;
   text-transform: uppercase;
-  letter-spacing: 2px;
+  letter-spacing: 0px;
   text-align: center; // Fallback for non-flex content, though children are flexed
 }
 

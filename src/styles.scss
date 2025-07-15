@@ -1,18 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
-@import url("https://fonts.googleapis.com/css2?family=Azeret+Mono:wght@800&family=Roboto+Mono:wght@600&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Azeret+Mono:wght@800&family=Roboto+Mono:wght@600&family=Roboto:wght@500&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=DM+Sans&family=Montserrat:wght@400;700;900&display=swap");
-
-@font-face {
-  font-family: DIN Next W1G Medium;
-  src: url("../public/assets/fonts/DINNextW1G/dinnextw1g_medium.otf") format("opentype");
-}
+@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap");
 
 * {
-  font-family: "DIN Next W1G Medium", sans-serif;
+  font-family: "Quicksand" !important;
   color: white;
-  font-weight: 500;
+  font-weight: 900;
 }
 
 html {

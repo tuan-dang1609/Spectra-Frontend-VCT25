@@ -9,7 +9,7 @@ export class EndroundComponent implements OnChanges, OnInit {
   tournamentUrl = "../../assets/misc/logo.webp";
   endRoundEnabled = false;
 
-  tournamentBackgroundUrl = "../../assets/misc/backdropcopy.webp";
+  tournamentBackgroundUrl = "../../assets/misc/backdrop.png";
 
   teamWon = 0;
   ngOnInit(): void {

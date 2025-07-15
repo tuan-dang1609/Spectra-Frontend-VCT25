@@ -1,9 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Anton&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Source+Sans+3&display=swap");
-@font-face { 
-  font-family: DIN Next W1G Medium;
-  src: url("../../../public/assets/fonts/DINNextW1G/dinnextw1g_medium.otf") format("opentype");
-}
 .topscore {
   position: absolute;
   width: 601px;
@@ -31,11 +27,11 @@
   justify-content: center;
 }
 .round-number {
-  font-family: "DIN Next W1G Medium", Helvetica;
+  font-weight: 700;
   color: #fefeff99;
   font-size: 15px;
   text-align: center;
-  letter-spacing: 4px;
+  letter-spacing: 0.39px;
   line-height: normal;
 }
 .top-score-box,
@@ -227,7 +223,7 @@
   height: 38.22%;
   position: absolute;
   right: 22.89%;
-  left: 76.38%;
+  left: 76.46%;
   bottom: 53.5%;
   top: 8.28%;
   overflow: visible;
@@ -257,7 +253,6 @@
   position: relative;
   width: fit-content;
   text-shadow: 0px 1.21px 4.83px rgba(0, 0, 0, 0.12);
-  font-family: "Anton", sans-serif;
   font-weight: 500;
   color: #ffffff;
   font-size: 40px;
@@ -317,11 +312,10 @@
 .teamcode {
   position: relative;
   width: fit-content;
-  margin-top: -1.21px;
-  font-family: "Anton", sans-serif;
-  font-weight: 500;
+  margin-top: -1px;
+  font-weight: 800;
   color: #ffffff;
-  font-size: 28px;
+  font-size: 24px;
   font-style: normal;
   text-align: center;
   letter-spacing: -0.48px;
@@ -385,8 +379,7 @@
 .teamseeding {
   position: relative;
   width: fit-content;
-  margin-top: -8px;
-  font-family: "Source Sans 3", serif;
+  margin-top: -3px;
   font-optical-sizing: auto;
   font-weight: 800;
   color: #ffffff99;
