@@ -1,27 +1,27 @@
-<div class="topinfo-container"
-  [style.opacity]="!mapInfoForSlot(0).type ? '0' : '1'"
->
+<div class="topinfo-container" [style.opacity]="!mapInfoForSlot(0).type ? '0' : '1'">
   <app-mapinfo
     [map]="match.map"
     [mapinfo]="mapInfoForSlot(0)"
     [slotType]="'past'"
-    [isDecider]="isDeciderForSlot(0)">
+    [isDecider]="isDeciderForSlot(0)"
+  >
   </app-mapinfo>
   <app-mapinfo
     [map]="match.map"
     [mapinfo]="mapInfoForSlot(1)"
     [slotType]="'present'"
-    [isDecider]="isDeciderForSlot(1)">
+    [isDecider]="isDeciderForSlot(1)"
+  >
   </app-mapinfo>
   <app-mapinfo
     [map]="match.map"
     [mapinfo]="mapInfoForSlot(2)"
     [slotType]="'future'"
-    [isDecider]="isDeciderForSlot(2)">
+    [isDecider]="isDeciderForSlot(2)"
+  >
   </app-mapinfo>
 </div>
-<div class="topinfo-container-right">
-</div>
+<div class="topinfo-container-right"></div>
 <div class="sponsor-container" *ngIf="sponsorsAvailable">
   <ng-container *ngFor="let sponsor of sponsorImages; let i = index">
     <img
@@ -34,17 +34,22 @@
   </ng-container>
 </div>
 
-
 <div class="event-name-container" *ngIf="showSpectraWatermark || showCustomText">
-  <img class="event-name-bg" src="/assets/topscore/topinfo/eventName.svg" alt="Event Name Background" />
+  <img
+    class="event-name-bg"
+    src="/assets/topscore/topinfo/eventName.svg"
+    alt="Event Name Background"
+  />
 
   <!-- CAUTION: Attribution is a required part of using Spectra, so please do not remove this portion of code, lest you be smited by the gods! -->
   <div class="cycling-or-static-content-wrapper">
     <!-- Cycling between custom text and Spectra attribution -->
     <ng-container *ngIf="isCyclingAttribution">
-      <span *ngIf="!displayAttributionContent" class="event-name-text-cycling" @fadeCycle>{{ customText }}</span>
+      <span *ngIf="!displayAttributionContent" class="event-name-text-cycling" @fadeCycle>{{
+        customText
+      }}</span>
       <div *ngIf="displayAttributionContent" class="attribution-content-cycling" @fadeCycle>
-        <img src="assets/misc/icon.webp" class="attribution-icon" alt="Spectra Icon">
+        <img src="assets/misc/icon.webp" class="attribution-icon" alt="Spectra Icon" />
         <span class="attribution-text-part">OVERLAY BY SPECTRA</span>
       </div>
     </ng-container>
@@ -56,7 +61,7 @@
       <span *ngIf="showCustomText" class="event-name-text">{{ customText }}</span>
       <!-- Only show Spectra attribution if custom text is NOT enabled -->
       <div *ngIf="!showCustomText && showSpectraWatermark" class="attribution-content-static">
-        <img src="assets/misc/icon.webp" class="attribution-icon" alt="Spectra Icon">
+        <img src="assets/misc/icon.webp" class="attribution-icon" alt="Spectra Icon" />
         <span class="attribution-text-part">OVERLAY BY SPECTRA</span>
       </div>
     </ng-container>
