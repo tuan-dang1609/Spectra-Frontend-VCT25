@@ -5,7 +5,7 @@ WORKDIR /app
 COPY . .
 
 RUN corepack enable
-RUN yarn install --immutable && \
+RUN yarn install && \
   yarn build
 
 FROM nginx:1.27.2-alpine
