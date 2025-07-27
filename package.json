@@ -23,6 +23,7 @@
     "@angular/router": "^18.2.13",
     "@rive-app/canvas": "^2.27.2",
     "express": "^4.21.2",
+    "latest-version": "^9.0.0",
     "node-fetch": "^2.7.0",
     "rxjs": "~7.8.2",
     "socket.io-client": "4.8.1",
@@ -49,6 +50,6 @@
   },
   "engines": {
     "node": "20.11.1",
-    "npm": "~1.0.20"
+    "npm": "9.0.0"
   }
 }
